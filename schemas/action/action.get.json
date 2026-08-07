@@ -1,0 +1,292 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/action/action.get",
+  "title": "action.get",
+  "description": "Retrieve actions according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/action/get",
+  "type": "object",
+  "properties": {
+    "actionids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only actions with the given IDs."
+    },
+    "groupids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only actions that use the given host groups in action conditions."
+    },
+    "hostids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only actions that use the given hosts in action conditions."
+    },
+    "triggerids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only actions that use the given triggers in action conditions."
+    },
+    "mediatypeids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only actions that use the given media types to send messages."
+    },
+    "usrgrpids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only actions that are configured to send messages to the given user groups."
+    },
+    "userids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only actions that are configured to send messages to the given users."
+    },
+    "scriptids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only actions that are configured to run the given scripts."
+    },
+    "selectFilter": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return a filter property with the action condition filter."
+    },
+    "selectOperations": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return an operations property with action operations."
+    },
+    "selectRecoveryOperations": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return a recovery_operations property with action recovery operations."
+    },
+    "selectUpdateOperations": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return an update_operations property with action update operations."
+    },
+    "sortfield": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "actionid",
+            "name",
+            "status"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "actionid",
+              "name",
+              "status"
+            ]
+          }
+        }
+      ],
+      "description": "Sort the result by the given properties. Possible values: actionid, name, status."
+    },
+    "countOutput": {
+      "type": "boolean",
+      "description": "Return the number of records in the result instead of the actual data."
+    },
+    "editable": {
+      "type": "boolean",
+      "description": "If set to true, return only objects that the user has write permissions to. Default: false."
+    },
+    "excludeSearch": {
+      "type": "boolean",
+      "description": "Return results that do not match the criteria given in the search parameter."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Does not support text-type properties."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Limit the number of records returned."
+    },
+    "output": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "preservekeys": {
+      "type": "boolean",
+      "description": "Use IDs as keys in the resulting array."
+    },
+    "search": {
+      "type": "object",
+      "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."
+    },
+    "searchByAny": {
+      "type": "boolean",
+      "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."
+    },
+    "searchWildcardsEnabled": {
+      "type": "boolean",
+      "description": "If true, enables the use of '*' as a wildcard character. Default: false."
+    },
+    "sortorder": {
+      "oneOf": [
+        {
+          "enum": [
+            "ASC",
+            "DESC"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          }
+        }
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {
+      "type": "boolean",
+      "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."
+    }
+  },
+  "additionalProperties": false
+}

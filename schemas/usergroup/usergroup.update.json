@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/usergroup/usergroup.update",
+  "title": "usergroup.update",
+  "description": "Update existing user groups.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/usergroup/update",
+  "type": "object",
+  "$defs": {
+    "permission": {
+      "type": "object",
+      "description": "Permission object: host group or template group permission to assign to the user group.",
+      "properties": {
+        "id": {"type": "string", "description": "ID of the host group or template group to add permission to. Property behavior: required."},
+        "permission": {
+          "type": "integer",
+          "enum": [0, 2, 3],
+          "description": "Access level to the host group or template group. Possible values: 0 - access denied; 2 - read-only access; 3 - read-write access."
+        }
+      },
+      "required": ["id"],
+      "additionalProperties": false
+    },
+    "tagFilter": {
+      "type": "object",
+      "description": "Tag-based permission object.",
+      "properties": {
+        "groupid": {"type": "string", "description": "ID of the host group to add permission to. Property behavior: required."},
+        "tag": {"type": "string", "description": "Tag name."},
+        "value": {"type": "string", "description": "Tag value."}
+      },
+      "required": ["groupid"],
+      "additionalProperties": false
+    },
+    "userRef": {
+      "type": "object",
+      "description": "User to assign to the user group. The user must have only the userid property defined.",
+      "properties": {
+        "userid": {"type": "string", "description": "ID of the user."}
+      },
+      "required": ["userid"],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "usrgrpid": {"type": "string", "description": "ID of the user group. Property behavior: read-only; required for update operations."},
+    "name": {"type": "string", "description": "Name of the user group."},
+    "debug_mode": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether debug mode is enabled or disabled. Possible values: 0 - (default) disabled; 1 - enabled."
+    },
+    "gui_access": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3],
+      "description": "Frontend authentication method of the users in the group. Possible values: 0 - (default) use the system default authentication method; 1 - use internal authentication; 2 - use LDAP authentication; 3 - disable access to the frontend."
+    },
+    "mfa_status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether MFA is enabled or disabled for the users in the group. Possible values: 0 - disabled (for all configured MFA methods); 1 - enabled (for all configured MFA methods)."
+    },
+    "mfaid": {
+      "type": "string",
+      "description": "MFA method used for the users in the group. Property behavior: supported for Super admin type users (since Zabbix 7.0.9); supported if mfa_status of Authentication object is set to \"Enabled\"."
+    },
+    "users_status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether the user group is enabled or disabled. For deprovisioned users, the user group cannot be enabled. Possible values: 0 - (default) enabled; 1 - disabled."
+    },
+    "userdirectoryid": {
+      "type": "string",
+      "description": "ID of the user directory used for authentication. Property behavior: supported for Super admin type users (since Zabbix 7.0.9); supported if gui_access is set to \"use the system default authentication method\" or \"use LDAP authentication\"."
+    },
+    "hostgroup_rights": {
+      "oneOf": [
+        {"$ref": "#/$defs/permission"},
+        {"type": "array", "items": {"$ref": "#/$defs/permission"}}
+      ],
+      "description": "Host group permissions to replace the current permissions assigned to the user group."
+    },
+    "templategroup_rights": {
+      "oneOf": [
+        {"$ref": "#/$defs/permission"},
+        {"type": "array", "items": {"$ref": "#/$defs/permission"}}
+      ],
+      "description": "Template group permissions to replace the current permissions assigned to the user group."
+    },
+    "tag_filters": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/tagFilter"},
+      "description": "Tag-based permissions to replace the current permissions assigned to the user group."
+    },
+    "users": {
+      "oneOf": [
+        {"$ref": "#/$defs/userRef"},
+        {"type": "array", "items": {"$ref": "#/$defs/userRef"}}
+      ],
+      "description": "Users to replace the current users assigned to the user group. The user must have only the userid property defined."
+    },
+    "rights": {
+      "oneOf": [
+        {"$ref": "#/$defs/permission"},
+        {"type": "array", "items": {"$ref": "#/$defs/permission"}}
+      ],
+      "description": "Deprecated, please use hostgroup_rights or templategroup_rights instead. Permissions to assign to the user group."
+    }
+  },
+  "required": ["usrgrpid"],
+  "additionalProperties": false
+}

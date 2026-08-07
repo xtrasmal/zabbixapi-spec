@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/drule/drule.update",
+  "title": "drule.update",
+  "description": "Update existing network discovery rules.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/drule/update ; discovery rule properties from https://www.zabbix.com/documentation/7.0/en/manual/api/reference/drule/object ; discovery check properties from https://www.zabbix.com/documentation/7.0/en/manual/api/reference/dcheck/object",
+  "type": "object",
+  "properties": {
+    "druleid": {
+      "type": "string",
+      "description": "ID of the discovery rule. Property behavior: read-only; required for update operations."
+    },
+    "iprange": {
+      "type": "string",
+      "description": "One or several IP ranges to check, separated by commas."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the discovery rule."
+    },
+    "delay": {
+      "type": "string",
+      "description": "Execution interval of the discovery rule. Accepts seconds or time unit with suffix (e.g., 30s, 1m, 2h, 1d), or a user macro. Default: 1h."
+    },
+    "proxyid": {
+      "type": "string",
+      "description": "ID of the proxy used for discovery."
+    },
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether the discovery rule is enabled. Possible values: 0 - (default) enabled; 1 - disabled."
+    },
+    "concurrency_max": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 999,
+      "description": "Maximum number of concurrent checks per discovery rule. Possible values: 0 - (default) unlimited number of checks; 1 - one check; 2-999 - custom number of checks."
+    },
+    "dchecks": {
+      "type": "array",
+      "description": "Discovery checks to replace existing checks.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "dcheckid": {
+            "type": "string",
+            "description": "ID of the discovery check."
+          },
+          "druleid": {
+            "type": "string",
+            "description": "ID of the discovery rule that the check belongs to."
+          },
+          "key_": {
+            "type": "string",
+            "description": "Item key (if type is set to \"Zabbix agent\") or SNMP OID (if type is set to \"SNMPv1 agent\", \"SNMPv2 agent\", or \"SNMPv3 agent\"). Property behavior: required if type is set to \"Zabbix agent\", \"SNMPv1 agent\", \"SNMPv2 agent\", or \"SNMPv3 agent\"."
+          },
+          "ports": {
+            "type": "string",
+            "description": "One or several port ranges to check, separated by commas. Default: 0. Property behavior: supported if type is set to \"SSH\" (0), \"LDAP\" (1), \"SMTP\" (2), \"FTP\" (3), \"HTTP\" (4), \"POP\" (5), \"NNTP\" (6), \"IMAP\" (7), \"TCP\" (8), \"Zabbix agent\" (9), \"SNMPv1 agent\" (10), \"SNMPv2 agent\" (11), \"SNMPv3 agent\" (13), \"HTTPS\" (14), or \"Telnet\" (15)."
+          },
+          "snmp_community": {
+            "type": "string",
+            "description": "SNMP community. Property behavior: required if type is set to \"SNMPv1 agent\" or \"SNMPv2 agent\"."
+          },
+          "snmpv3_authpassphrase": {
+            "type": "string",
+            "description": "Authentication passphrase. Property behavior: supported if type is set to \"SNMPv3 agent\" and snmpv3_securitylevel is set to \"authNoPriv\" or \"authPriv\"."
+          },
+          "snmpv3_authprotocol": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5],
+            "description": "Authentication protocol. Possible values: 0 - (default) MD5; 1 - SHA1; 2 - SHA224; 3 - SHA256; 4 - SHA384; 5 - SHA512. Property behavior: supported if type is set to \"SNMPv3 agent\" and snmpv3_securitylevel is set to \"authNoPriv\" or \"authPriv\"."
+          },
+          "snmpv3_contextname": {
+            "type": "string",
+            "description": "SNMPv3 context name. Property behavior: supported if type is set to \"SNMPv3 agent\"."
+          },
+          "snmpv3_privpassphrase": {
+            "type": "string",
+            "description": "Privacy passphrase. Property behavior: supported if type is set to \"SNMPv3 agent\" and snmpv3_securitylevel is set to \"authPriv\"."
+          },
+          "snmpv3_privprotocol": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5],
+            "description": "Privacy protocol. Possible values: 0 - (default) DES; 1 - AES128; 2 - AES192; 3 - AES256; 4 - AES192C; 5 - AES256C. Property behavior: supported if type is set to \"SNMPv3 agent\" and snmpv3_securitylevel is set to \"authPriv\"."
+          },
+          "snmpv3_securitylevel": {
+            "type": "string",
+            "enum": ["0", "1", "2"],
+            "description": "Security level. Possible values: 0 - noAuthNoPriv; 1 - authNoPriv; 2 - authPriv. Property behavior: supported if type is set to \"SNMPv3 agent\". NOTE: documentation source lists the Type column for this property as 'string' even though possible values are the digits 0-2; encoded here as a string enum to match the documented type verbatim."
+          },
+          "snmpv3_securityname": {
+            "type": "string",
+            "description": "Security name. Property behavior: supported if type is set to \"SNMPv3 agent\"."
+          },
+          "type": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            "description": "Type of check. Possible values: 0 - SSH; 1 - LDAP; 2 - SMTP; 3 - FTP; 4 - HTTP; 5 - POP; 6 - NNTP; 7 - IMAP; 8 - TCP; 9 - Zabbix agent; 10 - SNMPv1 agent; 11 - SNMPv2 agent; 12 - ICMP ping; 13 - SNMPv3 agent; 14 - HTTPS; 15 - Telnet. Property behavior: required."
+          },
+          "uniq": {
+            "type": "integer",
+            "enum": [0, 1],
+            "description": "Whether to use this check as a device uniqueness criteria. Only a single unique check can be configured for a discovery rule. Possible values: 0 - (default) do not use this check as a uniqueness criteria; 1 - use this check as a uniqueness criteria. Property behavior: supported if type is set to \"Zabbix agent\", \"SNMPv1 agent\", \"SNMPv2 agent\", or \"SNMPv3 agent\"."
+          },
+          "host_source": {
+            "type": "integer",
+            "enum": [1, 2, 3],
+            "description": "Source for host name. Possible values: 1 - (default) DNS; 2 - IP; 3 - discovery value of this check."
+          },
+          "name_source": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3],
+            "description": "Source for visible name. Possible values: 0 - (default) not specified; 1 - DNS; 2 - IP; 3 - discovery value of this check."
+          },
+          "allow_redirect": {
+            "type": "integer",
+            "enum": [0, 1],
+            "description": "Allow situation where the target being ICMP pinged responds from a different IP address. Possible values: 0 - (default) treat redirected responses as if the target host is down (fail); 1 - treat redirected responses as if the target host is up (success). Property behavior: supported if type is set to \"ICMP ping\"."
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["druleid"],
+  "additionalProperties": false
+}

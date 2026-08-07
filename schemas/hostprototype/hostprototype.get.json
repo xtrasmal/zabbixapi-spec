@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/hostprototype/hostprototype.get",
+  "title": "hostprototype.get",
+  "description": "Retrieve host prototypes according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/hostprototype/get",
+  "type": "object",
+  "properties": {
+    "hostids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only host prototypes with the given IDs."
+    },
+    "discoveryids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only host prototypes that belong to the given LLD rules."
+    },
+    "inherited": {
+      "type": "boolean",
+      "description": "If set to true return only items inherited from a template."
+    },
+    "selectDiscoveryRule": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a discoveryRule property with the LLD rule that the host prototype belongs to."
+    },
+    "selectInterfaces": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return an interfaces property with host prototype custom interfaces."
+    },
+    "selectGroupLinks": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a groupLinks property with the group links of the host prototype."
+    },
+    "selectGroupPrototypes": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a groupPrototypes property with the group prototypes of the host prototype."
+    },
+    "selectMacros": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a macros property with host prototype macros."
+    },
+    "selectParentHost": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a parentHost property with the host that the host prototype belongs to."
+    },
+    "selectTags": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a tags property with host prototype tags."
+    },
+    "selectTemplates": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a templates property with the templates linked to the host prototype. Supports count."
+    },
+    "sortfield": {
+      "oneOf": [
+        { "type": "string", "enum": ["hostid", "host", "name", "status", "discovered"] },
+        {
+          "type": "array",
+          "items": { "type": "string", "enum": ["hostid", "host", "name", "status", "discovered"] }
+        }
+      ],
+      "description": "Sort the result by the given properties. Possible values: hostid, host, name, status, discovered."
+    },
+    "countOutput": {
+      "type": "boolean",
+      "description": "Return the number of records in the result instead of the actual data."
+    },
+    "editable": {
+      "type": "boolean",
+      "description": "If set to true, return only objects that the user has write permissions to. Default: false."
+    },
+    "excludeSearch": {
+      "type": "boolean",
+      "description": "Return results that do not match the criteria given in the search parameter."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Does not support text-type properties."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Limit the number of records returned."
+    },
+    "output": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "preservekeys": {
+      "type": "boolean",
+      "description": "Use IDs as keys in the resulting array."
+    },
+    "search": {
+      "type": "object",
+      "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."
+    },
+    "searchByAny": {
+      "type": "boolean",
+      "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."
+    },
+    "searchWildcardsEnabled": {
+      "type": "boolean",
+      "description": "If true, enables the use of '*' as a wildcard character. Default: false."
+    },
+    "sortorder": {
+      "oneOf": [
+        { "enum": ["ASC", "DESC"] },
+        { "type": "array", "items": { "enum": ["ASC", "DESC"] } }
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {
+      "type": "boolean",
+      "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."
+    }
+  },
+  "additionalProperties": false
+}

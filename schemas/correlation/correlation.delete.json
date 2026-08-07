@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/correlation/correlation.delete",
+  "title": "correlation.delete",
+  "description": "Delete correlations. Params is an array of correlation IDs to delete.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/correlation/delete",
+  "type": "array",
+  "items": { "type": "string" },
+  "minItems": 1
+}

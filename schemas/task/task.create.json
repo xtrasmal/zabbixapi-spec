@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/task/task.create",
+  "title": "task.create",
+  "description": "Create new tasks. Accepts a single task object or an array of task objects (bulk create).",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/task/create ; task properties and request sub-objects from https://www.zabbix.com/documentation/7.0/en/manual/api/reference/task/object . Available to users of any type (to Admin and User type users since Zabbix 7.0.19); permissions to call the method can be revoked in user role settings. 'Execute now' tasks can only be created for items/LLD rules of certain types (Zabbix agent (passive), Simple check, SNMP agent v1/v2/v3, Zabbix internal, External check, Database monitor, HTTP agent, IPMI agent, SSH agent, TELNET agent, JMX agent, Calculated, Dependent item, Script, Browser); if the item is a Dependent item, its master item must also be one of these types. taskid, status, clock, ttl and result are read-only and omitted here.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "integer",
+      "enum": [1, 2, 6],
+      "description": "Type of the task. Possible values: 1 - Diagnostic information; 2 - Refresh proxy configuration; 6 - Execute now. Since Zabbix 7.0.19, Admin and User type users may create 'Execute now' tasks. Property behavior: required."
+    },
+    "request": {
+      "description": "Task request object according to the task type given in 'type'. Property behavior: required.",
+      "oneOf": [
+        { "$ref": "#/$defs/executeNowRequest" },
+        { "$ref": "#/$defs/refreshProxyConfigurationRequest" },
+        { "$ref": "#/$defs/diagnosticInformationRequest" }
+      ]
+    },
+    "proxyid": {
+      "type": "string",
+      "description": "ID of the proxy about which diagnostic information statistic is collected. Property behavior: supported if 'type' is set to \"Diagnostic information\" (1) or \"Refresh proxy configuration\" (2)."
+    }
+  },
+  "required": ["type", "request"],
+  "additionalProperties": false,
+  "$defs": {
+    "executeNowRequest": {
+      "type": "object",
+      "description": "'Execute now' task request object. Used when 'type' is 6 (Execute now).",
+      "properties": {
+        "itemid": {
+          "type": "string",
+          "description": "ID of item and low-level discovery rules. Since Zabbix 7.0.19, Admin and User type users may 'Execute now' items on hosts for which they have read-write permission, or read permission with the invoke_execute_now action enabled for their role. The same applies to Admin type users for low-level discovery (LLD) rules."
+        }
+      },
+      "required": ["itemid"],
+      "additionalProperties": false
+    },
+    "refreshProxyConfigurationRequest": {
+      "type": "object",
+      "description": "'Refresh proxy configuration' task request object. Used when 'type' is 2 (Refresh proxy configuration).",
+      "properties": {
+        "proxyids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Proxy IDs."
+        }
+      },
+      "required": ["proxyids"],
+      "additionalProperties": false
+    },
+    "diagnosticInformationRequest": {
+      "type": "object",
+      "description": "'Diagnostic information' task request object. Used when 'type' is 1 (Diagnostic information). Each property is a Statistic request object defining what information to collect about the corresponding internal process; include only the sub-objects relevant to the process(es) being queried.",
+      "properties": {
+        "historycache": {
+          "$ref": "#/$defs/statRequestHistoryCache",
+          "description": "History cache statistic request. Available on server and proxy."
+        },
+        "valuecache": {
+          "$ref": "#/$defs/statRequestValueCache",
+          "description": "Items (value) cache statistic request. Available on server."
+        },
+        "preprocessing": {
+          "$ref": "#/$defs/statRequestPreprocessing",
+          "description": "Preprocessing manager statistic request. Available on server and proxy."
+        },
+        "alerting": {
+          "$ref": "#/$defs/statRequestAlerting",
+          "description": "Alert manager statistic request. Available on server."
+        },
+        "lld": {
+          "$ref": "#/$defs/statRequestLld",
+          "description": "LLD manager statistic request. Available on server."
+        }
+      },
+      "additionalProperties": false
+    },
+    "statRequestHistoryCache": {
+      "type": "object",
+      "description": "Statistic request object for historycache. Available 'stats' fields: items (number of cached items), values (number of cached values), memory (shared memory statistics), memory.data (history data cache shared memory statistics), memory.index (history index cache shared memory statistics). Available 'top' sorting field: values (integer).",
+      "properties": {
+        "stats": {
+          "oneOf": [
+            { "type": "array", "items": { "enum": ["items", "values", "memory", "memory.data", "memory.index"] } },
+            { "enum": ["extend", "count"] }
+          ],
+          "description": "Statistic object properties to be returned. Default: extend will return all available statistic fields."
+        },
+        "top": {
+          "type": "object",
+          "propertyNames": { "enum": ["values"] },
+          "additionalProperties": { "type": "integer" },
+          "description": "Object to sort and limit returned statistic values. Keys are statistic field names, values are the number of top records to return. Example: { \"values\": 10 }."
+        }
+      },
+      "additionalProperties": false
+    },
+    "statRequestValueCache": {
+      "type": "object",
+      "description": "Statistic request object for valuecache. Available 'stats' fields: items (number of cached items), values (number of cached values), memory (shared memory statistics), mode (value cache mode). Available 'top' sorting fields: values (integer), request.values (integer).",
+      "properties": {
+        "stats": {
+          "oneOf": [
+            { "type": "array", "items": { "enum": ["items", "values", "memory", "mode"] } },
+            { "enum": ["extend", "count"] }
+          ],
+          "description": "Statistic object properties to be returned. Default: extend will return all available statistic fields."
+        },
+        "top": {
+          "type": "object",
+          "propertyNames": { "enum": ["values", "request.values"] },
+          "additionalProperties": { "type": "integer" },
+          "description": "Object to sort and limit returned statistic values. Keys are statistic field names, values are the number of top records to return."
+        }
+      },
+      "additionalProperties": false
+    },
+    "statRequestPreprocessing": {
+      "type": "object",
+      "description": "Statistic request object for preprocessing. Available 'stats' fields: values (number of queued values), preproc.values (number of queued values with preprocessing steps). Available 'top' sorting field: values (integer).",
+      "properties": {
+        "stats": {
+          "oneOf": [
+            { "type": "array", "items": { "enum": ["values", "preproc.values"] } },
+            { "enum": ["extend", "count"] }
+          ],
+          "description": "Statistic object properties to be returned. Default: extend will return all available statistic fields."
+        },
+        "top": {
+          "type": "object",
+          "propertyNames": { "enum": ["values"] },
+          "additionalProperties": { "type": "integer" },
+          "description": "Object to sort and limit returned statistic values. Keys are statistic field names, values are the number of top records to return."
+        }
+      },
+      "additionalProperties": false
+    },
+    "statRequestAlerting": {
+      "type": "object",
+      "description": "Statistic request object for alerting. Available 'stats' field: alerts (number of queued alerts). Available 'top' sorting fields: media.alerts (integer), source.alerts (integer).",
+      "properties": {
+        "stats": {
+          "oneOf": [
+            { "type": "array", "items": { "enum": ["alerts"] } },
+            { "enum": ["extend", "count"] }
+          ],
+          "description": "Statistic object properties to be returned. Default: extend will return all available statistic fields."
+        },
+        "top": {
+          "type": "object",
+          "propertyNames": { "enum": ["media.alerts", "source.alerts"] },
+          "additionalProperties": { "type": "integer" },
+          "description": "Object to sort and limit returned statistic values. Keys are statistic field names, values are the number of top records to return. Example: { \"source.alerts\": 10 }."
+        }
+      },
+      "additionalProperties": false
+    },
+    "statRequestLld": {
+      "type": "object",
+      "description": "Statistic request object for lld. Available 'stats' fields: rules (number of queued rules), values (number of queued values). Available 'top' sorting field: values (integer).",
+      "properties": {
+        "stats": {
+          "oneOf": [
+            { "type": "array", "items": { "enum": ["rules", "values"] } },
+            { "enum": ["extend", "count"] }
+          ],
+          "description": "Statistic object properties to be returned. Default: extend will return all available statistic fields."
+        },
+        "top": {
+          "type": "object",
+          "propertyNames": { "enum": ["values"] },
+          "additionalProperties": { "type": "integer" },
+          "description": "Object to sort and limit returned statistic values. Keys are statistic field names, values are the number of top records to return. Example: { \"values\": 5 }."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

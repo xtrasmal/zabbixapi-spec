@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/iconmap/iconmap.create",
+  "title": "iconmap.create",
+  "description": "Create new icon maps.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/iconmap/create",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the icon map. Property behavior: required for create operations."
+    },
+    "default_iconid": {
+      "type": "string",
+      "description": "ID of the default icon. Property behavior: required for create operations."
+    },
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "iconid": {
+            "type": "string",
+            "description": "ID of the icon used by the icon mapping. Property behavior: required."
+          },
+          "expression": {
+            "type": "string",
+            "description": "Expression to match the inventory field against. Property behavior: required."
+          },
+          "inventory_link": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              67,
+              68,
+              69,
+              70
+            ],
+            "description": "ID of the host inventory field to match the expression against. Property behavior: required. Refer to the host inventory object (host.object) for the full list of supported inventory fields. Possible values: 1 - type; 2 - type_full; 3 - name; 4 - alias; 5 - os; 6 - os_full; 7 - os_short; 8 - serialno_a; 9 - serialno_b; 10 - tag; 11 - asset_tag; 12 - macaddress_a; 13 - macaddress_b; 14 - hardware; 15 - hardware_full; 16 - software; 17 - software_full; 18 - software_app_a; 19 - software_app_b; 20 - software_app_c; 21 - software_app_d; 22 - software_app_e; 23 - contact; 24 - location; 25 - location_lat; 26 - location_lon; 27 - notes; 28 - chassis; 29 - model; 30 - hw_arch; 31 - vendor; 32 - contract_number; 33 - installer_name; 34 - deployment_status; 35 - url_a; 36 - url_b; 37 - url_c; 38 - host_networks; 39 - host_netmask; 40 - host_router; 41 - oob_ip; 42 - oob_netmask; 43 - oob_router; 44 - date_hw_purchase; 45 - date_hw_install; 46 - date_hw_expiry; 47 - date_hw_decomm; 48 - site_address_a; 49 - site_address_b; 50 - site_address_c; 51 - site_city; 52 - site_state; 53 - site_country; 54 - site_zip; 55 - site_rack; 56 - site_notes; 57 - poc_1_name; 58 - poc_1_email; 59 - poc_1_phone_a; 60 - poc_1_phone_b; 61 - poc_1_cell; 62 - poc_1_screen; 63 - poc_1_notes; 64 - poc_2_name; 65 - poc_2_email; 66 - poc_2_phone_a; 67 - poc_2_phone_b; 68 - poc_2_cell; 69 - poc_2_screen; 70 - poc_2_notes."
+          }
+        },
+        "required": [
+          "iconid",
+          "expression",
+          "inventory_link"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Icon mappings to be created for the icon map. Property behavior: required."
+    }
+  },
+  "required": [
+    "name",
+    "default_iconid",
+    "mappings"
+  ],
+  "additionalProperties": false
+}

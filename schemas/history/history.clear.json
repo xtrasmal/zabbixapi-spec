@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/history/clear",
+  "title": "history.clear",
+  "description": "Clear item history. Returns an object containing the IDs of the cleared items under the itemids property. Only available to Admin and Super admin user types.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/history/clear",
+  "type": "array",
+  "items": {"type": "string"},
+  "minItems": 1,
+  "description": "IDs of items to clear."
+}

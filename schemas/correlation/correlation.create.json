@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/correlation/correlation.create",
+  "title": "correlation.create",
+  "description": "Create new correlations.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/correlation/create",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the correlation. Required for create operations."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the correlation."
+    },
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether the correlation is enabled or disabled. Possible values: 0 - (default) enabled; 1 - disabled."
+    },
+    "filter": {
+      "$ref": "#/$defs/filter",
+      "description": "Correlation filter object for the correlation. Required."
+    },
+    "operations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/operation" },
+      "description": "Correlation operations to create for the correlation. Required."
+    }
+  },
+  "required": ["name", "filter", "operations"],
+  "additionalProperties": false,
+  "$defs": {
+    "filter": {
+      "type": "object",
+      "description": "The correlation filter object defines a set of conditions that must be met to perform the configured correlation operations.",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/filterCondition" },
+          "description": "Set of filter conditions to use for filtering results. The conditions will be sorted in the order of their placement in the formula. Required."
+        },
+        "evaltype": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3],
+          "description": "Filter condition evaluation method. Possible values: 0 - And/Or; 1 - And; 2 - Or; 3 - Custom expression. Required."
+        },
+        "formula": {
+          "type": "string",
+          "description": "User-defined expression to be used for evaluating conditions of filters with a custom expression. The expression must contain IDs that reference specific filter conditions by its formulaid. The IDs used in the expression must exactly match the ones defined in the filter conditions: no condition can remain unused or omitted. Required if evaltype is set to \"custom expression\"."
+        }
+      },
+      "required": ["conditions", "evaltype"],
+      "additionalProperties": false
+    },
+    "filterCondition": {
+      "type": "object",
+      "description": "The correlation filter condition object defines a specific condition that must be checked before running the correlation operations.",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4, 5],
+          "description": "Type of condition. Possible values: 0 - old event tag; 1 - new event tag; 2 - new event host group; 3 - event tag pair; 4 - old event tag value; 5 - new event tag value. Required."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Event tag (old or new). Required if type is set to \"old event tag\", \"new event tag\", \"old event tag value\", or \"new event tag value\"."
+        },
+        "groupid": {
+          "type": "string",
+          "description": "ID of the host group. Required if type is set to \"new event host group\"."
+        },
+        "oldtag": {
+          "type": "string",
+          "description": "Old event tag. Required if type is set to \"event tag pair\"."
+        },
+        "newtag": {
+          "type": "string",
+          "description": "Old event tag. Required if type is set to \"event tag pair\". (As documented; the Zabbix docs use this same description text for both oldtag and newtag.)"
+        },
+        "value": {
+          "type": "string",
+          "description": "Event tag (old or new) value. Required if type is set to \"old event tag value\" or \"new event tag value\"."
+        },
+        "formulaid": {
+          "type": "string",
+          "description": "Arbitrary unique ID that is used to reference the condition from a custom expression. Can only contain capital-case letters. The ID must be defined by the user when modifying filter conditions, but will be generated anew when requesting them afterward."
+        },
+        "operator": {
+          "type": "integer",
+          "description": "Condition operator. Required if type is set to \"new event host group\", \"old event tag value\", or \"new event tag value\". Supported operators depend on condition type: host group (type 2) supports = and <>; old/new event tag value (types 4 and 5) support =, <>, like, and not like. Zabbix docs do not publish numeric codes for this field's possible values."
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "operation": {
+      "type": "object",
+      "description": "The correlation operation object defines an operation that will be performed when a correlation is executed.",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Type of operation. Possible values: 0 - close old events; 1 - close new event. Required."
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    }
+  }
+}

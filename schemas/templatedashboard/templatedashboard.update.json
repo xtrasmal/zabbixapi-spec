@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/templatedashboard/templatedashboard.update",
+  "title": "templatedashboard.update",
+  "description": "Update existing template dashboards.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/templatedashboard/update",
+  "type": "object",
+  "$defs": {
+    "widgetField": {
+      "type": "object",
+      "description": "Template dashboard widget field object.",
+      "properties": {
+        "type": {"type": "integer", "enum": [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], "description": "Type of the widget field. Possible values: 0 - Integer; 1 - String; 4 - Item; 5 - Item prototype; 6 - Graph; 7 - Graph prototype; 8 - Map; 9 - Service; 10 - SLA; 11 - User; 12 - Action; 13 - Media type."},
+        "name": {"type": "string", "description": "Widget field name. Possible values: see Dashboard widget fields. Note that some host-related parameters are not available when configuring the widget on a template dashboard."},
+        "value": {"description": "Widget field value depending on the type. Possible values: see Dashboard widget fields."}
+      },
+      "required": ["type", "name", "value"],
+      "additionalProperties": false
+    },
+    "widget": {
+      "type": "object",
+      "description": "Template dashboard widget object.",
+      "properties": {
+        "type": {"type": "string", "enum": ["actionlog", "clock", "dataover", "discovery", "favgraphs", "favmaps", "gauge", "graph", "graphprototype", "honeycomb", "hostavail", "hostnavigator", "itemnavigator", "item", "map", "navtree", "piechart", "plaintext", "problemhosts", "problems", "problemsbysv", "slareport", "svggraph", "systeminfo", "tophosts", "toptriggers", "trigover", "url", "web"], "description": "Type of the dashboard widget. Possible values: actionlog - Action log; clock - Clock; dataover - Data overview (deprecated); discovery - Discovery status; favgraphs - Favorite graphs; favmaps - Favorite maps; gauge - Gauge; graph - Graph (classic); graphprototype - Graph prototype; honeycomb - Honeycomb; hostavail - Host availability; hostnavigator - Host navigator; itemnavigator - Item navigator; item - Item value; map - Map; navtree - Map Navigation Tree; piechart - Pie chart; plaintext - Plain text; problemhosts - Problem hosts; problems - Problems; problemsbysv - Problems by severity; slareport - SLA report; svggraph - Graph; systeminfo - System information; tophosts - Top hosts; toptriggers - Top triggers; trigover - Trigger overview; url - URL; web - Web monitoring."},
+        "name": {"type": "string", "description": "Custom widget name."},
+        "x": {"type": "integer", "minimum": 0, "maximum": 71, "description": "A horizontal position from the left side of the dashboard. Possible values range from 0 to 71."},
+        "y": {"type": "integer", "minimum": 0, "maximum": 63, "description": "A vertical position from the top of the dashboard. Possible values range from 0 to 63."},
+        "width": {"type": "integer", "minimum": 1, "maximum": 72, "description": "The widget width. Possible values range from 1 to 72."},
+        "height": {"type": "integer", "minimum": 1, "maximum": 64, "description": "The widget height. Possible values range from 1 to 64."},
+        "view_mode": {"type": "integer", "enum": [0, 1], "description": "The widget view mode. Possible values: 0 - (default) default widget view; 1 - with hidden header."},
+        "fields": {"type": "array", "items": {"$ref": "#/$defs/widgetField"}, "description": "Array of the template dashboard widget field objects."}
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "page": {
+      "type": "object",
+      "description": "Template dashboard page object. Pages are matched to existing ones by dashboard_pageid; objects without dashboard_pageid create new pages.",
+      "properties": {
+        "dashboard_pageid": {"type": "string", "description": "ID of the dashboard page. Used to match against an existing dashboard page for update. New dashboard pages will be created for objects without this property, and existing dashboard pages will be deleted if not reused."},
+        "name": {"type": "string", "description": "Dashboard page name. Default: empty string."},
+        "display_period": {"type": "integer", "enum": [0, 10, 30, 60, 120, 600, 1800, 3600], "description": "Dashboard page display period (in seconds). Possible values: 0, 10, 30, 60, 120, 600, 1800, 3600. Default: 0 (will use the default page display period)."},
+        "widgets": {"type": "array", "items": {"$ref": "#/$defs/widget"}, "description": "Array of the template dashboard widget objects."}
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "dashboardid": {"type": "string", "description": "ID of the template dashboard to update."},
+    "name": {"type": "string", "description": "Name of the template dashboard."},
+    "templateid": {"type": "string", "description": "ID of the template the dashboard belongs to. This property is constant and cannot be changed after creation."},
+    "display_period": {"type": "integer", "enum": [10, 30, 60, 120, 600, 1800, 3600], "description": "Default page display period (in seconds). Possible values: 10, 30, 60, 120, 600, 1800, 3600. Default: 30."},
+    "auto_start": {"type": "integer", "enum": [0, 1], "description": "Auto start slideshow. Possible values: 0 - do not auto start slideshow; 1 - (default) auto start slideshow."},
+    "uuid": {"type": "string", "description": "Universal unique identifier, used for linking imported template dashboards to already existing ones."},
+    "pages": {"type": "array", "items": {"$ref": "#/$defs/page"}, "minItems": 1, "description": "Template dashboard pages to replace the existing dashboard pages. Dashboard pages are updated by the dashboard_pageid property. New dashboard pages will be created for objects without dashboard_pageid property and the existing dashboard pages will be deleted if not reused. Dashboard pages will be ordered in the same order as specified. Only the specified properties of the dashboard pages will be updated. At least one dashboard page object is required for pages property."}
+  },
+  "required": ["dashboardid"],
+  "additionalProperties": false
+}

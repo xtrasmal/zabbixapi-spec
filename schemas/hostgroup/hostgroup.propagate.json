@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/hostgroup/hostgroup.propagate",
+  "title": "hostgroup.propagate",
+  "description": "Propagate permissions and tag filters to all subgroups of a host group.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/hostgroup/propagate",
+  "type": "object",
+  "properties": {
+    "groups": {
+      "oneOf": [
+        { "$ref": "#/$defs/hostGroupRef" },
+        { "type": "array", "items": { "$ref": "#/$defs/hostGroupRef" } }
+      ],
+      "description": "Host groups to propagate. The host groups must have the groupid property defined. Parameter behavior: required."
+    },
+    "permissions": {
+      "type": "boolean",
+      "description": "Set to \"true\" to propagate permissions. Parameter behavior: required if tag_filters is not set."
+    },
+    "tag_filters": {
+      "type": "boolean",
+      "description": "Set to \"true\" to propagate tag filters. Parameter behavior: required if permissions is not set."
+    }
+  },
+  "required": ["groups"],
+  "additionalProperties": false,
+  "$defs": {
+    "hostGroupRef": {
+      "type": "object",
+      "description": "Reference to an existing host group by groupid only.",
+      "properties": {
+        "groupid": { "type": "string", "description": "ID of the host group." }
+      },
+      "required": ["groupid"],
+      "additionalProperties": false
+    }
+  }
+}

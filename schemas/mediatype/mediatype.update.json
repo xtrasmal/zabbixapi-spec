@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/mediatype/mediatype.update",
+  "title": "mediatype.update",
+  "description": "Update existing media types.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/mediatype/update",
+  "type": "object",
+  "properties": {
+    "mediatypeid": {
+      "type": "string",
+      "description": "ID of the media type.\n\nProperty behavior:\n- read-only\n- required for update operations"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the media type."
+    },
+    "type": {
+      "type": "integer",
+      "description": "Transport used by the media type.\n\nPossible values:\n0 - Email;\n1 - Script;\n2 - SMS;\n4 - Webhook.",
+      "enum": [0, 1, 2, 4]
+    },
+    "exec_path": {
+      "type": "string",
+      "description": "Name of the script file (e.g., notification.sh) that is located in the directory specified in the AlertScriptsPath server configuration parameter.\n\nProperty behavior:\n- required if type is set to \"Script\""
+    },
+    "gsm_modem": {
+      "type": "string",
+      "description": "Serial device name of the GSM modem.\n\nProperty behavior:\n- required if type is set to \"SMS\""
+    },
+    "passwd": {
+      "type": "string",
+      "description": "Authentication password.\n\nProperty behavior:\n- supported if smtp_authentication is set to \"Normal password\""
+    },
+    "provider": {
+      "type": "integer",
+      "description": "Email provider.\n\nPossible values:\n0 - (default) Generic SMTP;\n1 - Gmail;\n2 - Gmail relay;\n3 - Office365;\n4 - Office365 relay.",
+      "enum": [0, 1, 2, 3, 4]
+    },
+    "smtp_email": {
+      "type": "string",
+      "description": "Email address from which notifications will be sent.\n\nProperty behavior:\n- required if type is set to \"Email\""
+    },
+    "smtp_helo": {
+      "type": "string",
+      "description": "SMTP HELO.\n\nProperty behavior:\n- supported if type is set to \"Email\""
+    },
+    "smtp_server": {
+      "type": "string",
+      "description": "SMTP server.\n\nProperty behavior:\n- required if type is set to \"Email\""
+    },
+    "smtp_port": {
+      "type": "integer",
+      "description": "SMTP server port to connect to.\n\nDefault: 25.\n\nProperty behavior:\n- supported if type is set to \"Email\""
+    },
+    "smtp_security": {
+      "type": "integer",
+      "description": "SMTP connection security level to use.\n\nPossible values:\n0 - (default) None;\n1 - STARTTLS;\n2 - SSL/TLS.\n\nProperty behavior:\n- supported if type is set to \"Email\"",
+      "enum": [0, 1, 2]
+    },
+    "smtp_verify_host": {
+      "type": "integer",
+      "description": "SSL verify host for SMTP.\n\nPossible values:\n0 - (default) No;\n1 - Yes.\n\nProperty behavior:\n- supported if smtp_security is set to \"STARTTLS\" or \"SSL/TLS\"",
+      "enum": [0, 1]
+    },
+    "smtp_verify_peer": {
+      "type": "integer",
+      "description": "SSL verify peer for SMTP.\n\nPossible values:\n0 - (default) No;\n1 - Yes.\n\nProperty behavior:\n- supported if smtp_security is set to \"STARTTLS\" or \"SSL/TLS\"",
+      "enum": [0, 1]
+    },
+    "smtp_authentication": {
+      "type": "integer",
+      "description": "SMTP authentication method to use.\n\nPossible values:\n0 - (default) None;\n1 - Normal password.\n\nProperty behavior:\n- supported if type is set to \"Email\"",
+      "enum": [0, 1]
+    },
+    "status": {
+      "type": "integer",
+      "description": "Whether the media type is enabled.\n\nPossible values:\n0 - (default) Enabled;\n1 - Disabled.",
+      "enum": [0, 1]
+    },
+    "username": {
+      "type": "string",
+      "description": "User name.\n\nProperty behavior:\n- supported if smtp_authentication is set to \"Normal password\""
+    },
+    "maxsessions": {
+      "type": "integer",
+      "description": "The maximum number of alerts that can be processed in parallel.\n\nPossible values if type is set to \"SMS\": 1.\n\nPossible values if type is set to \"Email\", \"Script\", or \"Webhook\": 0-100.\n\nDefault: 1."
+    },
+    "maxattempts": {
+      "type": "integer",
+      "description": "The maximum number of attempts to send an alert.\n\nPossible values: 1-100.\n\nDefault: 3."
+    },
+    "attempt_interval": {
+      "type": "string",
+      "description": "The interval between retry attempts.\nAccepts seconds and time unit with suffix.\n\nPossible values: 0-1h.\n\nDefault: 10s."
+    },
+    "content_type": {
+      "type": "integer",
+      "description": "Deprecated. Please use message_format instead.\nMessage format.\n\nPossible values:\n0 - Plain text;\n1 - (default) HTML.\n\nProperty behavior:\n- supported if type is set to \"Email\"",
+      "enum": [0, 1]
+    },
+    "message_format": {
+      "type": "integer",
+      "description": "Message format.\n\nPossible values:\n0 - Plain text;\n1 - (default) HTML.\n\nProperty behavior:\n- supported if type is set to \"Email\"",
+      "enum": [0, 1]
+    },
+    "script": {
+      "type": "string",
+      "description": "Webhook script body (JavaScript).\n\nProperty behavior:\n- required if type is set to \"Webhook\""
+    },
+    "timeout": {
+      "type": "string",
+      "description": "Webhook script timeout.\nAccepts seconds and time unit with suffix.\n\nPossible values: 1-60s.\n\nDefault: 30s.\n\nProperty behavior:\n- supported if type is set to \"Webhook\""
+    },
+    "process_tags": {
+      "type": "integer",
+      "description": "Process JSON property values in Webhook script response as tags. These tags are added to any existing problem tags.\n\nPossible values:\n0 - (default) Ignore webhook script response;\n1 - Process webhook script response as tags.\n\nProperty behavior:\n- supported if type is set to \"Webhook\"",
+      "enum": [0, 1]
+    },
+    "show_event_menu": {
+      "type": "integer",
+      "description": "Include an entry in the event menu that links to a custom URL. Also adds the urls property to the output of problem.get and event.get.\n\nPossible values:\n0 - (default) Do not include event menu entry or urls property;\n1 - Include event menu entry and urls property.\n\nProperty behavior:\n- supported if type is set to \"Webhook\"",
+      "enum": [0, 1]
+    },
+    "event_menu_url": {
+      "type": "string",
+      "description": "URL used in the event menu entry and in the urls property returned by problem.get and event.get.\n\nProperty behavior:\n- supported if show_event_menu is set to \"Include event menu entry and urls property\""
+    },
+    "event_menu_name": {
+      "type": "string",
+      "description": "Name used for the event menu entry and in the urls property returned by problem.get and event.get.\n\nProperty behavior:\n- supported if show_event_menu is set to \"Include event menu entry and urls property\""
+    },
+    "parameters": {
+      "type": "array",
+      "description": "Webhook or script parameters.\n\nProperty behavior:\n- supported if type is set to \"Webhook\" or \"Script\"",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "description": "Script parameter.",
+            "properties": {
+              "sortorder": {
+                "type": "integer",
+                "description": "The order in which parameter values will be passed to the script as command-line arguments, starting with 0 as the first one.\n\nProperty behavior:\n- required"
+              },
+              "value": {
+                "type": "string",
+                "description": "Parameter value, supports macros."
+              }
+            },
+            "required": ["sortorder"],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "description": "Webhook parameter.",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Parameter name.\n\nProperty behavior:\n- required"
+              },
+              "value": {
+                "type": "string",
+                "description": "Parameter value, supports macros."
+              }
+            },
+            "required": ["name"],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "description": {
+      "type": "string",
+      "description": "Media type description."
+    },
+    "message_templates": {
+      "type": "array",
+      "description": "Message templates to replace the current message templates.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "eventsource": {
+            "type": "integer",
+            "description": "Event source.\n\nPossible values:\n0 - Triggers;\n1 - Discovery;\n2 - Autoregistration;\n3 - Internal;\n4 - Services.\n\nProperty behavior:\n- required",
+            "enum": [0, 1, 2, 3, 4]
+          },
+          "recovery": {
+            "type": "integer",
+            "description": "Operation mode.\n\nPossible values:\n0 - Operations;\n1 - Recovery operations;\n2 - Update operations.\n\nProperty behavior:\n- required",
+            "enum": [0, 1, 2]
+          },
+          "subject": {
+            "type": "string",
+            "description": "Message subject."
+          },
+          "message": {
+            "type": "string",
+            "description": "Message text."
+          }
+        },
+        "required": ["eventsource", "recovery"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["mediatypeid"],
+  "additionalProperties": false
+}

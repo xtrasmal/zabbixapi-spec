@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/valuemap/valuemap.create",
+  "title": "valuemap.create",
+  "description": "Create new value maps.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/valuemap/create",
+  "type": "object",
+  "properties": {
+    "hostid": {
+      "type": "string",
+      "description": "ID of the host or template that the value map belongs to. Constant. Required for create operations."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the value map. Required for create operations."
+    },
+    "mappings": {
+      "type": "array",
+      "description": "Value mappings for current value map. Required for create operations.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5],
+            "description": "Mapping match type. Possible values: 0 - (default) mapping will be applied if value is equal; 1 - mapping will be applied if value is greater or equal (supported only for items having value type \"numeric unsigned\", \"numeric float\"); 2 - mapping will be applied if value is less or equal (supported only for items having value type \"numeric unsigned\", \"numeric float\"); 3 - mapping will be applied if value is in range (ranges are inclusive; multiple ranges, separated by comma character, can be defined) (supported only for items having value type \"numeric unsigned\", \"numeric float\"); 4 - mapping will be applied if value matches a regular expression (supported only for items having value type \"character\"); 5 - if no matches are found, mapping will not be applied, and the default value will be used. If type is set to \"0\", \"1\", \"2\", \"3\", \"4\", then value cannot be empty. If type is set to \"5\", then value must be empty."
+          },
+          "value": {
+            "type": "string",
+            "description": "Original value. Required if type is set to \"1\", \"2\", \"3\", \"4\". Supported if type is set to \"5\"."
+          },
+          "newvalue": {
+            "type": "string",
+            "description": "Value to which the original value is mapped to. Required."
+          }
+        },
+        "required": ["newvalue"],
+        "additionalProperties": false
+      }
+    },
+    "uuid": {
+      "type": "string",
+      "description": "Universal unique identifier, used for linking imported value maps to already existing ones. Auto-generated, if not given. Supported if the value map belongs to a template."
+    }
+  },
+  "required": ["hostid", "name", "mappings"],
+  "additionalProperties": false
+}

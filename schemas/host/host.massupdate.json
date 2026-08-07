@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/host/host.massupdate",
+  "title": "host.massupdate",
+  "description": "Simultaneously replace or remove related objects and update properties on multiple hosts.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/host/massupdate",
+  "type": "object",
+  "properties": {
+    "hosts": {
+      "oneOf": [
+        { "$ref": "#/$defs/hostRef" },
+        { "type": "array", "items": { "$ref": "#/$defs/hostRef" } }
+      ],
+      "description": "Hosts to be updated. The hosts must have only the hostid property defined. Parameter behavior: required."
+    },
+    "host": {
+      "type": "string",
+      "description": "Technical name of the host (standard host property, applied to all given hosts)."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the host (standard host property, applied to all given hosts)."
+    },
+    "inventory_mode": {
+      "type": "integer",
+      "enum": [-1, 0, 1],
+      "description": "Host inventory population mode. Possible values: -1 - (default) disabled; 0 - manual; 1 - automatic."
+    },
+    "ipmi_authtype": {
+      "type": "integer",
+      "enum": [-1, 0, 1, 2, 4, 5, 6],
+      "description": "IPMI authentication algorithm. Possible values: -1 - (default) default; 0 - none; 1 - MD2; 2 - MD5; 4 - straight; 5 - OEM; 6 - RMCP+."
+    },
+    "ipmi_password": {
+      "type": "string",
+      "description": "IPMI password."
+    },
+    "ipmi_privilege": {
+      "type": "integer",
+      "enum": [1, 2, 3, 4, 5],
+      "description": "IPMI privilege level. Possible values: 1 - callback; 2 - (default) user; 3 - operator; 4 - admin; 5 - OEM."
+    },
+    "ipmi_username": {
+      "type": "string",
+      "description": "IPMI username."
+    },
+    "name": {
+      "type": "string",
+      "description": "Visible name of the host. Default: host property value."
+    },
+    "monitored_by": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "Source that is used to monitor the host. Possible values: 0 - (default) Zabbix server; 1 - Proxy; 2 - Proxy group."
+    },
+    "proxyid": {
+      "type": "string",
+      "description": "ID of the proxy that is used to monitor the host. Property behavior: required if monitored_by is set to \"Proxy\" (1)."
+    },
+    "proxy_groupid": {
+      "type": "string",
+      "description": "ID of the proxy group that is used to monitor the host. Property behavior: required if monitored_by is set to \"Proxy group\" (2)."
+    },
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Status and function of the host. Possible values: 0 - (default) enabled; 1 - disabled."
+    },
+    "tls_connect": {
+      "type": "integer",
+      "enum": [1, 2, 4],
+      "description": "Connections to host. Possible values: 1 - (default) No encryption; 2 - PSK; 4 - certificate."
+    },
+    "tls_accept": {
+      "type": "integer",
+      "description": "Connections from host. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 6 for PSK and certificate). Possible bitmap values: 1 - (default) No encryption; 2 - PSK; 4 - certificate."
+    },
+    "tls_issuer": {
+      "type": "string",
+      "description": "Certificate issuer."
+    },
+    "tls_subject": {
+      "type": "string",
+      "description": "Certificate subject."
+    },
+    "tls_psk_identity": {
+      "type": "string",
+      "description": "PSK identity; must be paired with only one PSK (across autoregistration, hosts, and proxies). Property behavior: write-only; required if tls_connect is set to \"PSK\", or tls_accept contains the \"PSK\" bit."
+    },
+    "tls_psk": {
+      "type": "string",
+      "description": "Pre-shared key (PSK); must be at least 32 hex digits. Property behavior: write-only; required if tls_connect is set to \"PSK\", or tls_accept contains the \"PSK\" bit."
+    },
+    "groups": {
+      "oneOf": [
+        { "$ref": "#/$defs/hostGroupRef" },
+        { "type": "array", "items": { "$ref": "#/$defs/hostGroupRef" } }
+      ],
+      "description": "Host groups to replace the current host groups the hosts belong to. The host groups must have only the groupid property defined."
+    },
+    "interfaces": {
+      "oneOf": [
+        { "type": "object" },
+        { "type": "array", "items": { "type": "object" } }
+      ],
+      "description": "Host interfaces to replace the current host interfaces on the given hosts. See the Host interface object (reference/hostinterface/object)."
+    },
+    "inventory": {
+      "$ref": "#/$defs/hostInventory",
+      "description": "Host inventory properties. Host inventory mode cannot be updated using the inventory parameter, use inventory_mode instead."
+    },
+    "macros": {
+      "oneOf": [
+        { "type": "object" },
+        { "type": "array", "items": { "type": "object" } }
+      ],
+      "description": "User macros to replace the current user macros on the given hosts. See the User macro object (reference/usermacro/object)."
+    },
+    "templates": {
+      "oneOf": [
+        { "$ref": "#/$defs/templateRef" },
+        { "type": "array", "items": { "$ref": "#/$defs/templateRef" } }
+      ],
+      "description": "Templates to replace the currently linked templates on the given hosts. The templates must have only the templateid property defined."
+    },
+    "templates_clear": {
+      "oneOf": [
+        { "$ref": "#/$defs/templateRef" },
+        { "type": "array", "items": { "$ref": "#/$defs/templateRef" } }
+      ],
+      "description": "Templates to unlink and clear from the given hosts. The templates must have only the templateid property defined."
+    }
+  },
+  "required": ["hosts"],
+  "additionalProperties": false,
+  "$defs": {
+    "hostRef": {
+      "type": "object",
+      "description": "Reference to an existing host by hostid only.",
+      "properties": {
+        "hostid": { "type": "string", "description": "ID of the host." }
+      },
+      "required": ["hostid"],
+      "additionalProperties": false
+    },
+    "hostGroupRef": {
+      "type": "object",
+      "description": "Reference to an existing host group by groupid only.",
+      "properties": {
+        "groupid": { "type": "string", "description": "ID of the host group." }
+      },
+      "required": ["groupid"],
+      "additionalProperties": false
+    },
+    "templateRef": {
+      "type": "object",
+      "description": "Reference to an existing template by templateid only.",
+      "properties": {
+        "templateid": { "type": "string", "description": "ID of the template." }
+      },
+      "required": ["templateid"],
+      "additionalProperties": false
+    },
+    "hostInventory": {
+      "type": "object",
+      "description": "Host inventory object. Each property has its own unique ID number, which is used to associate host inventory fields with items.",
+      "properties": {
+        "alias": { "type": "string", "description": "Alias. Maximum length: 128 characters." },
+        "asset_tag": { "type": "string", "description": "Asset tag. Maximum length: 64 characters." },
+        "chassis": { "type": "string", "description": "Chassis. Maximum length: 64 characters." },
+        "contact": { "type": "string", "description": "Contact person. Maximum length: depends on the database used (65535 characters for SQL databases, 2048 for Oracle)." },
+        "contract_number": { "type": "string", "description": "Contract number. Maximum length: 64 characters." },
+        "date_hw_decomm": { "type": "string", "description": "HW decommissioning date. Maximum length: 64 characters." },
+        "date_hw_expiry": { "type": "string", "description": "HW maintenance expiry date. Maximum length: 64 characters." },
+        "date_hw_install": { "type": "string", "description": "HW installation date. Maximum length: 64 characters." },
+        "date_hw_purchase": { "type": "string", "description": "HW purchase date. Maximum length: 64 characters." },
+        "deployment_status": { "type": "string", "description": "Deployment status. Maximum length: 64 characters." },
+        "hardware": { "type": "string", "description": "Hardware. Maximum length: 255 characters." },
+        "hardware_full": { "type": "string", "description": "Detailed hardware. Maximum length: depends on the database used (65535 characters for SQL databases, 2048 for Oracle)." },
+        "host_netmask": { "type": "string", "description": "Host subnet mask. Maximum length: 39 characters." },
+        "host_networks": { "type": "string", "description": "Host networks. Maximum length: depends on the database used (65535 characters for SQL databases, 2048 for Oracle)." },
+        "host_router": { "type": "string", "description": "Host router. Maximum length: 39 characters." },
+        "hw_arch": { "type": "string", "description": "HW architecture. Maximum length: 32 characters." },
+        "installer_name": { "type": "string", "description": "Installer name. Maximum length: 64 characters." },
+        "location": { "type": "string", "description": "Location. Maximum length: depends on the database used (65535 characters for SQL databases, 2048 for Oracle)." },
+        "location_lat": { "type": "string", "description": "Location latitude. Maximum length: 16 characters." },
+        "location_lon": { "type": "string", "description": "Location longitude. Maximum length: 16 characters." },
+        "macaddress_a": { "type": "string", "description": "MAC address A. Maximum length: 64 characters." },
+        "macaddress_b": { "type": "string", "description": "MAC address B. Maximum length: 64 characters." },
+        "model": { "type": "string", "description": "Model. Maximum length: 64 characters." },
+        "name": { "type": "string", "description": "Name. Maximum length: 128 characters." },
+        "notes": { "type": "string", "description": "Notes. Maximum length: depends on the database used (65535 characters for SQL databases, 2048 for Oracle)." },
+        "oob_ip": { "type": "string", "description": "OOB IP address. Maximum length: 39 characters." },
+        "oob_netmask": { "type": "string", "description": "OOB host subnet mask. Maximum length: 39 characters." },
+        "oob_router": { "type": "string", "description": "OOB router. Maximum length: 39 characters." },
+        "os": { "type": "string", "description": "OS name. Maximum length: 128 characters." },
+        "os_full": { "type": "string", "description": "Detailed OS name. Maximum length: 255 characters." },
+        "os_short": { "type": "string", "description": "Short OS name. Maximum length: 128 characters." },
+        "poc_1_cell": { "type": "string", "description": "Primary POC mobile number. Maximum length: 64 characters." },
+        "poc_1_email": { "type": "string", "description": "Primary email. Maximum length: 128 characters." },
+        "poc_1_name": { "type": "string", "description": "Primary POC name. Maximum length: 128 characters." },
+        "poc_1_notes": { "type": "string", "description": "Primary POC notes. Maximum length: depends on the database used (65535 characters for SQL databases, 2048 for Oracle)." },
+        "poc_1_phone_a": { "type": "string", "description": "Primary POC phone A. Maximum length: 64 characters." },
+        "poc_1_phone_b": { "type": "string", "description": "Primary POC phone B. Maximum length: 64 characters." },
+        "poc_1_screen": { "type": "string", "description": "Primary POC screen name. Maximum length: 64 characters." },
+        "poc_2_cell": { "type": "string", "description": "Secondary POC mobile number. Maximum length: 64 characters." },
+        "poc_2_email": { "type": "string", "description": "Secondary POC email. Maximum length: 128 characters." },
+        "poc_2_name": { "type": "string", "description": "Secondary POC name. Maximum length: 128 characters." },
+        "poc_2_notes": { "type": "string", "description": "Secondary POC notes. Maximum length: depends on the database used (65535 characters for SQL databases, 2048 for Oracle)." },
+        "poc_2_phone_a": { "type": "string", "description": "Secondary POC phone A. Maximum length: 64 characters." },
+        "poc_2_phone_b": { "type": "string", "description": "Secondary POC phone B. Maximum length: 64 characters." },
+        "poc_2_screen": { "type": "string", "description": "Secondary POC screen name. Maximum length: 64 characters." },
+        "serialno_a": { "type": "string", "description": "Serial number A. Maximum length: 64 characters." },
+        "serialno_b": { "type": "string", "description": "Serial number B. Maximum length: 64 characters." },
+        "site_address_a": { "type": "string", "description": "Site address A. Maximum length: 128 characters." },
+        "site_address_b": { "type": "string", "description": "Site address B. Maximum length: 128 characters." },
+        "site_address_c": { "type": "string", "description": "Site address C. Maximum length: 128 characters." },
+        "site_city": { "type": "string", "description": "Site city. Maximum length: 128 characters." },
+        "site_country": { "type": "string", "description": "Site country. Maximum length: 64 characters." },
+        "site_notes": { "type": "string", "description": "Site notes. Maximum length: depends on the database used (65535 characters for SQL databases, 2048 for Oracle)." },
+        "site_rack": { "type": "string", "description": "Site rack location. Maximum length: 128 characters." },
+        "site_state": { "type": "string", "description": "Site state. Maximum length: 64 characters." },
+        "site_zip": { "type": "string", "description": "Site ZIP/postal code. Maximum length: 64 characters." },
+        "software": { "type": "string", "description": "Software. Maximum length: 255 characters." },
+        "software_app_a": { "type": "string", "description": "Software application A. Maximum length: 64 characters." },
+        "software_app_b": { "type": "string", "description": "Software application B. Maximum length: 64 characters." },
+        "software_app_c": { "type": "string", "description": "Software application C. Maximum length: 64 characters." },
+        "software_app_d": { "type": "string", "description": "Software application D. Maximum length: 64 characters." },
+        "software_app_e": { "type": "string", "description": "Software application E. Maximum length: 64 characters." },
+        "software_full": { "type": "string", "description": "Software details. Maximum length: depends on the database used (65535 characters for SQL databases, 2048 for Oracle)." },
+        "tag": { "type": "string", "description": "Tag. Maximum length: 64 characters." },
+        "type": { "type": "string", "description": "Type. Maximum length: 64 characters." },
+        "type_full": { "type": "string", "description": "Type details. Maximum length: 64 characters." },
+        "url_a": { "type": "string", "description": "URL A. Maximum length: 2048 characters." },
+        "url_b": { "type": "string", "description": "URL B. Maximum length: 2048 characters." },
+        "url_c": { "type": "string", "description": "URL C. Maximum length: 2048 characters." },
+        "vendor": { "type": "string", "description": "Vendor. Maximum length: 64 characters." }
+      },
+      "additionalProperties": false
+    }
+  }
+}

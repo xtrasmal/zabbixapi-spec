@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/mediatype/mediatype.get",
+  "title": "mediatype.get",
+  "description": "Retrieve media types according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/mediatype/get",
+  "type": "object",
+  "properties": {
+    "mediatypeids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only media types with the given IDs."
+    },
+    "mediaids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only media types used by the given media (see user object's media property)."
+    },
+    "userids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only media types used by the given users."
+    },
+    "selectActions": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return an actions property with the actions that use the media type."
+    },
+    "selectMessageTemplates": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a message_templates property with an array of media type messages.\n\nParameter behavior:\n- supported for Super admin type users (since Zabbix 7.0.4)"
+    },
+    "selectUsers": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a users property with the users that use the media type. See user.get for restrictions based on user type."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Accepts an object, where the keys are property names, and the values are either a single value or an array of values to match against. Does not support properties of text data type.\n\nPossible Media type object properties for Admin type users (since Zabbix 7.0.4) and User type users (since Zabbix 7.0.6): mediatypeid, name, type, status, maxattempts."
+    },
+    "output": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Media type object properties to be returned. Admin type users (since Zabbix 7.0.4) and User type users (since Zabbix 7.0.6) may retrieve only the following properties: mediatypeid, name, type, status, maxattempts, description. Default: extend."
+    },
+    "search": {
+      "type": "object",
+      "description": "Return results that match the given pattern (case-insensitive). Accepts an object, where the keys are property names, and the values are strings to search for. If no additional options are given, this will perform a LIKE \"%...%\" search. Supports only properties of string and text data type.\n\nPossible Media type object properties for Admin type users (since Zabbix 7.0.4) and User type users (since Zabbix 7.0.6): name, description."
+    },
+    "sortfield": {
+      "oneOf": [
+        {"type": "string", "enum": ["mediatypeid"]},
+        {"type": "array", "items": {"type": "string", "enum": ["mediatypeid"]}}
+      ],
+      "description": "Sort the result by the given properties. Possible values: mediatypeid."
+    },
+    "countOutput": {
+      "type": "boolean",
+      "description": "Return the number of records in the result instead of the actual data."
+    },
+    "editable": {
+      "type": "boolean",
+      "description": "If set to true, return only objects that the user has write permissions to. Default: false."
+    },
+    "excludeSearch": {
+      "type": "boolean",
+      "description": "Return results that do not match the criteria given in the search parameter."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Limit the number of records returned."
+    },
+    "preservekeys": {
+      "type": "boolean",
+      "description": "Use IDs as keys in the resulting array."
+    },
+    "searchByAny": {
+      "type": "boolean",
+      "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."
+    },
+    "searchWildcardsEnabled": {
+      "type": "boolean",
+      "description": "If true, enables the use of '*' as a wildcard character. Default: false."
+    },
+    "sortorder": {
+      "oneOf": [
+        {"enum": ["ASC", "DESC"]},
+        {"type": "array", "items": {"enum": ["ASC", "DESC"]}}
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {
+      "type": "boolean",
+      "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."
+    }
+  },
+  "additionalProperties": false
+}

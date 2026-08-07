@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/script/script.getscriptsbyhosts",
+  "title": "script.getscriptsbyhosts",
+  "description": "Retrieve all available scripts on the given host, or a specific script if a script ID is provided. When manualinput is provided, it substitutes the {MANUALINPUT} macro with the specified value.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/script/getscriptsbyhosts",
+  "oneOf": [
+    { "$ref": "#/$defs/hostScriptRequest" },
+    { "type": "array", "items": { "$ref": "#/$defs/hostScriptRequest" } }
+  ],
+  "$defs": {
+    "hostScriptRequest": {
+      "type": "object",
+      "properties": {
+        "hostid": {
+          "type": "string",
+          "description": "ID of host to return scripts for. Must be unique. Required."
+        },
+        "scriptid": {
+          "type": "string",
+          "description": "ID of script to return."
+        },
+        "manualinput": {
+          "type": "string",
+          "description": "Value of the user-provided {MANUALINPUT} macro value."
+        }
+      },
+      "required": ["hostid"],
+      "additionalProperties": false
+    }
+  }
+}

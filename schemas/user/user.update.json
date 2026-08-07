@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/user/user.update",
+  "title": "user.update",
+  "description": "Update existing users.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/user/update",
+  "type": "object",
+  "properties": {
+    "userid": {
+      "type": "string",
+      "description": "ID of the user. Property behavior: read-only; required for update operations."
+    },
+    "username": {
+      "type": "string",
+      "description": "User's name. Property behavior: read-only for provisioned users if the user is linked to a user directory (userdirectoryid is set to a valid value that is not \"0\"), and user directory provisioning status is enabled (provision_status of User directory object is set to \"1\"), and authentication status of all LDAP or SAML provisioning is enabled (ldap_jit_status of Authentication object is set to \"Enabled for configured LDAP IdPs\" or saml_jit_status of Authentication object is set to \"Enabled for configured SAML IdPs\")."
+    },
+    "passwd": {
+      "type": "string",
+      "description": "User's password. The value of this parameter can be an empty string if the user is linked to a user directory. Property behavior: write-only."
+    },
+    "current_passwd": {
+      "type": "string",
+      "description": "User's current password. The value of this parameter can be an empty string if the user is linked to a user directory. Parameter behavior: write-only; required if passwd of User object is set and user changes own user password."
+    },
+    "roleid": {
+      "type": "string",
+      "description": "ID of the role of the user. Note that users without a role can log into Zabbix only using LDAP or SAML authentication, provided their LDAP/SAML information matches the user group mappings configured in Zabbix."
+    },
+    "autologin": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to enable auto-login. Possible values: 0 - (default) auto-login disabled; 1 - auto-login enabled."
+    },
+    "autologout": {
+      "type": "string",
+      "description": "User session life time. Accepts seconds and time unit with suffix. If set to 0s, the session will never expire. Default: 15m."
+    },
+    "lang": {
+      "type": "string",
+      "description": "Language code of the user's language, for example, en_US. Default: default - system default."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the user."
+    },
+    "refresh": {
+      "type": "string",
+      "description": "Automatic refresh period. Accepts seconds or time unit with suffix (e.g., 30s, 90s, 1m, 1h). Default: 30s."
+    },
+    "rows_per_page": {
+      "type": "integer",
+      "description": "Amount of object rows to show per page. Default: 50."
+    },
+    "surname": {
+      "type": "string",
+      "description": "Surname of the user."
+    },
+    "theme": {
+      "type": "string",
+      "enum": ["default", "blue-theme", "dark-theme", "hc-light", "hc-dark"],
+      "description": "User's theme. Possible values: default - (default) system default; blue-theme - Blue; dark-theme - Dark; hc-light - High-contrast light; hc-dark - High-contrast dark."
+    },
+    "url": {
+      "type": "string",
+      "description": "URL of the page to redirect the user to after logging in."
+    },
+    "usrgrps": {
+      "type": "array",
+      "description": "User groups to replace existing user groups. The user groups must have only the usrgrpid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "usrgrpid": { "type": "string", "description": "ID of the user group." }
+        },
+        "required": ["usrgrpid"],
+        "additionalProperties": false
+      }
+    },
+    "medias": {
+      "type": "array",
+      "description": "User media to replace existing, non-provisioned media. Provisioned media can be omitted when updating media.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "mediatypeid": {
+            "type": "string",
+            "description": "ID of the media type used by the user's media. Property behavior: required."
+          },
+          "sendto": {
+            "oneOf": [
+              { "type": "string" },
+              { "type": "array", "items": { "type": "string" } }
+            ],
+            "description": "Address, user name or other identifier of the recipient. If type of Media type is set to \"Email\", values are represented as array. For other types of Media types, value is represented as a string. Property behavior: required."
+          },
+          "active": {
+            "type": "integer",
+            "enum": [0, 1],
+            "description": "Whether the media is enabled. Possible values: 0 - (default) enabled; 1 - disabled."
+          },
+          "severity": {
+            "type": "integer",
+            "description": "Trigger severities to send notifications about. Possible bitmap values: 1 - Not classified; 2 - Information; 4 - Warning; 8 - Average; 16 - High; 32 - Disaster. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 48 for Average, High, and Disaster). Default: 63."
+          },
+          "period": {
+            "type": "string",
+            "description": "Time when the notifications can be sent as a time period or user macros separated by a semicolon. Default: 1-7,00:00-24:00."
+          }
+        },
+        "required": ["mediatypeid", "sendto"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["userid"],
+  "additionalProperties": false
+}

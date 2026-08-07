@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/template/template.create",
+  "title": "template.create",
+  "description": "Create new templates.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/template/create",
+  "type": "object",
+  "properties": {
+    "host": {
+      "type": "string",
+      "description": "Technical name of the template. Property behavior: required for create operations."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the template."
+    },
+    "name": {
+      "type": "string",
+      "description": "Visible name of the template. Default: host property value."
+    },
+    "uuid": {
+      "type": "string",
+      "description": "Universal unique identifier, used for linking imported templates to already existing ones. Auto-generated, if not given."
+    },
+    "vendor_name": {
+      "type": "string",
+      "description": "Template vendor name. For create operations, both vendor_name and vendor_version should be either set or left empty. For update operations, vendor_version can be left empty if it has a value in the database."
+    },
+    "vendor_version": {
+      "type": "string",
+      "description": "Template vendor version. For create operations, both vendor_name and vendor_version should be either set or left empty. For update operations, vendor_name can be left empty if it has a value in the database."
+    },
+    "groups": {
+      "oneOf": [
+        { "$ref": "#/$defs/templateGroupRef" },
+        { "type": "array", "items": { "$ref": "#/$defs/templateGroupRef" } }
+      ],
+      "description": "Template groups to add the template to. The template groups must have only the groupid property defined. Parameter behavior: required."
+    },
+    "tags": {
+      "oneOf": [
+        { "$ref": "#/$defs/templateTag" },
+        { "type": "array", "items": { "$ref": "#/$defs/templateTag" } }
+      ],
+      "description": "Template tags. See the Template tag object."
+    },
+    "templates": {
+      "oneOf": [
+        { "$ref": "#/$defs/templateRef" },
+        { "type": "array", "items": { "$ref": "#/$defs/templateRef" } }
+      ],
+      "description": "Templates to be linked to the template. The templates must have only the templateid property defined."
+    },
+    "macros": {
+      "oneOf": [
+        { "type": "object" },
+        { "type": "array", "items": { "type": "object" } }
+      ],
+      "description": "User macros to be created for the template. See the User macro object (reference/usermacro/object)."
+    }
+  },
+  "required": ["host", "groups"],
+  "additionalProperties": false,
+  "$defs": {
+    "templateGroupRef": {
+      "type": "object",
+      "description": "Reference to an existing template group by groupid only.",
+      "properties": {
+        "groupid": { "type": "string", "description": "ID of the template group." }
+      },
+      "required": ["groupid"],
+      "additionalProperties": false
+    },
+    "templateRef": {
+      "type": "object",
+      "description": "Reference to an existing template by templateid only.",
+      "properties": {
+        "templateid": { "type": "string", "description": "ID of the template." }
+      },
+      "required": ["templateid"],
+      "additionalProperties": false
+    },
+    "templateTag": {
+      "type": "object",
+      "description": "Template tag object.",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "Template tag name. Property behavior: required."
+        },
+        "value": {
+          "type": "string",
+          "description": "Template tag value."
+        }
+      },
+      "required": ["tag"],
+      "additionalProperties": false
+    }
+  }
+}

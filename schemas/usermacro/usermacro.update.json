@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/usermacro/update",
+  "title": "usermacro.update",
+  "description": "Update existing host macros. The hostmacroid property must be defined for each host macro; all other properties are optional and only the passed properties will be updated.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/usermacro/update",
+  "$defs": {
+    "hostMacro": {
+      "type": "object",
+      "properties": {
+        "hostmacroid": {
+          "type": "string",
+          "description": "ID of the host macro. Property behavior: read-only; required for update operations."
+        },
+        "hostid": {
+          "type": "string",
+          "description": "ID of the host that the macro belongs to. Property behavior: constant; required for create operations."
+        },
+        "macro": {
+          "type": "string",
+          "description": "Macro string. Property behavior: required for create operations."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of the macro. Property behavior: write-only if type is set to \"Secret macro\"; required for create operations."
+        },
+        "type": {
+          "type": "integer",
+          "enum": [0, 1, 2],
+          "description": "Type of macro. Possible values: 0 - (default) Text macro; 1 - Secret macro; 2 - Vault secret."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the macro."
+        },
+        "automatic": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Defines whether the macro is controlled by discovery rule. Possible values: 0 - (default) Macro is managed by user; 1 - Macro is managed by discovery rule. User is not allowed to create automatic macro. To update automatic macro, it must be converted to manual by setting automatic to 0."
+        }
+      },
+      "required": ["hostmacroid"],
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    {"$ref": "#/$defs/hostMacro"},
+    {"type": "array", "items": {"$ref": "#/$defs/hostMacro"}, "minItems": 1}
+  ]
+}

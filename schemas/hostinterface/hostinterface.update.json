@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/hostinterface/hostinterface.update",
+  "title": "hostinterface.update",
+  "description": "Update existing host interfaces.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/hostinterface/update",
+  "type": "object",
+  "properties": {
+    "interfaceid": {
+      "type": "string",
+      "description": "ID of the interface. Property behavior: read-only; required for update operations."
+    },
+    "hostid": {
+      "type": "string",
+      "description": "ID of the host that the interface belongs to. Property behavior: constant; required for create operations."
+    },
+    "type": {
+      "type": "integer",
+      "enum": [1, 2, 3, 4],
+      "description": "Interface type. Possible values: 1 - Agent; 2 - SNMP; 3 - IPMI; 4 - JMX. Property behavior: required for create operations."
+    },
+    "ip": {
+      "type": "string",
+      "description": "IP address used by the interface. Can be empty if the connection is made via DNS. Property behavior: required for create operations."
+    },
+    "dns": {
+      "type": "string",
+      "description": "DNS name used by the interface. Can be empty if the connection is made via IP. Property behavior: required for create operations."
+    },
+    "port": {
+      "type": "string",
+      "description": "Port number used by the interface. Can contain user macros. Property behavior: required for create operations."
+    },
+    "useip": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether the connection should be made via IP. Possible values: 0 - connect using host DNS name; 1 - connect using host IP address. Property behavior: required for create operations."
+    },
+    "main": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether the interface is used as default on the host. Only one interface of some type can be set as default on a host. Possible values: 0 - not default; 1 - default. Property behavior: required for create operations."
+    },
+    "details": {
+      "type": "object",
+      "description": "Additional details object for interface. Property behavior: required if type is set to \"SNMP\" (2).",
+      "properties": {
+        "version": {
+          "type": "integer",
+          "enum": [1, 2, 3],
+          "description": "SNMP interface version. Possible values: 1 - SNMPv1; 2 - SNMPv2c; 3 - SNMPv3. Property behavior: required."
+        },
+        "bulk": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Whether to use bulk SNMP requests. Possible values: 0 - don't use bulk requests; 1 - (default) - use bulk requests."
+        },
+        "community": {
+          "type": "string",
+          "description": "SNMP community. Used only by SNMPv1 and SNMPv2 interfaces. Property behavior: required if version is set to \"SNMPv1\" (1) or \"SNMPv2c\" (2)."
+        },
+        "max_repetitions": {
+          "type": "integer",
+          "description": "Max repetition value for native SNMP bulk requests (GetBulkRequest-PDUs). Used only for discovery[] and walk[] items in SNMPv2 and v3. Default: 10."
+        },
+        "securityname": {
+          "type": "string",
+          "description": "SNMPv3 security name. Used only by SNMPv3 interfaces."
+        },
+        "securitylevel": {
+          "type": "integer",
+          "enum": [0, 1, 2],
+          "description": "SNMPv3 security level. Used only by SNMPv3 interfaces. Possible values: 0 - (default) - noAuthNoPriv; 1 - authNoPriv; 2 - authPriv."
+        },
+        "authpassphrase": {
+          "type": "string",
+          "description": "SNMPv3 authentication passphrase. Used only by SNMPv3 interfaces."
+        },
+        "privpassphrase": {
+          "type": "string",
+          "description": "SNMPv3 privacy passphrase. Used only by SNMPv3 interfaces."
+        },
+        "authprotocol": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4, 5],
+          "description": "SNMPv3 authentication protocol. Used only by SNMPv3 interfaces. Possible values: 0 - (default) - MD5; 1 - SHA1; 2 - SHA224; 3 - SHA256; 4 - SHA384; 5 - SHA512."
+        },
+        "privprotocol": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4, 5],
+          "description": "SNMPv3 privacy protocol. Used only by SNMPv3 interfaces. Possible values: 0 - (default) - DES; 1 - AES128; 2 - AES192; 3 - AES256; 4 - AES192C; 5 - AES256C."
+        },
+        "contextname": {
+          "type": "string",
+          "description": "SNMPv3 context name. Used only by SNMPv3 interfaces."
+        }
+      },
+      "required": ["version"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["interfaceid"],
+  "additionalProperties": false
+}

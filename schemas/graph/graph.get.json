@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/graph/graph.get",
+  "title": "graph.get",
+  "description": "Retrieve graphs according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/graph/get",
+  "type": "object",
+  "properties": {
+    "graphids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only graphs with the given IDs."
+    },
+    "groupids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only graphs that belong to hosts or templates in the given host groups or template groups."
+    },
+    "templateids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only graph that belong to the given templates."
+    },
+    "hostids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only graphs that belong to the given hosts."
+    },
+    "itemids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only graphs that contain the given items."
+    },
+    "templated": {
+      "type": "boolean",
+      "description": "If set to true return only graphs that belong to templates."
+    },
+    "inherited": {
+      "type": "boolean",
+      "description": "If set to true return only graphs inherited from a template."
+    },
+    "expandName": {
+      "type": "boolean",
+      "description": "Expand macros in the graph name."
+    },
+    "selectHostGroups": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a hostgroups property with the host groups that the graph belongs to."
+    },
+    "selectTemplateGroups": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a templategroups property with the template groups that the graph belongs to."
+    },
+    "selectTemplates": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a templates property with the templates that the graph belongs to."
+    },
+    "selectHosts": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a hosts property with the hosts that the graph belongs to."
+    },
+    "selectItems": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return an items property with the items used in the graph."
+    },
+    "selectGraphDiscovery": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a graphDiscovery property with the graph discovery object. The graph discovery object links the graph to a graph prototype from which it was created. It has the following properties: graphid - (ID) ID of the graph; parent_graphid - (ID) ID of the graph prototype from which the graph has been created; lastcheck - (timestamp) time when the graph was last discovered; status - (integer) graph discovery status: 0 - (default) graph is discovered, 1 - graph is not discovered anymore; ts_delete - (timestamp) time when a graph that is no longer discovered will be deleted."
+    },
+    "selectGraphItems": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a gitems property with the items used in the graph."
+    },
+    "selectDiscoveryRule": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a discoveryRule property with the low-level discovery rule that created the graph."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Accepts an object, where the keys are property names, and the values are either a single value or an array of values to match against. Does not support properties of the text data type. Supports additional properties: host - technical name of the host that the graph belongs to; hostid - ID of the host that the graph belongs to."
+    },
+    "sortfield": {
+      "oneOf": [
+        { "enum": ["graphid", "name", "graphtype"] },
+        { "type": "array", "items": { "enum": ["graphid", "name", "graphtype"] } }
+      ],
+      "description": "Sort the result by the given properties. Possible values: graphid, name, graphtype."
+    },
+    "countOutput": {
+      "type": "boolean",
+      "description": "Return the number of records in the result instead of the actual data."
+    },
+    "editable": {
+      "type": "boolean",
+      "description": "If set to true, return only objects that the user has write permissions to. Default: false."
+    },
+    "excludeSearch": {
+      "type": "boolean",
+      "description": "Return results that do not match the criteria given in the search parameter."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Limit the number of records returned."
+    },
+    "output": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "preservekeys": {
+      "type": "boolean",
+      "description": "Use IDs as keys in the resulting array."
+    },
+    "search": {
+      "type": "object",
+      "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."
+    },
+    "searchByAny": {
+      "type": "boolean",
+      "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."
+    },
+    "searchWildcardsEnabled": {
+      "type": "boolean",
+      "description": "If true, enables the use of '*' as a wildcard character. Default: false."
+    },
+    "sortorder": {
+      "oneOf": [
+        { "enum": ["ASC", "DESC"] },
+        { "type": "array", "items": { "enum": ["ASC", "DESC"] } }
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {
+      "type": "boolean",
+      "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."
+    },
+    "selectGroups": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Deprecated. Please use selectHostGroups or selectTemplateGroups instead. Return a groups property with the host groups and template groups that the graph belongs to."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/mfa/mfa.create",
+  "title": "mfa.create",
+  "description": "Create new MFA methods.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/mfa/create",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "integer",
+      "enum": [1, 2],
+      "description": "Type of the MFA method. Possible values: 1 - TOTP (Time-based One-Time Passwords); 2 - Duo Universal Prompt."
+    },
+    "name": {
+      "type": "string",
+      "description": "Unique name of the MFA method. Required for create operations."
+    },
+    "hash_function": {
+      "type": "integer",
+      "enum": [1, 2, 3],
+      "description": "Type of the hash function for generating TOTP codes. Possible values: 1 - SHA-1; 2 - SHA-256; 3 - SHA-512. Required if type is set to \"TOTP\"."
+    },
+    "code_length": {
+      "type": "integer",
+      "enum": [6, 8],
+      "description": "Verification code length. Possible values: 6 - 6-digit long; 8 - 8-digit long. Required if type is set to \"TOTP\"."
+    },
+    "api_hostname": {
+      "type": "string",
+      "description": "API hostname provided by the Duo authentication service. Required if type is set to \"Duo Universal Prompt\"."
+    },
+    "clientid": {
+      "type": "string",
+      "description": "Client ID provided by the Duo authentication service. Required if type is set to \"Duo Universal Prompt\"."
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "Client secret provided by the Duo authentication service. Write-only. Required if type is set to \"Duo Universal Prompt\"."
+    }
+  },
+  "required": ["name"],
+  "additionalProperties": false
+}

@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/proxy/proxy.update",
+  "title": "proxy.update",
+  "description": "Update existing proxies.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/proxy/update",
+  "type": "object",
+  "properties": {
+    "proxyid": {
+      "type": "string",
+      "description": "ID of the proxy. Property behavior: read-only; required for update operations."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the proxy. Property behavior: required for create operations."
+    },
+    "proxy_groupid": {
+      "type": "string",
+      "description": "ID of the proxy group. 0 - proxy is not assigned to any proxy group."
+    },
+    "local_address": {
+      "type": "string",
+      "description": "Address for active agents. IP address or DNS name to connect to. Property behavior: required if proxy_groupid is not 0."
+    },
+    "local_port": {
+      "type": "string",
+      "description": "Local proxy port number to connect to. User macros are supported. Default: 10051. Property behavior: supported if proxy_groupid is not 0."
+    },
+    "operating_mode": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Type of proxy. Possible values: 0 - active proxy; 1 - passive proxy. Property behavior: required for create operations."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the proxy."
+    },
+    "address": {
+      "type": "string",
+      "description": "IP address or DNS name to connect to. User macros are supported. Property behavior: required if the Zabbix proxy operating mode is passive."
+    },
+    "port": {
+      "type": "string",
+      "description": "Port number to connect to. User macros are supported. Default: 10051. Property behavior: supported if the Zabbix proxy operating mode is passive."
+    },
+    "allowed_addresses": {
+      "type": "string",
+      "description": "Comma-delimited IP addresses or DNS names of active Zabbix proxy."
+    },
+    "tls_connect": {
+      "type": "integer",
+      "enum": [1, 2, 4],
+      "description": "Connections to proxy. Possible values: 1 - (default) No encryption; 2 - PSK; 4 - certificate."
+    },
+    "tls_accept": {
+      "type": "integer",
+      "description": "Connections from proxy. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 6 for PSK and certificate). Possible bitmap values: 1 - (default) No encryption; 2 - PSK; 4 - certificate."
+    },
+    "tls_issuer": {
+      "type": "string",
+      "description": "Certificate issuer."
+    },
+    "tls_subject": {
+      "type": "string",
+      "description": "Certificate subject."
+    },
+    "tls_psk_identity": {
+      "type": "string",
+      "description": "PSK identity; must be paired with only one PSK (across autoregistration, hosts, and proxies). Do not include sensitive information in the PSK identity, as it is sent unencrypted over the network to inform the receiver which PSK to use. Property behavior: write-only; required if tls_connect is set to \"PSK\", or tls_accept contains the \"PSK\" bit."
+    },
+    "tls_psk": {
+      "type": "string",
+      "description": "Pre-shared key (PSK); must be at least 32 hex digits. Property behavior: write-only; required if tls_connect is set to \"PSK\", or tls_accept contains the \"PSK\" bit."
+    },
+    "custom_timeouts": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to override global item timeouts on the proxy level. Possible values: 0 - (default) use global settings; 1 - override timeouts."
+    },
+    "timeout_zabbix_agent": {
+      "type": "string",
+      "description": "Spend no more than timeout_zabbix_agent seconds on processing. Accepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros. Possible values range: 1-600s. Default: \"\". Property behavior: required if custom_timeouts is set to 1."
+    },
+    "timeout_simple_check": {
+      "type": "string",
+      "description": "Spend no more than timeout_simple_check seconds on processing. Accepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros. Possible values range: 1-600s. Default: \"\". Property behavior: required if custom_timeouts is set to 1."
+    },
+    "timeout_snmp_agent": {
+      "type": "string",
+      "description": "Spend no more than timeout_snmp_agent seconds on processing. Accepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros. Possible values range: 1-600s. Default: \"\". Property behavior: required if custom_timeouts is set to 1."
+    },
+    "timeout_external_check": {
+      "type": "string",
+      "description": "Spend no more than timeout_external_check seconds on processing. Accepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros. Possible values range: 1-600s. Default: \"\". Property behavior: required if custom_timeouts is set to 1."
+    },
+    "timeout_db_monitor": {
+      "type": "string",
+      "description": "Spend no more than timeout_db_monitor seconds on processing. Accepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros. Possible values range: 1-600s. Default: \"\". Property behavior: required if custom_timeouts is set to 1."
+    },
+    "timeout_http_agent": {
+      "type": "string",
+      "description": "Spend no more than timeout_http_agent seconds on processing. Accepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros. Possible values range: 1-600s. Default: \"\". Property behavior: required if custom_timeouts is set to 1."
+    },
+    "timeout_ssh_agent": {
+      "type": "string",
+      "description": "Spend no more than timeout_ssh_agent seconds on processing. Accepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros. Possible values range: 1-600s. Default: \"\". Property behavior: required if custom_timeouts is set to 1."
+    },
+    "timeout_telnet_agent": {
+      "type": "string",
+      "description": "Spend no more than timeout_telnet_agent seconds on processing. Accepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros. Possible values range: 1-600s. Default: \"\". Property behavior: required if custom_timeouts is set to 1."
+    },
+    "timeout_script": {
+      "type": "string",
+      "description": "Spend no more than timeout_script seconds on processing. Accepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros. Possible values range: 1-600s. Default: \"\". Property behavior: required if custom_timeouts is set to 1."
+    },
+    "timeout_browser": {
+      "type": "string",
+      "description": "Spend no more than timeout_browser seconds on processing. Accepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros. Possible values range: 1-600s. Default: \"\". Property behavior: required if custom_timeouts is set to 1."
+    },
+    "hosts": {
+      "type": "array",
+      "description": "Hosts to be monitored by the proxy. If a host is already monitored by a different proxy, it will be reassigned to the current proxy. The hosts must have only the hostid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hostid": {
+            "type": "string",
+            "description": "ID of the host."
+          }
+        },
+        "required": ["hostid"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["proxyid"],
+  "additionalProperties": false
+}

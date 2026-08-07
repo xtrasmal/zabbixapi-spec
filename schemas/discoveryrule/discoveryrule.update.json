@@ -1,0 +1,903 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/discoveryrule/discoveryrule.update",
+  "title": "discoveryrule.update",
+  "description": "Update existing LLD rules. The itemid property must be defined for each LLD rule; all other properties are optional and only passed properties will be updated.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/discoveryrule/update",
+  "type": "object",
+  "$defs": {
+    "header": {
+      "type": "object",
+      "description": "The header object has the following properties.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "HTTP header name. Property behavior: required."
+        },
+        "value": {
+          "type": "string",
+          "description": "Header value. Property behavior: required."
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "queryField": {
+      "type": "object",
+      "description": "The query field object defines a name and value that is used to specify a URL parameter.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the parameter. Property behavior: required."
+        },
+        "value": {
+          "type": "string",
+          "description": "Parameter value. Property behavior: required."
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "parameter": {
+      "type": "object",
+      "description": "Additional parameter for Script/Browser type LLD rules. name must be unique among the array.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Parameter name. Must be unique."
+        },
+        "value": {
+          "type": "string",
+          "description": "Parameter value."
+        }
+      },
+      "additionalProperties": false
+    },
+    "filterCondition": {
+      "type": "object",
+      "description": "The LLD rule filter condition object defines a separate check to perform on the value of an LLD macro.",
+      "properties": {
+        "macro": {
+          "type": "string",
+          "description": "LLD macro to perform the check on. Property behavior: required."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value to compare with. Property behavior: required if operator is set to \"matches regular expression\" (8) or \"does not match regular expression\" (9)."
+        },
+        "formulaid": {
+          "type": "string",
+          "description": "Arbitrary unique ID used to reference the condition from a custom expression. Can only contain capital-case letters. Must be defined by the user when modifying filter conditions, but is generated anew when requesting them afterward. Property behavior: required if evaltype of the LLD rule filter object is set to \"custom expression\" (3)."
+        },
+        "operator": {
+          "type": "integer",
+          "enum": [
+            8,
+            9,
+            12,
+            13
+          ],
+          "description": "Condition operator. Possible values: 8 - (default) matches regular expression; 9 - does not match regular expression; 12 - exists; 13 - does not exist."
+        }
+      },
+      "required": [
+        "macro"
+      ],
+      "additionalProperties": false
+    },
+    "filter": {
+      "type": "object",
+      "description": "The LLD rule filter object defines a set of conditions that can be used to filter discovered objects.",
+      "properties": {
+        "conditions": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/filterCondition"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/filterCondition"
+              }
+            }
+          ],
+          "description": "Set of filter conditions to use for filtering results. The conditions will be sorted in the order of their placement in the formula. Property behavior: required."
+        },
+        "evaltype": {
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "description": "Filter condition evaluation method. Possible values: 0 - And/Or; 1 - And; 2 - Or; 3 - Custom expression. Property behavior: required."
+        },
+        "eval_formula": {
+          "type": "string",
+          "description": "Generated expression that will be used for evaluating filter conditions. The expression contains IDs that reference specific filter conditions by its formulaid. The value of eval_formula is equal to the value of formula for filters with a custom expression. Property behavior: read-only."
+        },
+        "formula": {
+          "type": "string",
+          "description": "User-defined expression to be used for evaluating conditions of filters with a custom expression. The expression must contain IDs that reference specific filter conditions by its formulaid. The IDs used in the expression must exactly match the ones defined in the filter conditions: no condition can remain unused or omitted. Property behavior: required if evaltype is set to \"custom expression\" (3)."
+        }
+      },
+      "required": [
+        "conditions",
+        "evaltype"
+      ],
+      "additionalProperties": false
+    },
+    "lldMacroPath": {
+      "type": "object",
+      "description": "The LLD macro path object.",
+      "properties": {
+        "lld_macro": {
+          "type": "string",
+          "description": "LLD macro. Property behavior: required."
+        },
+        "path": {
+          "type": "string",
+          "description": "Selector for value which will be assigned to corresponding macro. Property behavior: required."
+        }
+      },
+      "required": [
+        "lld_macro",
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "preprocessing": {
+      "type": "object",
+      "description": "The LLD rule preprocessing object.",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "enum": [
+            5,
+            11,
+            12,
+            14,
+            15,
+            16,
+            17,
+            20,
+            21,
+            23,
+            24,
+            25,
+            27,
+            28,
+            29,
+            30
+          ],
+          "description": "The preprocessing option type. Possible values: 5 - Regular expression; 11 - XML XPath; 12 - JSONPath; 14 - Matches regular expression; 15 - Does not match regular expression; 16 - Check for error in JSON; 17 - Check for error in XML; 20 - Discard unchanged with heartbeat; 21 - JavaScript; 23 - Prometheus to JSON; 24 - CSV to JSON; 25 - Replace; 27 - XML to JSON; 28 - SNMP walk value; 29 - SNMP walk to JSON; 30 - SNMP get value. Property behavior: required."
+        },
+        "params": {
+          "type": "string",
+          "description": "Additional parameters used by preprocessing option. Multiple parameters are separated by the newline (\\n) character. Property behavior: required if type is set to \"Regular expression\" (5), \"XML XPath\" (11), \"JSONPath\" (12), \"Matches regular expression\" (14), \"Does not match regular expression\" (15), \"Check for error in JSON\" (16), \"Check for error in XML\" (17), \"Discard unchanged with heartbeat\" (20), \"JavaScript\" (21), \"Prometheus to JSON\" (23), \"CSV to JSON\" (24), \"Replace\" (25), \"SNMP walk value\" (28), \"SNMP walk to JSON\" (29), or \"SNMP get value\" (30)."
+        },
+        "error_handler": {
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "description": "Action type used in case of preprocessing step failure. Possible values: 0 - Error message is set by Zabbix server; 1 - Discard value; 2 - Set custom value; 3 - Set custom error message. Property behavior: required if type is set to \"Regular expression\" (5), \"XML XPath\" (11), \"JSONPath\" (12), \"Matches regular expression\" (14), \"Does not match regular expression\" (15), \"Check for error in JSON\" (16), \"Check for error in XML\" (17), \"Prometheus to JSON\" (23), \"CSV to JSON\" (24), \"XML to JSON\" (27), \"SNMP walk value\" (28), \"SNMP walk to JSON\" (29), or \"SNMP get value\" (30)."
+        },
+        "error_handler_params": {
+          "type": "string",
+          "description": "Error handler parameters. Property behavior: required if error_handler is set to \"Set custom value\" (2) or \"Set custom error message\" (3)."
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "overrideFilterCondition": {
+      "type": "object",
+      "description": "The LLD rule override filter condition object defines a separate check to perform on the value of an LLD macro.",
+      "properties": {
+        "macro": {
+          "type": "string",
+          "description": "LLD macro to perform the check on. Property behavior: required."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value to compare with. Property behavior: required if operator is set to \"matches regular expression\" (8) or \"does not match regular expression\" (9)."
+        },
+        "formulaid": {
+          "type": "string",
+          "description": "Arbitrary unique ID used to reference the condition from a custom expression. Can only contain capital-case letters. Must be defined by the user when modifying override filter conditions, but is generated anew when requesting them afterward. Property behavior: required if evaltype of the LLD rule override filter object is set to \"custom expression\" (3)."
+        },
+        "operator": {
+          "type": "integer",
+          "enum": [
+            8,
+            9,
+            12,
+            13
+          ],
+          "description": "Condition operator. Possible values: 8 - (default) matches regular expression; 9 - does not match regular expression; 12 - exists; 13 - does not exist."
+        }
+      },
+      "required": [
+        "macro"
+      ],
+      "additionalProperties": false
+    },
+    "overrideFilter": {
+      "type": "object",
+      "description": "The LLD rule override filter object defines a set of conditions that if they match the discovered object the override is applied.",
+      "properties": {
+        "conditions": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/overrideFilterCondition"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/overrideFilterCondition"
+              }
+            }
+          ],
+          "description": "Set of override filter conditions to use for matching the discovered objects. The conditions will be sorted in the order of their placement in the formula. Property behavior: required."
+        },
+        "evaltype": {
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "description": "Override filter condition evaluation method. Possible values: 0 - And/Or; 1 - And; 2 - Or; 3 - Custom expression. Property behavior: required."
+        },
+        "eval_formula": {
+          "type": "string",
+          "description": "Generated expression that will be used for evaluating override filter conditions. The expression contains IDs that reference specific override filter conditions by its formulaid. The value of eval_formula is equal to the value of formula for filters with a custom expression. Property behavior: read-only."
+        },
+        "formula": {
+          "type": "string",
+          "description": "User-defined expression to be used for evaluating conditions of override filters with a custom expression. The expression must contain IDs that reference specific override filter conditions by its formulaid. The IDs used in the expression must exactly match the ones defined in the override filter conditions: no condition can remain unused or omitted. Property behavior: required if evaltype is set to \"custom expression\" (3)."
+        }
+      },
+      "required": [
+        "conditions",
+        "evaltype"
+      ],
+      "additionalProperties": false
+    },
+    "opstatus": {
+      "type": "object",
+      "description": "LLD rule override operation status that is set to discovered object.",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Override the status for selected object. Possible values: 0 - Create enabled; 1 - Create disabled. Property behavior: required."
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "opdiscover": {
+      "type": "object",
+      "description": "LLD rule override operation discover status that is set to discovered object.",
+      "properties": {
+        "discover": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Override the discover status for selected object. Possible values: 0 - Yes, continue discovering the objects; 1 - No, new objects will not be discovered and existing ones will be marked as lost. Property behavior: required."
+        }
+      },
+      "required": [
+        "discover"
+      ],
+      "additionalProperties": false
+    },
+    "opperiod": {
+      "type": "object",
+      "description": "LLD rule override operation period is an update interval value that is set to discovered item.",
+      "properties": {
+        "delay": {
+          "type": "string",
+          "description": "Override the update interval of the item prototype. Accepts seconds or time unit with suffix (e.g., 30s, 1m, 2h, 1d) and, optionally, one or more custom intervals, all separated by semicolons. Custom intervals can be a mix of flexible and scheduling intervals. Accepts user macros or LLD macros (LLD macro support restored in Zabbix 7.0.27). If used, the value must be a single macro. Multiple macros or macros mixed with text are not supported. Flexible intervals may be written as two macros separated by a forward slash (e.g., {$FLEX_INTERVAL}/{$FLEX_PERIOD}). Property behavior: required."
+        }
+      },
+      "required": [
+        "delay"
+      ],
+      "additionalProperties": false
+    },
+    "ophistory": {
+      "type": "object",
+      "description": "LLD rule override operation history value that is set to discovered item.",
+      "properties": {
+        "history": {
+          "type": "string",
+          "description": "Override the history of item prototype which is a time unit of how long the history data should be stored. Also accepts user macro and LLD macro (LLD macro support restored in Zabbix 7.0.27). Property behavior: required."
+        }
+      },
+      "required": [
+        "history"
+      ],
+      "additionalProperties": false
+    },
+    "optrends": {
+      "type": "object",
+      "description": "LLD rule override operation trends value that is set to discovered item.",
+      "properties": {
+        "trends": {
+          "type": "string",
+          "description": "Override the trends of item prototype which is a time unit of how long the trends data should be stored. Also accepts user macro and LLD macro (LLD macro support restored in Zabbix 7.0.27). Property behavior: required."
+        }
+      },
+      "required": [
+        "trends"
+      ],
+      "additionalProperties": false
+    },
+    "opseverity": {
+      "type": "object",
+      "description": "LLD rule override operation severity value that is set to discovered trigger.",
+      "properties": {
+        "severity": {
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "description": "Override the severity of trigger prototype. Possible values: 0 - (default) not classified; 1 - information; 2 - warning; 3 - average; 4 - high; 5 - disaster. Property behavior: required."
+        }
+      },
+      "required": [
+        "severity"
+      ],
+      "additionalProperties": false
+    },
+    "optag": {
+      "type": "object",
+      "description": "LLD rule override operation tag object contains tag name and value that are set to discovered object.",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "New tag name. Also accepts user macro and LLD macro. Property behavior: required."
+        },
+        "value": {
+          "type": "string",
+          "description": "New tag value. Also accepts user macro and LLD macro."
+        }
+      },
+      "required": [
+        "tag"
+      ],
+      "additionalProperties": false
+    },
+    "optemplate": {
+      "type": "object",
+      "description": "LLD rule override operation template object that is linked to discovered host.",
+      "properties": {
+        "templateid": {
+          "type": "string",
+          "description": "Override the template of host prototype linked templates. Property behavior: required."
+        }
+      },
+      "required": [
+        "templateid"
+      ],
+      "additionalProperties": false
+    },
+    "opinventory": {
+      "type": "object",
+      "description": "LLD rule override operation inventory mode value that is set to discovered host.",
+      "properties": {
+        "inventory_mode": {
+          "type": "integer",
+          "enum": [
+            -1,
+            0,
+            1
+          ],
+          "description": "Override the host prototype inventory mode. Possible values: -1 - disabled; 0 - (default) manual; 1 - automatic. Property behavior: required."
+        }
+      },
+      "required": [
+        "inventory_mode"
+      ],
+      "additionalProperties": false
+    },
+    "overrideOperation": {
+      "type": "object",
+      "description": "The LLD rule override operation is a combination of conditions and actions to perform on the prototype object.",
+      "properties": {
+        "operationobject": {
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "description": "Type of discovered object to perform the action on. Possible values: 0 - Item prototype; 1 - Trigger prototype; 2 - Graph prototype; 3 - Host prototype. Property behavior: required."
+        },
+        "operator": {
+          "type": "integer",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            8,
+            9
+          ],
+          "description": "Override condition operator. Possible values: 0 - (default) equals; 1 - does not equal; 2 - contains; 3 - does not contain; 8 - matches; 9 - does not match."
+        },
+        "value": {
+          "type": "string",
+          "description": "Pattern to match item, trigger, graph or host prototype name depending on selected object."
+        },
+        "opstatus": {
+          "$ref": "#/$defs/opstatus",
+          "description": "Override operation status object for item, trigger and host prototype objects."
+        },
+        "opdiscover": {
+          "$ref": "#/$defs/opdiscover",
+          "description": "Override operation discover status object (all object types)."
+        },
+        "opperiod": {
+          "$ref": "#/$defs/opperiod",
+          "description": "Override operation period (update interval) object for item prototype object."
+        },
+        "ophistory": {
+          "$ref": "#/$defs/ophistory",
+          "description": "Override operation history object for item prototype object."
+        },
+        "optrends": {
+          "$ref": "#/$defs/optrends",
+          "description": "Override operation trends object for item prototype object."
+        },
+        "opseverity": {
+          "$ref": "#/$defs/opseverity",
+          "description": "Override operation severity object for trigger prototype object."
+        },
+        "optag": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/optag"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/optag"
+              }
+            }
+          ],
+          "description": "Override operation tag object for trigger and host prototype objects."
+        },
+        "optemplate": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/optemplate"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/optemplate"
+              }
+            }
+          ],
+          "description": "Override operation template object for host prototype object."
+        },
+        "opinventory": {
+          "$ref": "#/$defs/opinventory",
+          "description": "Override operation inventory object for host prototype object."
+        }
+      },
+      "required": [
+        "operationobject"
+      ],
+      "additionalProperties": false
+    },
+    "override": {
+      "type": "object",
+      "description": "The LLD rule overrides object defines a set of rules (filters, conditions and operations) that are used to override properties of different prototype objects.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique override name. Property behavior: required."
+        },
+        "step": {
+          "type": "integer",
+          "description": "Unique order number of the override. Property behavior: required."
+        },
+        "stop": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "description": "Stop processing next overrides if matches. Possible values: 0 - (default) don't stop processing overrides; 1 - stop processing overrides if filter matches."
+        },
+        "filter": {
+          "$ref": "#/$defs/overrideFilter",
+          "description": "Override filter."
+        },
+        "operations": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/overrideOperation"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/overrideOperation"
+              }
+            }
+          ],
+          "description": "Override operations."
+        }
+      },
+      "required": [
+        "name",
+        "step"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "itemid": {
+      "type": "string",
+      "description": "ID of the LLD rule. Property behavior: read-only; required for update operations."
+    },
+    "delay": {
+      "type": "string",
+      "description": "Update interval of the LLD rule. Accepts seconds or time unit with suffix (e.g., 30s, 1m, 2h, 1d) and, optionally, one or more custom intervals, all separated by semicolons. Custom intervals can be a mix of flexible and scheduling intervals. Accepts user macros. If used, the value must be a single macro. Multiple macros or macros mixed with text are not supported. Flexible intervals may be written as two macros separated by a forward slash (e.g., {$FLEX_INTERVAL}/{$FLEX_PERIOD}). Example: 1h;wd1-5h9-18;{$Macro1}/1-7,00:00-24:00;0/6-7,12:00-24:00;{$Macro2}/{$Macro3}. Property behavior: required if type is set to \"Zabbix agent\" (0), \"Simple check\" (3), \"Zabbix internal\" (5), \"External check\" (10), \"Database monitor\" (11), \"IPMI agent\" (12), \"SSH agent\" (13), \"TELNET agent\" (14), \"JMX agent\" (16), \"HTTP agent\" (19), \"SNMP agent\" (20), \"Script\" (21), \"Browser\" (22), or if type is set to \"Zabbix agent (active)\" (7) and key_ does not contain \"mqtt.get\"."
+    },
+    "hostid": {
+      "type": "string",
+      "description": "ID of the host that the LLD rule belongs to. Property behavior: constant; required for create operations."
+    },
+    "interfaceid": {
+      "type": "string",
+      "description": "ID of the LLD rule's host interface. Property behavior: required if LLD rule belongs to host and type is set to \"Zabbix agent\", \"IPMI agent\", \"JMX agent\", or \"SNMP agent\"; supported if LLD rule belongs to host and type is set to \"Simple check\", \"External check\", \"SSH agent\", \"TELNET agent\", or \"HTTP agent\"."
+    },
+    "key_": {
+      "type": "string",
+      "description": "LLD rule key. Property behavior: required for create operations; read-only for inherited objects."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the LLD rule. Property behavior: required for create operations; read-only for inherited objects."
+    },
+    "type": {
+      "type": "integer",
+      "enum": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        10,
+        11,
+        12,
+        13,
+        14,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "description": "Type of the LLD rule. Possible values: 0 - Zabbix agent; 2 - Zabbix trapper; 3 - Simple check; 5 - Zabbix internal; 7 - Zabbix agent (active); 10 - External check; 11 - Database monitor; 12 - IPMI agent; 13 - SSH agent; 14 - TELNET agent; 16 - JMX agent; 18 - Dependent item; 19 - HTTP agent; 20 - SNMP agent; 21 - Script; 22 - Browser. Property behavior: required for create operations; read-only for inherited objects."
+    },
+    "url": {
+      "type": "string",
+      "description": "URL string. Supports user macros, {HOST.IP}, {HOST.CONN}, {HOST.DNS}, {HOST.HOST}, {HOST.NAME}, {ITEM.ID}, {ITEM.KEY}. Property behavior: required if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "allow_traps": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Allow to populate value similarly to the trapper item. Possible values: 0 - (default) Do not allow to accept incoming data; 1 - Allow to accept incoming data. Property behavior: supported if type is set to \"HTTP agent\"."
+    },
+    "authtype": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "description": "Authentication method. Possible values if type is set to \"SSH agent\": 0 - (default) password; 1 - public key. Possible values if type is set to \"HTTP agent\": 0 - (default) none; 1 - basic; 2 - NTLM; 3 - Kerberos; 4 - Digest. Property behavior: supported if type is set to \"SSH agent\" or \"HTTP agent\"; read-only for inherited objects (if type is set to \"HTTP agent\")."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the LLD rule."
+    },
+    "follow_redirects": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Follow response redirects while polling data. Possible values: 0 - Do not follow redirects; 1 - (default) Follow redirects. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "headers": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/header"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/header"
+          }
+        }
+      ],
+      "description": "Array of headers that will be sent when performing an HTTP request. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "http_proxy": {
+      "type": "string",
+      "description": "HTTP(S) proxy connection string. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "ipmi_sensor": {
+      "type": "string",
+      "description": "IPMI sensor. Property behavior: required if type is set to \"IPMI agent\" and key_ is not set to \"ipmi.get\"; supported if type is set to \"IPMI agent\"; read-only for inherited objects."
+    },
+    "jmx_endpoint": {
+      "type": "string",
+      "description": "JMX agent custom connection string. Default: service:jmx:rmi:///jndi/rmi://{HOST.CONN}:{HOST.PORT}/jmxrmi. Property behavior: supported if type is set to \"JMX agent\"."
+    },
+    "lifetime": {
+      "type": "string",
+      "description": "Time period after which items that are no longer discovered will be deleted. Accepts seconds, time unit with suffix, or a user macro. Default: 7d."
+    },
+    "lifetime_type": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "description": "Scenario to delete lost LLD resources. Possible values: 0 - (default) Delete after lifetime threshold is reached; 1 - Do not delete; 2 - Delete immediately."
+    },
+    "enabled_lifetime": {
+      "type": "string",
+      "description": "Time period after which items that are no longer discovered will be disabled. Accepts seconds, time unit with suffix, or a user macro. Default: 0."
+    },
+    "enabled_lifetime_type": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "description": "Scenario to disable lost LLD resources. Possible values: 0 - Disable after lifetime threshold is reached; 1 - Do not disable; 2 - (default) Disable immediately."
+    },
+    "master_itemid": {
+      "type": "string",
+      "description": "ID of the master item. Recursion up to 3 dependent items and maximum count of dependent items equal to 999 are allowed. Discovery rule cannot be master item for another discovery rule. Property behavior: required if type is set to \"Dependent item\"; read-only for inherited objects."
+    },
+    "output_format": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Should the response be converted to JSON. Possible values: 0 - (default) Store raw; 1 - Convert to JSON. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "params": {
+      "type": "string",
+      "description": "Additional parameters depending on the type of the LLD rule: executed script for SSH and Telnet LLD rules; SQL query for database monitor LLD rules; formula for calculated LLD rules; the script for script and browser LLD rules. Property behavior: required if type is set to \"Database monitor\", \"SSH agent\", \"TELNET agent\", \"Script\" or \"Browser\"; read-only for inherited objects (if type is set to \"Script\" or \"Browser\")."
+    },
+    "parameters": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/parameter"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/parameter"
+          }
+        }
+      ],
+      "description": "Additional parameters if type is set to \"Script\" or \"Browser\". Array of objects with name and value properties, where name must be unique. Property behavior: supported if type is set to \"Script\" or \"Browser\"; read-only for inherited objects."
+    },
+    "password": {
+      "type": "string",
+      "description": "Password for authentication. Property behavior: required if type is set to \"JMX agent\" and username is set; supported if type is set to \"Simple check\", \"Database monitor\", \"SSH agent\", \"TELNET agent\", or \"HTTP agent\"; read-only for inherited objects (if type is set to \"HTTP agent\")."
+    },
+    "post_type": {
+      "type": "integer",
+      "enum": [
+        0,
+        2,
+        3
+      ],
+      "description": "Type of post data body stored in posts property. Possible values: 0 - (default) Raw data; 2 - JSON data; 3 - XML data. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "posts": {
+      "type": "string",
+      "description": "HTTP(S) request body data. Property behavior: required if type is set to \"HTTP agent\" and post_type is set to \"JSON data\" or \"XML data\"; supported if type is set to \"HTTP agent\" and post_type is set to \"Raw data\"; read-only for inherited objects."
+    },
+    "privatekey": {
+      "type": "string",
+      "description": "Name of the private key file. Property behavior: required if type is set to \"SSH agent\" and authtype is set to \"public key\"."
+    },
+    "publickey": {
+      "type": "string",
+      "description": "Name of the public key file. Property behavior: required if type is set to \"SSH agent\" and authtype is set to \"public key\"."
+    },
+    "query_fields": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/queryField"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/queryField"
+          }
+        }
+      ],
+      "description": "Array of query fields that will be sent when performing an HTTP request. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "request_method": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "description": "Type of request method. Possible values: 0 - (default) GET; 1 - POST; 2 - PUT; 3 - HEAD. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "retrieve_mode": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "description": "What part of response should be stored. Possible values if request_method is set to \"GET\", \"POST\", or \"PUT\": 0 - (default) Body; 1 - Headers; 2 - Both body and headers will be stored. Possible values if request_method is set to \"HEAD\": 1 - Headers. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "snmp_oid": {
+      "type": "string",
+      "description": "SNMP OID. Property behavior: required if type is set to \"SNMP agent\"; read-only for inherited objects."
+    },
+    "ssl_cert_file": {
+      "type": "string",
+      "description": "Public SSL Key file path. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "ssl_key_file": {
+      "type": "string",
+      "description": "Private SSL Key file path. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "ssl_key_password": {
+      "type": "string",
+      "description": "Password for SSL Key file. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "status": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Status of the LLD rule. Possible values: 0 - (default) enabled LLD rule; 1 - disabled LLD rule."
+    },
+    "status_codes": {
+      "type": "string",
+      "description": "Ranges of required HTTP status codes, separated by commas. Also supports user macros as part of comma separated list. Example: 200,200-{$M},{$M},200-400. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "timeout": {
+      "type": "string",
+      "description": "Item data polling request timeout. Accepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros. Possible values range: 1-600s. Default: \"\" - use proxy/global settings. Property behavior: supported if type is set to \"Zabbix agent\" (0), \"Simple check\" (3) and key_ does not start with \"vmware.\" and \"icmpping\", \"Zabbix agent (active)\" (7), \"External check\" (10), \"Database monitor\" (11), \"SSH agent\" (13), \"TELNET agent\" (14), \"HTTP agent\" (19), \"SNMP agent\" (20) and snmp_oid starts with \"walk[\" or \"get[\", \"Script\" (21), \"Browser\" (22); read-only for inherited objects."
+    },
+    "trapper_hosts": {
+      "type": "string",
+      "description": "Allowed hosts. Property behavior: supported if type is set to \"Zabbix trapper\", or if type is set to \"HTTP agent\" and allow_traps is set to \"Allow to accept incoming data\"."
+    },
+    "username": {
+      "type": "string",
+      "description": "Username for authentication. Property behavior: required if type is set to \"SSH agent\", \"TELNET agent\", or if type is set to \"JMX agent\" and password is set; supported if type is set to \"Simple check\", \"Database monitor\", or \"HTTP agent\"; read-only for inherited objects (if type is set to \"HTTP agent\")."
+    },
+    "uuid": {
+      "type": "string",
+      "description": "Universal unique identifier, used for linking imported LLD rules to already existing ones. Auto-generated, if not given. Property behavior: supported if the LLD rule belongs to a template."
+    },
+    "verify_host": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Whether to validate that the host name for the connection matches the one in the host's certificate. Possible values: 0 - (default) Do not validate; 1 - Validate. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "verify_peer": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Whether to validate that the host's certificate is authentic. Possible values: 0 - (default) Do not validate; 1 - Validate. Property behavior: supported if type is set to \"HTTP agent\"; read-only for inherited objects."
+    },
+    "filter": {
+      "$ref": "#/$defs/filter",
+      "description": "LLD rule filter to replace the existing filter."
+    },
+    "preprocessing": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/preprocessing"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/preprocessing"
+          }
+        }
+      ],
+      "description": "LLD rule preprocessing options to replace the existing preprocessing options. Parameter behavior: read-only for inherited objects."
+    },
+    "lld_macro_paths": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/lldMacroPath"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/lldMacroPath"
+          }
+        }
+      ],
+      "description": "LLD rule lld_macro_path options to replace the existing lld_macro_path options. Parameter behavior: read-only for inherited objects."
+    },
+    "overrides": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/override"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/override"
+          }
+        }
+      ],
+      "description": "LLD rule overrides options to replace the existing overrides options. Parameter behavior: read-only for inherited objects."
+    }
+  },
+  "required": [
+    "itemid"
+  ],
+  "additionalProperties": false
+}

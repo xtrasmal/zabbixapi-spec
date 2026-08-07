@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/host/host.massremove",
+  "title": "host.massremove",
+  "description": "Remove related objects from multiple hosts.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/host/massremove",
+  "type": "object",
+  "properties": {
+    "hostids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "IDs of the hosts to be updated. Parameter behavior: required."
+    },
+    "groupids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "IDs of the host groups to remove the given hosts from."
+    },
+    "interfaces": {
+      "oneOf": [
+        { "$ref": "#/$defs/hostInterfaceRemoveRef" },
+        { "type": "array", "items": { "$ref": "#/$defs/hostInterfaceRemoveRef" } }
+      ],
+      "description": "Host interfaces to remove from the given hosts. The host interface object must have only the ip, dns and port properties defined."
+    },
+    "macros": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "User macros to delete from the given hosts. See the User macro object (reference/usermacro/object)."
+    },
+    "templateids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "IDs of the templates to unlink from the given hosts."
+    },
+    "templateids_clear": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "IDs of the templates to unlink and clear from the given hosts."
+    }
+  },
+  "required": ["hostids"],
+  "additionalProperties": false,
+  "$defs": {
+    "hostInterfaceRemoveRef": {
+      "type": "object",
+      "description": "Host interface identified by ip, dns and port only, as documented for host.massremove.",
+      "properties": {
+        "ip": { "type": "string", "description": "IP address used by the interface." },
+        "dns": { "type": "string", "description": "DNS name used by the interface." },
+        "port": { "type": "string", "description": "Port number used by the interface." }
+      },
+      "additionalProperties": false
+    }
+  }
+}

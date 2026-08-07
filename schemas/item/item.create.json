@@ -1,0 +1,420 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/item/create",
+  "title": "item.create",
+  "description": "Create new items. Web items cannot be created via the Zabbix API.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/item/create",
+  "type": "object",
+  "properties": {
+    "delay": {
+      "type": "string",
+      "description": "Update interval of the item.\n\nAccepts seconds or time unit with suffix (e.g., 30s, 1m, 2h, 1d) and, optionally, one or more custom intervals, all separated by semicolons. Custom intervals can be a mix of flexible and scheduling intervals.\n\nAccepts user macros. If used, the value must be a single macro. Multiple macros or macros mixed with text are not supported. Flexible intervals may be written as two macros separated by a forward slash (e.g., {$FLEX_INTERVAL}/{$FLEX_PERIOD}).\n\nExample:\n1h;wd1-5h9-18;{$Macro1}/1-7,00:00-24:00;0/6-7,12:00-24:00;{$Macro2}/{$Macro3}\n\nProperty behavior:\n- required if type is set to \"Zabbix agent\" (0), \"Simple check\" (3), \"Zabbix internal\" (5), \"External check\" (10), \"Database monitor\" (11), \"IPMI agent\" (12), \"SSH agent\" (13), \"TELNET agent\" (14), \"Calculated\" (15), \"JMX agent\" (16), \"HTTP agent\" (19), \"SNMP agent\" (20), \"Script\" (21), \"Browser\" (22), or if type is set to \"Zabbix agent (active)\" (7) and key_ does not contain \"mqtt.get\""
+    },
+    "hostid": {
+      "type": "string",
+      "description": "ID of the host or template that the item belongs to.\n\nProperty behavior:\n- constant\n- required for create operations"
+    },
+    "interfaceid": {
+      "type": "string",
+      "description": "ID of the item's host interface.\n\nProperty behavior:\n- required if item belongs to host and type is set to \"Zabbix agent\", \"IPMI agent\", \"JMX agent\", \"SNMP trap\", or \"SNMP agent\"\n- supported if item belongs to host and type is set to \"Simple check\", \"External check\", \"SSH agent\", \"TELNET agent\", or \"HTTP agent\"\n- read-only for discovered objects"
+    },
+    "key_": {
+      "type": "string",
+      "description": "Item key.\n\nProperty behavior:\n- required for create operations\n- read-only for inherited objects or discovered objects"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the item.\nSupports user macros.\n\nProperty behavior:\n- required for create operations\n- read-only for inherited objects or discovered objects"
+    },
+    "type": {
+      "type": "integer",
+      "description": "Type of the item.\n\nPossible values:\n0 - Zabbix agent;\n2 - Zabbix trapper;\n3 - Simple check;\n5 - Zabbix internal;\n7 - Zabbix agent (active);\n9 - Web item;\n10 - External check;\n11 - Database monitor;\n12 - IPMI agent;\n13 - SSH agent;\n14 - TELNET agent;\n15 - Calculated;\n16 - JMX agent;\n17 - SNMP trap;\n18 - Dependent item;\n19 - HTTP agent;\n20 - SNMP agent;\n21 - Script;\n22 - Browser.\n\nProperty behavior:\n- required for create operations\n- read-only for inherited objects or discovered objects",
+      "enum": [
+        0,
+        2,
+        3,
+        5,
+        7,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ]
+    },
+    "url": {
+      "type": "string",
+      "description": "URL string.\nSupports user macros, {HOST.IP}, {HOST.CONN}, {HOST.DNS}, {HOST.HOST}, {HOST.NAME}, {ITEM.ID}, {ITEM.KEY}.\n\nProperty behavior:\n- required if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects"
+    },
+    "value_type": {
+      "type": "integer",
+      "description": "Type of information of the item.\n\nPossible values:\n0 - numeric float;\n1 - character;\n2 - log;\n3 - numeric unsigned;\n4 - text;\n5 - binary.\n\nProperty behavior:\n- required for create operations\n- read-only for inherited objects or discovered objects",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "allow_traps": {
+      "type": "integer",
+      "description": "Allow to populate value similarly to the trapper item.\n\n0 - (default) Do not allow to accept incoming data;\n1 - Allow to accept incoming data.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for discovered objects",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "authtype": {
+      "type": "integer",
+      "description": "Authentication method.\n\nPossible values if type is set to \"SSH agent\":\n0 - (default) password;\n1 - public key.\n\nPossible values if type is set to \"HTTP agent\":\n0 - (default) none;\n1 - basic;\n2 - NTLM;\n3 - Kerberos;\n4 - Digest.\n\nProperty behavior:\n- supported if type is set to \"SSH agent\" or \"HTTP agent\"\n- read-only for inherited objects (if type is set to \"HTTP agent\") or discovered objects",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the item.\n\nProperty behavior:\n- read-only for discovered objects"
+    },
+    "follow_redirects": {
+      "type": "integer",
+      "description": "Follow response redirects while polling data.\n\nPossible values:\n0 - Do not follow redirects;\n1 - (default) Follow redirects.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "headers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "HTTP header name.\n\nProperty behavior:\n- required"
+          },
+          "value": {
+            "type": "string",
+            "description": "Header value.\n\nProperty behavior:\n- required"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Array of headers that will be sent when performing an HTTP request.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects"
+    },
+    "history": {
+      "type": "string",
+      "description": "A time unit of how long the history data should be stored.\nAlso accepts user macro.\n\nDefault: 31d.\n\nProperty behavior:\n- read-only for discovered objects"
+    },
+    "http_proxy": {
+      "type": "string",
+      "description": "HTTP(S) proxy connection string.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects"
+    },
+    "inventory_link": {
+      "type": "integer",
+      "description": "ID of the host inventory field that is populated by the item.\n\nRefer to the host inventory page for a list of supported host inventory fields and their IDs.\n\nDefault: 0.\n\nProperty behavior:\n- supported if value_type is set to \"numeric float\", \"character\", \"numeric unsigned\", or \"text\"\n- read-only for discovered objects"
+    },
+    "ipmi_sensor": {
+      "type": "string",
+      "description": "IPMI sensor.\n\nProperty behavior:\n- required if type is set to \"IPMI agent\" and key_ is not set to \"ipmi.get\"\n- supported if type is set to \"IPMI agent\"\n- read-only for inherited objects or discovered objects"
+    },
+    "jmx_endpoint": {
+      "type": "string",
+      "description": "JMX agent custom connection string.\n\nDefault value: service:jmx:rmi:///jndi/rmi://{HOST.CONN}:{HOST.PORT}/jmxrmi\n\nProperty behavior:\n- supported if type is set to \"JMX agent\"\n- read-only for discovered objects"
+    },
+    "logtimefmt": {
+      "type": "string",
+      "description": "Format of the time in log entries.\n\nProperty behavior:\n- supported if value_type is set to \"log\"\n- read-only for inherited objects or discovered objects"
+    },
+    "master_itemid": {
+      "type": "string",
+      "description": "ID of the master item.\nRecursion up to 3 dependent items and maximum count of dependent items equal to 29999 are allowed.\n\nProperty behavior:\n- required if type is set to \"Dependent item\"\n- read-only for inherited objects or discovered objects"
+    },
+    "output_format": {
+      "type": "integer",
+      "description": "Should the response be converted to JSON.\n\n0 - (default) Store raw;\n1 - Convert to JSON.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "params": {
+      "type": "string",
+      "description": "Additional parameters depending on the type of the item:\n- executed script for SSH agent and TELNET agent items;\n- SQL query for database monitor items;\n- formula for calculated items;\n- the script for script and browser items.\n\nProperty behavior:\n- required if type is set to \"Database monitor\", \"SSH agent\", \"TELNET agent\", \"Calculated\", \"Script\", or \"Browser\"\n- read-only for inherited objects (if type is set to \"Script\" or \"Browser\") or discovered objects"
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the parameter. Must be unique among an item's parameters."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value of the parameter."
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Additional parameters if type is set to \"Script\" or \"Browser\". Array of objects with name and value properties, where name must be unique.\n\nProperty behavior:\n- supported if type is set to \"Script\" or \"Browser\"\n- read-only for inherited objects or discovered objects Represented as an array of {name, value} objects; name must be unique."
+    },
+    "password": {
+      "type": "string",
+      "description": "Password for authentication.\n\nProperty behavior:\n- required if type is set to \"JMX agent\" and username is set\n- supported if type is set to \"Simple check\", \"SSH agent\", \"TELNET agent\", \"Database monitor\", or \"HTTP agent\"\n- read-only for inherited objects (if type is set to \"HTTP agent\") or discovered objects"
+    },
+    "post_type": {
+      "type": "integer",
+      "description": "Type of post data body stored in posts property.\n\nPossible values:\n0 - (default) Raw data;\n2 - JSON data;\n3 - XML data.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects",
+      "enum": [
+        0,
+        2,
+        3
+      ]
+    },
+    "posts": {
+      "type": "string",
+      "description": "HTTP(S) request body data.\n\nProperty behavior:\n- required if type is set to \"HTTP agent\" and post_type is set to \"JSON data\" or \"XML data\"\n- supported if type is set to \"HTTP agent\" and post_type is set to \"Raw data\"\n- read-only for inherited objects or discovered objects"
+    },
+    "privatekey": {
+      "type": "string",
+      "description": "Name of the private key file.\n\nProperty behavior:\n- required if type is set to \"SSH agent\" and authtype is set to \"public key\"\n- read-only for discovered objects"
+    },
+    "publickey": {
+      "type": "string",
+      "description": "Name of the public key file.\n\nProperty behavior:\n- required if type is set to \"SSH agent\" and authtype is set to \"public key\"\n- read-only for discovered objects"
+    },
+    "query_fields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the parameter.\n\nProperty behavior:\n- required"
+          },
+          "value": {
+            "type": "string",
+            "description": "Parameter value.\n\nProperty behavior:\n- required"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Array of query fields that will be sent when performing an HTTP request.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects"
+    },
+    "request_method": {
+      "type": "integer",
+      "description": "Type of request method.\n\nPossible values:\n0 - (default) GET;\n1 - POST;\n2 - PUT;\n3 - HEAD.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "retrieve_mode": {
+      "type": "integer",
+      "description": "What part of response should be stored.\n\nPossible values if request_method is set to \"GET\", \"POST\", or \"PUT\":\n0 - (default) Body;\n1 - Headers;\n2 - Both body and headers will be stored.\n\nPossible values if request_method is set to \"HEAD\":\n1 - Headers.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects",
+      "enum": [
+        0,
+        1,
+        2
+      ]
+    },
+    "snmp_oid": {
+      "type": "string",
+      "description": "SNMP OID.\n\nProperty behavior:\n- required if type is set to \"SNMP agent\"\n- read-only for inherited objects or discovered objects"
+    },
+    "ssl_cert_file": {
+      "type": "string",
+      "description": "Public SSL Key file path.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects"
+    },
+    "ssl_key_file": {
+      "type": "string",
+      "description": "Private SSL Key file path.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects"
+    },
+    "ssl_key_password": {
+      "type": "string",
+      "description": "Password for SSL Key file.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects"
+    },
+    "status": {
+      "type": "integer",
+      "description": "Status of the item.\n\nPossible values:\n0 - (default) enabled item;\n1 - disabled item.",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "status_codes": {
+      "type": "string",
+      "description": "Ranges of required HTTP status codes, separated by commas.\nAlso supports user macros as part of comma separated list.\n\nExample: 200,200-{$M},{$M},200-400\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects"
+    },
+    "timeout": {
+      "type": "string",
+      "description": "Item data polling request timeout.\nAccepts seconds or time unit with suffix (e.g., 30s, 1m). Also accepts user macros.\n\nPossible values range: 1-600s.\n\nDefault: \"\" - use proxy/global settings.\n\nProperty behavior:\n- supported if type is set to \"Zabbix agent\" (0), \"Simple check\" (3) and key_ does not start with \"vmware.\" and \"icmpping\", \"Zabbix agent (active)\" (7), \"External check\" (10), \"Database monitor\" (11), \"SSH agent\" (13), \"TELNET agent\" (14), \"HTTP agent\" (19), \"SNMP agent\" (20) and snmp_oid starts with \"walk[\" or \"get[\", \"Script\" (21), \"Browser\" (22)\n- read-only for inherited and discovered objects"
+    },
+    "trapper_hosts": {
+      "type": "string",
+      "description": "Allowed hosts.\n\nProperty behavior:\n- readonly for discovered objects\n- supported if type is set to \"Zabbix trapper\", or if type is set to \"HTTP agent\" and allow_traps is set to \"Allow to accept incoming data\""
+    },
+    "trends": {
+      "type": "string",
+      "description": "A time unit of how long the trends data should be stored.\nAlso accepts user macro.\n\nDefault: 365d.\n\nProperty behavior:\n- supported if value_type is set to \"numeric float\" or \"numeric unsigned\"\n- read-only for discovered objects"
+    },
+    "units": {
+      "type": "string",
+      "description": "Value units.\n\nProperty behavior:\n- supported if value_type is set to \"numeric float\" or \"numeric unsigned\"\n- read-only for inherited objects or discovered objects"
+    },
+    "username": {
+      "type": "string",
+      "description": "Username for authentication.\n\nProperty behavior:\n- required if type is set to \"SSH agent\", \"TELNET agent\", or if type is set to \"JMX agent\" and password is set\n- supported if type is set to \"Simple check\", \"Database monitor\", or \"HTTP agent\"\n- read-only for inherited objects (if type is set to \"HTTP agent\") or discovered objects"
+    },
+    "uuid": {
+      "type": "string",
+      "description": "Universal unique identifier, used for linking imported item to already existing ones. Auto-generated, if not given.\n\nProperty behavior:\n- supported if the item belongs to a template"
+    },
+    "valuemapid": {
+      "type": "string",
+      "description": "ID of the associated value map.\n\nProperty behavior:\n- supported if value_type is set to \"numeric float\", \"character\", or \"numeric unsigned\"\n- read-only for inherited objects or discovered objects"
+    },
+    "verify_host": {
+      "type": "integer",
+      "description": "Whether to validate that the host name for the connection matches the one in the host's certificate.\n\nPossible values:\n0 - (default) Do not validate;\n1 - Validate.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "verify_peer": {
+      "type": "integer",
+      "description": "Whether to validate that the host's certificate is authentic.\n\nPossible values:\n0 - (default) Do not validate;\n1 - Validate.\n\nProperty behavior:\n- supported if type is set to \"HTTP agent\"\n- read-only for inherited objects or discovered objects",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "preprocessing": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "description": "The preprocessing option type.\n\nPossible values:\n1 - Custom multiplier;\n2 - Right trim;\n3 - Left trim;\n4 - Trim;\n5 - Regular expression;\n6 - Boolean to decimal;\n7 - Octal to decimal;\n8 - Hexadecimal to decimal;\n9 - Simple change;\n10 - Change per second;\n11 - XML XPath;\n12 - JSONPath;\n13 - In range;\n14 - Matches regular expression;\n15 - Does not match regular expression;\n16 - Check for error in JSON;\n17 - Check for error in XML;\n18 - Check for error using regular expression;\n19 - Discard unchanged;\n20 - Discard unchanged with heartbeat;\n21 - JavaScript;\n22 - Prometheus pattern;\n23 - Prometheus to JSON;\n24 - CSV to JSON;\n25 - Replace;\n26 - Check unsupported;\n27 - XML to JSON;\n28 - SNMP walk value;\n29 - SNMP walk to JSON;\n30 - SNMP get value.\n\nProperty behavior:\n- required",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30
+            ]
+          },
+          "params": {
+            "type": "string",
+            "description": "Additional parameters used by preprocessing option.\nMultiple parameters are separated by the newline (\\n) character.\n\nIf type is set to \"Check unsupported\", the parameters follow a <scope>[\\n<pattern>] syntax, where pattern is a regular expression, and scope is one of:\n-1 - match any error;\n\\ 0 - check if error message matches pattern;\n\\ 1 - check if error message does not match pattern.\n\nProperty behavior:\n- required if type is set to \"Custom multiplier\" (1), \"Right trim\" (2), \"Left trim\" (3), \"Trim\" (4), \"Regular expression\" (5), \"XML XPath\" (11), \"JSONPath\" (12), \"In range\" (13), \"Matches regular expression\" (14), \"Does not match regular expression\" (15), \"Check for error in JSON\" (16), \"Check for error in XML\" (17), \"Check for error using regular expression\" (18), \"Discard unchanged with heartbeat\" (20), \"JavaScript\" (21), \"Prometheus pattern\" (22), \"Prometheus to JSON\" (23), \"CSV to JSON\" (24), \"Replace\" (25), Check unsupported (26), \"SNMP walk value\" (28), \"SNMP walk to JSON\" (29), or \"SNMP get value\" (30)"
+          },
+          "error_handler": {
+            "type": "integer",
+            "description": "Action type used in case of preprocessing step failure.\n\nPossible values:\n0 - Error message is set by Zabbix server;\n1 - Discard value;\n2 - Set custom value;\n3 - Set custom error message.\n\nPossible values if type is set to \"Check unsupported\":\n1 - Discard value;\n2 - Set custom value;\n3 - Set custom error message.\n\nProperty behavior:\n- required if type is set to \"Custom multiplier\" (1), \"Regular expression\" (5), \"Boolean to decimal\" (6), \"Octal to decimal\" (7), \"Hexadecimal to decimal\" (8), \"Simple change\" (9), \"Change per second\" (10), \"XML XPath\" (11), \"JSONPath\" (12), \"In range\" (13), \"Matches regular expression\" (14), \"Does not match regular expression\" (15), \"Check for error in JSON\" (16), \"Check for error in XML\" (17), \"Check for error using regular expression\" (18), \"Prometheus pattern\" (22), \"Prometheus to JSON\" (23), \"CSV to JSON\" (24), \"Check unsupported\" (26), \"XML to JSON\" (27), \"SNMP walk value\" (28), \"SNMP walk to JSON\" (29), or \"SNMP get value\" (30)",
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          "error_handler_params": {
+            "type": "string",
+            "description": "Error handler parameters.\n\nProperty behavior:\n- required if error_handler is set to \"Set custom value\" or \"Set custom error message\""
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Item preprocessing options."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "description": "Item tag name.\n\nProperty behavior:\n- required"
+          },
+          "value": {
+            "type": "string",
+            "description": "Item tag value."
+          }
+        },
+        "required": [
+          "tag"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Item tags."
+    }
+  },
+  "required": [
+    "hostid",
+    "key_",
+    "name",
+    "type",
+    "value_type"
+  ],
+  "additionalProperties": false
+}

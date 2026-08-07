@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/authentication/update",
+  "title": "authentication.update",
+  "description": "Update existing authentication settings. Only available to Super admin user type. There is a single, singleton Authentication object (no ID field); pass any subset of its properties to update.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/authentication/update",
+  "type": "object",
+  "properties": {
+    "authentication_type": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Default authentication method. Possible values: 0 - (default) Internal; 1 - LDAP."
+    },
+    "http_auth_enabled": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "HTTP authentication. Possible values: 0 - (default) Disabled; 1 - Enabled. Supported if $ALLOW_HTTP_AUTH is enabled in the frontend configuration file (zabbix.conf.php)."
+    },
+    "http_login_form": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Default login form. Possible values: 0 - (default) Zabbix login form; 1 - HTTP login form. Supported if $ALLOW_HTTP_AUTH is enabled in the frontend configuration file (zabbix.conf.php)."
+    },
+    "http_strip_domains": {
+      "type": "string",
+      "description": "Domain name to remove. Supported if $ALLOW_HTTP_AUTH is enabled in the frontend configuration file (zabbix.conf.php)."
+    },
+    "http_case_sensitive": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "HTTP case-sensitive login. Possible values: 0 - Off; 1 - (default) On. Supported if $ALLOW_HTTP_AUTH is enabled in the frontend configuration file (zabbix.conf.php)."
+    },
+    "ldap_auth_enabled": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "LDAP authentication. Possible values: 0 - (default) Disabled; 1 - Enabled."
+    },
+    "ldap_case_sensitive": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "LDAP case-sensitive login. Possible values: 0 - Off; 1 - (default) On."
+    },
+    "ldap_userdirectoryid": {
+      "type": "string",
+      "description": "ID of the default user directory for LDAP authentication. Used for user groups with gui_access set to LDAP or System default. Required if ldap_auth_enabled is set to \"Enabled\"."
+    },
+    "saml_auth_enabled": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "SAML authentication. Possible values: 0 - (default) Disabled; 1 - Enabled."
+    },
+    "saml_case_sensitive": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "SAML case-sensitive login. Possible values: 0 - Off; 1 - (default) On."
+    },
+    "passwd_min_length": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 70,
+      "default": 8,
+      "description": "Password minimal length requirement. Possible values range from 1 to 70. Default: 8."
+    },
+    "passwd_check_rules": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 15,
+      "default": 8,
+      "description": "Password checking rules. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 15 for checking all rules). Possible bitmap values: 0 - Check password length; 1 - Check if password uses uppercase and lowercase Latin letters; 2 - Check if password uses digits; 4 - Check if password uses special characters; 8 - (default) Check if password is not in the list of commonly used passwords and does not contain derivations of word \"Zabbix\" or user's name, last name, or username."
+    },
+    "ldap_jit_status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Status of LDAP provisioning. Possible values: 0 - Disabled for configured LDAP IdPs; 1 - Enabled for configured LDAP IdPs."
+    },
+    "saml_jit_status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Status of SAML provisioning. Possible values: 0 - Disabled for configured SAML IdPs; 1 - Enabled for configured SAML IdPs."
+    },
+    "jit_provision_interval": {
+      "type": "string",
+      "description": "Time interval between JIT provision requests for logged-in user. Accepts seconds and time unit with suffix with month and year support (3600s, 60m, 1h, 1d, 1M, 1y). Minimum value: 1h. Default: 1h. Available only for LDAP provisioning."
+    },
+    "disabled_usrgrpid": {
+      "type": "string",
+      "description": "ID of the user group to assign the deprovisioned user to. The user group must be disabled and cannot be enabled or deleted when configured. Required if ldap_jit_status is set to \"Enabled for configured LDAP IdPs\", or saml_jit_status is set to \"Enabled for configured SAML IdPs\"."
+    },
+    "mfa_status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Multi-factor authentication. Possible values: 0 - Disabled (for all configured MFA methods); 1 - Enabled (for all configured MFA methods)."
+    },
+    "mfaid": {
+      "type": "string",
+      "description": "Default MFA method for user groups with MFA enabled. Required if mfa_status is set to \"Enabled\"."
+    }
+  },
+  "additionalProperties": false
+}

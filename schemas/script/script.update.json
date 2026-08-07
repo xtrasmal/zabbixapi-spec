@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/script/script.update",
+  "title": "script.update",
+  "description": "Update existing scripts. The scriptid property must be defined for each script; all other properties are optional and only the passed properties will be updated. An exception is the type property change from 5 (Webhook) to other: the parameters property will be cleaned.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/script/update",
+  "type": "object",
+  "properties": {
+    "scriptid": {
+      "type": "string",
+      "description": "ID of the script. Read-only. Required for update operations."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the script."
+    },
+    "type": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 5, 6],
+      "description": "Script type. Possible values if scope is set to \"action operation\": 0 - Script; 1 - IPMI; 2 - SSH; 3 - TELNET; 5 - Webhook. Possible values if scope is set to \"manual host action\" or \"manual event action\": 6 - URL."
+    },
+    "command": {
+      "type": "string",
+      "description": "Command to run. Required if type is set to \"Script\", \"IPMI\", \"SSH\", \"TELNET\", or \"Webhook\"."
+    },
+    "scope": {
+      "type": "integer",
+      "enum": [1, 2, 4],
+      "description": "Script scope. Possible values: 1 - action operation; 2 - manual host action; 4 - manual event action."
+    },
+    "execute_on": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "Where to run the script. Supported if type is set to \"Script\". Possible values: 0 - run on Zabbix agent; 1 - run on Zabbix server (supported only if execution of global scripts is enabled on Zabbix server); 2 - (default) run on Zabbix server or proxy."
+    },
+    "menu_path": {
+      "type": "string",
+      "description": "Folders separated by slash that form a menu like navigation in frontend when clicked on host or event. Supported if scope is set to \"manual host action\" or \"manual event action\"."
+    },
+    "authtype": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Authentication method used for SSH script type. Supported if type is set to \"SSH\". Possible values: 0 - password; 1 - public key."
+    },
+    "username": {
+      "type": "string",
+      "description": "User name used for authentication. Required if type is set to \"SSH\" or \"TELNET\"."
+    },
+    "password": {
+      "type": "string",
+      "description": "Password used for SSH scripts with password authentication and TELNET scripts. Supported if type is set to \"SSH\" and authtype is set to \"password\", or type is set to \"TELNET\"."
+    },
+    "publickey": {
+      "type": "string",
+      "description": "Name of the public key file used for SSH scripts with public key authentication. Required if type is set to \"SSH\" and authtype is set to \"public key\"."
+    },
+    "privatekey": {
+      "type": "string",
+      "description": "Name of the private key file used for SSH scripts with public key authentication. Required if type is set to \"SSH\" and authtype is set to \"public key\"."
+    },
+    "port": {
+      "type": "string",
+      "description": "Port number used for SSH and TELNET scripts. Supported if type is set to \"SSH\" or \"TELNET\"."
+    },
+    "groupid": {
+      "type": "string",
+      "description": "ID of the host group that the script can be run on. If set to \"0\", the script will be available on all host groups. Default: 0."
+    },
+    "usrgrpid": {
+      "type": "string",
+      "description": "ID of the user group that will be allowed to run the script. If set to \"0\", the script will be available for all user groups. Default: 0. Supported if scope is set to \"manual host action\" or \"manual event action\"."
+    },
+    "host_access": {
+      "type": "integer",
+      "enum": [2, 3],
+      "description": "Host permissions needed to run the script. Supported if scope is set to \"manual host action\" or \"manual event action\". Possible values: 2 - (default) read; 3 - write."
+    },
+    "confirmation": {
+      "type": "string",
+      "description": "Confirmation pop up text. The pop up will appear when trying to run the script from the Zabbix frontend. Supported if scope is set to \"manual host action\" or \"manual event action\"."
+    },
+    "timeout": {
+      "type": "string",
+      "description": "Webhook script execution timeout in seconds. Time suffixes are supported (e.g., 30s, 1m). Possible values: 1-60s. Default: 30s. Required if type is set to \"Webhook\"."
+    },
+    "parameters": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/webhookParameter" },
+      "description": "Array of webhook input parameters. Supported if type is set to \"Webhook\". Note: changing type from 5 (Webhook) to another type clears this property."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the script."
+    },
+    "url": {
+      "type": "string",
+      "description": "User defined URL. Required if type is set to \"URL\"."
+    },
+    "new_window": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Open URL in a new window. Supported if type is set to \"URL\". Possible values: 0 - No; 1 - (default) Yes."
+    },
+    "manualinput": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Indicates whether the script accepts user-provided input. Supported if scope is set to \"manual host action\" or \"manual event action\". Possible values: 0 - (default) Disabled; 1 - Enabled."
+    },
+    "manualinput_prompt": {
+      "type": "string",
+      "description": "Manual input prompt text. Required if manualinput is set to \"Enabled\"."
+    },
+    "manualinput_validator": {
+      "type": "string",
+      "description": "A character string field used to validate the user provided input. The string consists of either a regular expression or a set of values separated by commas. Required if manualinput is set to \"Enabled\"."
+    },
+    "manualinput_validator_type": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Determines the type of user input expected. Supported if manualinput is set to \"Enabled\". Possible values: 0 - (default) String (manualinput_validator is treated as a regular expression); 1 - List (manualinput_validator is treated as a comma-separated list of possible input values)."
+    },
+    "manualinput_default_value": {
+      "type": "string",
+      "description": "Default value for auto-filling user input. Supported if manualinput_validator_type is set to \"String\"."
+    }
+  },
+  "required": ["scriptid"],
+  "additionalProperties": false,
+  "$defs": {
+    "webhookParameter": {
+      "type": "object",
+      "description": "Parameter passed to a webhook script when it is called.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Parameter name. Required."
+        },
+        "value": {
+          "type": "string",
+          "description": "Parameter value. Supports macros."
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    }
+  }
+}

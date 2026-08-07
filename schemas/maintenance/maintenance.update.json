@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/maintenance/maintenance.update",
+  "title": "maintenance.update",
+  "description": "Update existing maintenances.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/maintenance/update",
+  "type": "object",
+  "properties": {
+    "maintenanceid": {
+      "type": "string",
+      "description": "ID of the maintenance. Property behavior: read-only; required for update operations."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the maintenance."
+    },
+    "active_since": {
+      "type": "integer",
+      "description": "Time when the maintenance becomes active (inclusive). The given value will be rounded down to minutes."
+    },
+    "active_till": {
+      "type": "integer",
+      "description": "Time when the maintenance stops being active (exclusive). The given value will be rounded down to minutes."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the maintenance."
+    },
+    "maintenance_type": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Type of maintenance. Possible values: 0 - (default) with data collection; 1 - without data collection."
+    },
+    "tags_evaltype": {
+      "type": "integer",
+      "enum": [0, 2],
+      "description": "Problem tag evaluation method. Possible values: 0 - (default) And/Or; 2 - Or."
+    },
+    "groups": {
+      "oneOf": [
+        {"$ref": "#/$defs/hostGroupRef"},
+        {"type": "array", "items": {"$ref": "#/$defs/hostGroupRef"}}
+      ],
+      "description": "Host groups to replace the current groups. The host groups must have only the groupid property defined. Parameter behavior: required if hosts is not set."
+    },
+    "hosts": {
+      "oneOf": [
+        {"$ref": "#/$defs/hostRef"},
+        {"type": "array", "items": {"$ref": "#/$defs/hostRef"}}
+      ],
+      "description": "Hosts to replace the current hosts. The hosts must have only the hostid property defined. Parameter behavior: required if groups is not set."
+    },
+    "timeperiods": {
+      "oneOf": [
+        {"$ref": "#/$defs/timePeriod"},
+        {"type": "array", "items": {"$ref": "#/$defs/timePeriod"}}
+      ],
+      "description": "Maintenance time periods to replace the current periods."
+    },
+    "tags": {
+      "oneOf": [
+        {"$ref": "#/$defs/problemTag"},
+        {"type": "array", "items": {"$ref": "#/$defs/problemTag"}}
+      ],
+      "description": "Problem tags to replace the current tags. Parameter behavior: supported if maintenance_type of Maintenance object is set to \"with data collection\"."
+    },
+    "groupids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Deprecated. Please use groups instead. IDs of the host groups that will undergo maintenance."
+    },
+    "hostids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Deprecated. Please use hosts instead. IDs of the hosts that will undergo maintenance."
+    }
+  },
+  "required": ["maintenanceid"],
+  "additionalProperties": false,
+  "$defs": {
+    "hostGroupRef": {
+      "type": "object",
+      "description": "Reference to an existing host group by groupid only.",
+      "properties": {
+        "groupid": {"type": "string", "description": "ID of the host group."}
+      },
+      "required": ["groupid"],
+      "additionalProperties": false
+    },
+    "hostRef": {
+      "type": "object",
+      "description": "Reference to an existing host by hostid only.",
+      "properties": {
+        "hostid": {"type": "string", "description": "ID of the host."}
+      },
+      "required": ["hostid"],
+      "additionalProperties": false
+    },
+    "timePeriod": {
+      "type": "object",
+      "description": "Time period defining when the maintenance must come into effect.",
+      "properties": {
+        "period": {
+          "type": "integer",
+          "description": "Duration of the maintenance period in seconds. The given value will be rounded down to minutes. Possible values range: 300 - 86399940. Default: 3600."
+        },
+        "timeperiod_type": {
+          "type": "integer",
+          "enum": [0, 2, 3, 4],
+          "description": "Type of time period. Possible values: 0 - (default) one time only; 2 - daily; 3 - weekly; 4 - monthly."
+        },
+        "start_date": {
+          "type": "integer",
+          "description": "Date when the maintenance period must come into effect. The given value will be rounded down to minutes. Default: current date. Property behavior: supported if timeperiod_type is set to \"one time only\"."
+        },
+        "start_time": {
+          "type": "integer",
+          "description": "Time of day when the maintenance starts in seconds. The given value will be rounded down to minutes. Default: 0. Property behavior: supported if timeperiod_type is set to \"daily\", \"weekly\", or \"monthly\"."
+        },
+        "every": {
+          "type": "integer",
+          "description": "For daily and weekly periods, defines the day or week intervals at which the maintenance must come into effect (default 1). For monthly periods when day is set, defines the day of the month when the maintenance must come into effect (default 1). For monthly periods when dayofweek is set, defines the week of the month when the maintenance must come into effect. Possible values if timeperiod_type is set to \"monthly\" and dayofweek is set: 1 - (default) first week; 2 - second week; 3 - third week; 4 - fourth week; 5 - last week. Property behavior: supported if timeperiod_type is set to \"daily\", \"weekly\", or \"monthly\"."
+        },
+        "dayofweek": {
+          "type": "integer",
+          "description": "Days of the week when the maintenance must come into effect. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 21 for Monday, Wednesday, and Friday). Possible bitmap values: 1 - Monday; 2 - Tuesday; 4 - Wednesday; 8 - Thursday; 16 - Friday; 32 - Saturday; 64 - Sunday. Property behavior: required if timeperiod_type is set to \"weekly\" or if timeperiod_type is set to \"monthly\" and day is not set."
+        },
+        "day": {
+          "type": "integer",
+          "description": "Day of the month when the maintenance must come into effect. Property behavior: required if timeperiod_type is set to \"monthly\" and dayofweek is not set."
+        },
+        "month": {
+          "type": "integer",
+          "description": "Months when the maintenance must come into effect. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 585 for January, April, July, and October). Possible bitmap values: 1 - January; 2 - February; 4 - March; 8 - April; 16 - May; 32 - June; 64 - July; 128 - August; 256 - September; 512 - October; 1024 - November; 2048 - December. Property behavior: required if timeperiod_type is set to \"monthly\"."
+        }
+      },
+      "additionalProperties": false
+    },
+    "problemTag": {
+      "type": "object",
+      "description": "Problem tag used to define which problems must be suppressed when the maintenance comes into effect. Can only be specified if maintenance_type of Maintenance object is set to \"with data collection\".",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "Problem tag name. Property behavior: required."
+        },
+        "operator": {
+          "type": "integer",
+          "enum": [0, 2],
+          "description": "Condition operator. Possible values: 0 - Equals; 2 - (default) Contains."
+        },
+        "value": {
+          "type": "string",
+          "description": "Problem tag value."
+        }
+      },
+      "required": ["tag"],
+      "additionalProperties": false
+    }
+  }
+}

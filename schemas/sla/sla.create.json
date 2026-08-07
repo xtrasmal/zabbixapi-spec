@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/sla/sla.create",
+  "title": "sla.create",
+  "description": "Create new SLA objects.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/sla/create",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the SLA. Property behavior: required for create operations."
+    },
+    "period": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "description": "Reporting period of the SLA. Possible values: 0 - daily; 1 - weekly; 2 - monthly; 3 - quarterly; 4 - annually. Property behavior: required for create operations."
+    },
+    "slo": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Minimum acceptable Service Level Objective expressed as a percent. If the Service Level Indicator (SLI) drops lower, the SLA is considered to be in problem/unfulfilled state. Possible values: 0-100 (up to 4 fractional digits). Property behavior: required for create operations."
+    },
+    "effective_date": {
+      "type": "integer",
+      "description": "Effective date of the SLA. Possible values: date timestamp in UTC."
+    },
+    "timezone": {
+      "type": "string",
+      "description": "Reporting time zone, for example: Europe/London, UTC. For the full list of supported time zones please refer to PHP documentation. Property behavior: required for create operations."
+    },
+    "status": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Status of the SLA. Possible values: 0 - (default) disabled SLA; 1 - enabled SLA."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the SLA."
+    },
+    "service_tags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/slaServiceTag"
+      },
+      "description": "SLA service tags to be created for the SLA. Property behavior: required."
+    },
+    "schedule": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/slaSchedule"
+      },
+      "description": "SLA schedule to be created for the SLA. Specifying an empty parameter will be interpreted as a 24x7 schedule. Default: 24x7 schedule."
+    },
+    "excluded_downtimes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/slaExcludedDowntime"
+      },
+      "description": "SLA excluded downtimes to be created for the SLA."
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "period",
+    "slo",
+    "timezone",
+    "service_tags"
+  ],
+  "$defs": {
+    "slaSchedule": {
+      "type": "object",
+      "description": "SLA schedule object. Defines periods where the connected service(s) are scheduled to be in working order.",
+      "properties": {
+        "period_from": {
+          "type": "integer",
+          "description": "Starting time of the recurrent weekly period of time (inclusive). Possible values: number of seconds (counting from Sunday). Property behavior: required."
+        },
+        "period_to": {
+          "type": "integer",
+          "description": "Ending time of the recurrent weekly period of time (exclusive). Possible values: number of seconds (counting from Sunday). Property behavior: required."
+        }
+      },
+      "required": [
+        "period_from",
+        "period_to"
+      ],
+      "additionalProperties": false
+    },
+    "slaExcludedDowntime": {
+      "type": "object",
+      "description": "SLA excluded downtime object. Defines periods where the connected service(s) are scheduled to be out of working order, without affecting SLI, e.g., undergoing planned maintenance.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the excluded downtime. Property behavior: required."
+        },
+        "period_from": {
+          "type": "integer",
+          "description": "Starting time of the excluded downtime (inclusive). Possible values: timestamp. Property behavior: required."
+        },
+        "period_to": {
+          "type": "integer",
+          "description": "Ending time of the excluded downtime (exclusive). Possible values: timestamp. Property behavior: required."
+        }
+      },
+      "required": [
+        "name",
+        "period_from",
+        "period_to"
+      ],
+      "additionalProperties": false
+    },
+    "slaServiceTag": {
+      "type": "object",
+      "description": "SLA service tag object. Links services to include in the calculations for the SLA.",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "SLA service tag name. Property behavior: required."
+        },
+        "operator": {
+          "type": "integer",
+          "enum": [
+            0,
+            2
+          ],
+          "description": "SLA service tag operator. Possible values: 0 - (default) Equals; 2 - Contains."
+        },
+        "value": {
+          "type": "string",
+          "description": "SLA service tag value."
+        }
+      },
+      "required": [
+        "tag"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/graph/graph.create",
+  "title": "graph.create",
+  "description": "Create new graphs.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/graph/create",
+  "type": "object",
+  "properties": {
+    "height": {
+      "type": "integer",
+      "description": "Height of the graph in pixels. Required for create operations."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the graph. Required for create operations."
+    },
+    "width": {
+      "type": "integer",
+      "description": "Width of the graph in pixels. Required for create operations."
+    },
+    "graphtype": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3],
+      "description": "Graph's layout type. Possible values: 0 - (default) normal; 1 - stacked; 2 - pie; 3 - exploded."
+    },
+    "percent_left": {
+      "type": "number",
+      "description": "Left percentile. Default: 0."
+    },
+    "percent_right": {
+      "type": "number",
+      "description": "Right percentile. Default: 0."
+    },
+    "show_3d": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to show pie and exploded graphs in 3D. Possible values: 0 - (default) show in 2D; 1 - show in 3D."
+    },
+    "show_legend": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to show the legend on the graph. Possible values: 0 - hide; 1 - (default) show."
+    },
+    "show_work_period": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to show the working time on the graph. Possible values: 0 - hide; 1 - (default) show."
+    },
+    "show_triggers": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to show the trigger line on the graph. Possible values: 0 - hide; 1 - (default) show."
+    },
+    "yaxismax": {
+      "type": "number",
+      "description": "The fixed maximum value for the Y axis. Default: 100."
+    },
+    "yaxismin": {
+      "type": "number",
+      "description": "The fixed minimum value for the Y axis. Default: 0."
+    },
+    "ymax_itemid": {
+      "type": "string",
+      "description": "ID of the item that is used as the maximum value for the Y axis. If a user has no access to the specified item, the graph is rendered as if ymax_type is set to \"calculated\"."
+    },
+    "ymax_type": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "Maximum value calculation method for the Y axis. Possible values: 0 - (default) calculated; 1 - fixed; 2 - item."
+    },
+    "ymin_itemid": {
+      "type": "string",
+      "description": "ID of the item that is used as the minimum value for the Y axis. If a user has no access to the specified item, the graph is rendered as if ymin_type is set to \"calculated\"."
+    },
+    "ymin_type": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "Minimum value calculation method for the Y axis. Possible values: 0 - (default) calculated; 1 - fixed; 2 - item."
+    },
+    "uuid": {
+      "type": "string",
+      "description": "Universal unique identifier, used for linking imported graphs to already existing ones. Auto-generated, if not given. Supported if the graph belongs to a template."
+    },
+    "gitems": {
+      "type": "array",
+      "description": "Graph items to be created for the graph. Required for create operations.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "color": {
+            "type": "string",
+            "description": "Graph item's draw color as a hexadecimal color code. Required for create operations."
+          },
+          "itemid": {
+            "type": "string",
+            "description": "ID of the item. Required for create operations."
+          },
+          "calc_fnc": {
+            "type": "integer",
+            "enum": [1, 2, 4, 7, 9],
+            "description": "Value of the item that will be displayed. Possible values: 1 - minimum value; 2 - (default) average value; 4 - maximum value; 7 - all values; 9 - last value, used only by pie and exploded graphs."
+          },
+          "drawtype": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5],
+            "description": "Draw style of the graph item. Possible values: 0 - (default) line; 1 - filled region; 2 - bold line; 3 - dot; 4 - dashed line; 5 - gradient line."
+          },
+          "sortorder": {
+            "type": "integer",
+            "description": "Position of the item in the graph. Default: starts with \"0\" and increases by one with each entry."
+          },
+          "type": {
+            "type": "integer",
+            "enum": [0, 2],
+            "description": "Type of graph item. Possible values: 0 - (default) simple; 2 - graph sum, used only by pie and exploded graphs."
+          },
+          "yaxisside": {
+            "type": "integer",
+            "enum": [0, 1],
+            "description": "Side of the graph where the graph item's Y scale will be drawn. Possible values: 0 - (default) left side; 1 - right side."
+          }
+        },
+        "required": ["color", "itemid"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["height", "name", "width", "gitems"],
+  "additionalProperties": false
+}

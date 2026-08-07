@@ -1,0 +1,287 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/userdirectory/test",
+  "title": "userdirectory.test",
+  "description": "Test user directory connection settings. Also allows testing what configured data matches the user directory settings for user provisioning (e.g., what user role, user groups, user medias will be assigned to the user); for this type of test the request should be made for a user directory that has provision_status set to enabled. Since userdirectory.get does not return the bind_password field, userdirectoryid and/or bind_password should be supplied.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/userdirectory/test",
+  "type": "object",
+  "properties": {
+    "userdirectoryid": {
+      "type": "string",
+      "description": "ID of the user directory. Read-only. Required for update operations. If a user directory is deleted, the value of the User object property userdirectoryid is set to \"0\" for all users that are linked to the deleted user directory."
+    },
+    "idp_type": {
+      "type": "integer",
+      "enum": [
+        1,
+        2
+      ],
+      "description": "Type of the authentication protocol used by the identity provider for the user directory. Note that only one user directory of type SAML can exist. Possible values: 1 - User directory of type LDAP; 2 - User directory of type SAML. Required for create operations."
+    },
+    "group_name": {
+      "type": "string",
+      "description": "LDAP/SAML user directory attribute that contains the group name used to map groups between the LDAP/SAML user directory and Zabbix. Example: cn. Required if provision_status is set to \"Enabled\" and saml_jit_status of Authentication object is set to \"Enabled for configured SAML IdPs\"."
+    },
+    "user_username": {
+      "type": "string",
+      "description": "LDAP/SAML user directory attribute (also SCIM attribute if scim_status is set to \"SCIM provisioning is enabled\") that contains the user's name which is used as the value for the User object property name when the user is provisioned. Examples: cn, commonName, displayName, name."
+    },
+    "user_lastname": {
+      "type": "string",
+      "description": "LDAP/SAML user directory attribute (also SCIM attribute if scim_status is set to \"SCIM provisioning is enabled\") that contains the user's last name which is used as the value for the User object property surname when the user is provisioned. Examples: sn, surname, lastName."
+    },
+    "provision_status": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Provisioning status of the user directory. Possible values: 0 - (default) Disabled (provisioning of users created by this user directory is disabled); 1 - Enabled (provisioning of users created by this user directory is enabled; additionally, the status of LDAP or SAML provisioning (ldap_jit_status or saml_jit_status of Authentication object) must be enabled)."
+    },
+    "provision_groups": {
+      "type": "array",
+      "description": "Array of provisioning groups mappings objects for mapping LDAP/SAML user group pattern to Zabbix user group and user role. Required if provision_status is set to \"Enabled\".",
+      "items": {
+        "type": "object",
+        "description": "Provisioning groups mapping object for mapping an LDAP/SAML user group pattern to a Zabbix user group and user role.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Full name of a group (e.g., Zabbix administrators) in LDAP/SAML user directory (also SCIM if scim_status is set to \"SCIM provisioning is enabled\"). Supports the wildcard character \"*\". Unique across all provisioning groups mappings. Required."
+          },
+          "roleid": {
+            "type": "string",
+            "description": "ID of the user role to assign to the user. If multiple provisioning groups mappings are matched, the role of the highest user type (User, Admin, or Super admin) is assigned to the user. If there are multiple roles with the same user type, the first role (sorted in alphabetical order) is assigned to the user. Required."
+          },
+          "user_groups": {
+            "type": "array",
+            "description": "Array of Zabbix user group ID objects. If multiple provisioning groups mappings are matched, Zabbix user groups of all matched mappings is assigned to the user. Required.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "usrgrpid": {
+                  "type": "string",
+                  "description": "ID of Zabbix user group to assign to the user. Required."
+                }
+              },
+              "required": [
+                "usrgrpid"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "name",
+          "roleid",
+          "user_groups"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "provision_media": {
+      "type": "array",
+      "description": "Array of media type mappings objects for mapping user's LDAP/SAML media attributes (e.g., email) to Zabbix user media for sending notifications.",
+      "items": {
+        "type": "object",
+        "description": "Media type mapping object for mapping user's LDAP/SAML media attributes to Zabbix user media for sending notifications.",
+        "properties": {
+          "userdirectory_mediaid": {
+            "type": "string",
+            "description": "Media type mapping ID. Read-only. May be supplied when updating to reference an existing media type mapping."
+          },
+          "name": {
+            "type": "string",
+            "description": "Visible name in the list of media type mappings. Required."
+          },
+          "mediatypeid": {
+            "type": "string",
+            "description": "ID of the media type to be created; used as the value for the Media object property mediatypeid. Required."
+          },
+          "attribute": {
+            "type": "string",
+            "description": "LDAP/SAML user directory attribute (also SCIM attribute if scim_status is set to \"SCIM provisioning is enabled\") that contains the user's media (e.g., user@example.com) which is used as the value for the Media object property sendto. If present in data received from the LDAP/SAML identity provider, and the value is not empty, this will trigger media creation for the provisioned user. Required."
+          },
+          "active": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "User media active property value when media is created for the provisioned user. Possible values: 0 - (default) enabled; 1 - disabled."
+          },
+          "severity": {
+            "type": "integer",
+            "description": "User media severity property value when media is created for the provisioned user. Default: 63."
+          },
+          "period": {
+            "type": "string",
+            "description": "User media period property value when media is created for the provisioned user. Default: 1-7,00:00-24:00."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "name": {
+      "type": "string",
+      "description": "Unique name of the user directory. Required if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "host": {
+      "type": "string",
+      "description": "Host name, IP or URI of the LDAP server. URI must contain schema (ldap:// or ldaps://), host, and port (optional). Examples: host.example.com; 127.0.0.1; ldap://ldap.example.com:389. Required if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "port": {
+      "type": "integer",
+      "description": "Port of the LDAP server. Required if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "base_dn": {
+      "type": "string",
+      "description": "LDAP user directory base path to user accounts. Examples: ou=Users,dc=example,dc=org; ou=Users,ou=system (for OpenLDAP); DC=company,DC=com (for Microsoft Active Directory); uid=%{user},dc=example,dc=com (for direct user binding; placeholder \"%{user}\" is mandatory). Required if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "search_attribute": {
+      "type": "string",
+      "description": "LDAP user directory attribute by which to identify the user account from the information provided in the login request. Examples: uid (for OpenLDAP); sAMAccountName (for Microsoft Active Directory). Required if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "bind_dn": {
+      "type": "string",
+      "description": "LDAP server account for binding and searching over the LDAP server. For direct user binding and anonymous binding, bind_dn must be empty. Examples: uid=ldap_search,ou=system (for OpenLDAP); CN=ldap_search,OU=user_group,DC=company,DC=com (for Microsoft Active Directory); CN=Admin,OU=Users,OU=Zabbix,DC=zbx,DC=local. Supported if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "bind_password": {
+      "type": "string",
+      "description": "LDAP password of the account for binding and searching over the LDAP server. For direct user binding and anonymous binding, bind_password must be empty. Supported if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the user directory. Supported if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "group_basedn": {
+      "type": "string",
+      "description": "LDAP user directory base path to groups; used to configure a user membership check in the LDAP user directory. Ignored when provisioning a user if group_membership is set. Example: ou=Groups,dc=example,dc=com. Supported if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "group_filter": {
+      "type": "string",
+      "description": "Filter string for retrieving LDAP user directory groups that the user is a member of; used to configure a user membership check in the LDAP user directory. Ignored when provisioning a user if group_membership is set. Supported placeholders: %{attr} - search attribute (replaced by the search_attribute property value); %{groupattr} - group attribute (replaced by the group_member property value); %{host} - host name, IP or URI of the LDAP server (replaced by the host property value); %{user} - Zabbix user username. Default: (%{groupattr}=%{user}). Supported if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "group_member": {
+      "type": "string",
+      "description": "LDAP user directory attribute that contains information about the group members; used to configure a user membership check in the LDAP user directory. Ignored when provisioning a user if group_membership is set. Supported if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "group_membership": {
+      "type": "string",
+      "description": "LDAP user directory attribute that contains information about the groups that a user belongs to. Example: memberOf. Supported if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "search_filter": {
+      "type": "string",
+      "description": "Custom filter string used to locate and authenticate a user in an LDAP user directory based on the information provided in the login request. Supported placeholders: %{attr} - search attribute name (e.g., uid, sAMAccountName); %{user} - Zabbix user username. Default: (%{attr}=%{user}). Supported if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "start_tls": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "LDAP server configuration option that allows the communication with the LDAP server to be secured using Transport Layer Security (TLS). Note that start_tls must be set to \"Disabled\" for hosts using the ldaps:// protocol. Possible values: 0 - (default) Disabled; 1 - Enabled. Supported if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "user_ref_attr": {
+      "type": "string",
+      "description": "LDAP user directory attribute used to reference a user object. The value of user_ref_attr is used to get values from the specified attribute in the user directory and place them instead of the %{ref} placeholder in the group_filter string. Examples: cn, uid, member, uniqueMember. Supported if idp_type is set to \"User directory of type LDAP\"."
+    },
+    "idp_entityid": {
+      "type": "string",
+      "description": "URI that identifies the identity provider and is used to communicate with the identity provider in SAML messages. Example: https://idp.example.com/idp. Required if idp_type is set to \"User directory of type SAML\"."
+    },
+    "sp_entityid": {
+      "type": "string",
+      "description": "URL or any string that identifies the identity provider's service provider. Examples: https://idp.example.com/sp; zabbix. Required if idp_type is set to \"User directory of type SAML\"."
+    },
+    "username_attribute": {
+      "type": "string",
+      "description": "SAML user directory attribute (also SCIM attribute if scim_status is set to \"SCIM provisioning is enabled\") that contains the user's username which is compared with the value of the User object property username when authenticating. Examples: uid, userprincipalname, samaccountname, username, userusername, urn:oid:0.9.2342.19200300.100.1.1, urn:oid:1.3.6.1.4.1.5923.1.1.1.13, urn:oid:0.9.2342.19200300.100.1.44. Required if idp_type is set to \"User directory of type SAML\"."
+    },
+    "sso_url": {
+      "type": "string",
+      "description": "URL of the identity provider's SAML single sign-on service, to which Zabbix will send the SAML authentication requests. Example: http://idp.example.com/idp/sso/saml. Required if idp_type is set to \"User directory of type SAML\"."
+    },
+    "slo_url": {
+      "type": "string",
+      "description": "URL of the identity provider's SAML single log-out service, to which Zabbix will send the SAML logout requests. Example: https://idp.example.com/idp/slo/saml. Supported if idp_type is set to \"User directory of type SAML\"."
+    },
+    "encrypt_nameid": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Whether the SAML name ID should be encrypted. Possible values: 0 - (default) Do not encrypt name ID; 1 - Encrypt name ID. Supported if idp_type is set to \"User directory of type SAML\"."
+    },
+    "encrypt_assertions": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Whether the SAML assertions should be encrypted. Possible values: 0 - (default) Do not encrypt assertions; 1 - Encrypt assertions. Supported if idp_type is set to \"User directory of type SAML\"."
+    },
+    "nameid_format": {
+      "type": "string",
+      "description": "Name ID format of the SAML identity provider's service provider. Examples: urn:oasis:names:tc:SAML:2.0:nameid-format:persistent; urn:oasis:names:tc:SAML:2.0:nameid-format:transient; urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos; urn:oasis:names:tc:SAML:2.0:nameid-format:entity. Supported if idp_type is set to \"User directory of type SAML\"."
+    },
+    "scim_status": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Whether SCIM provisioning for SAML is enabled or disabled. Possible values: 0 - (default) SCIM provisioning is disabled; 1 - SCIM provisioning is enabled. Supported if idp_type is set to \"User directory of type SAML\"."
+    },
+    "sign_assertions": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Whether the SAML assertions should be signed with a SAML signature. Possible values: 0 - (default) Do not sign assertions; 1 - Sign assertions. Supported if idp_type is set to \"User directory of type SAML\"."
+    },
+    "sign_authn_requests": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Whether the SAML AuthN requests should be signed with a SAML signature. Possible values: 0 - (default) Do not sign AuthN requests; 1 - Sign AuthN requests. Supported if idp_type is set to \"User directory of type SAML\"."
+    },
+    "sign_messages": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Whether the SAML messages should be signed with a SAML signature. Possible values: 0 - (default) Do not sign messages; 1 - Sign messages. Supported if idp_type is set to \"User directory of type SAML\"."
+    },
+    "sign_logout_requests": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Whether the SAML logout requests should be signed with a SAML signature. Possible values: 0 - (default) Do not sign logout requests; 1 - Sign logout requests. Supported if idp_type is set to \"User directory of type SAML\"."
+    },
+    "sign_logout_responses": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "description": "Whether the SAML logout responses should be signed with a SAML signature. Possible values: 0 - (default) Do not sign logout responses; 1 - Sign logout responses. Supported if idp_type is set to \"User directory of type SAML\"."
+    },
+    "test_username": {
+      "type": "string",
+      "description": "Username to test in user directory."
+    },
+    "test_password": {
+      "type": "string",
+      "description": "Username associated password to test in user directory."
+    }
+  },
+  "additionalProperties": false
+}

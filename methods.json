@@ -1,0 +1,1235 @@
+{
+  "$comment": "Index of Zabbix 7.0 API JSON Schemas. object -> method -> {path,title,description}.",
+  "source": "https://www.zabbix.com/documentation/7.0/en/manual/api/reference",
+  "schema_dialect": "https://json-schema.org/draft/2020-12/schema",
+  "object_count": 58,
+  "method_count": 222,
+  "objects": {
+    "action": {
+      "action.create": {
+        "path": "schemas/action/action.create.json",
+        "title": "action.create",
+        "description": "Create new actions."
+      },
+      "action.delete": {
+        "path": "schemas/action/action.delete.json",
+        "title": "action.delete",
+        "description": "Delete actions."
+      },
+      "action.get": {
+        "path": "schemas/action/action.get.json",
+        "title": "action.get",
+        "description": "Retrieve actions according to the given parameters."
+      },
+      "action.update": {
+        "path": "schemas/action/action.update.json",
+        "title": "action.update",
+        "description": "Update existing actions."
+      }
+    },
+    "alert": {
+      "alert.get": {
+        "path": "schemas/alert/alert.get.json",
+        "title": "alert.get",
+        "description": "Retrieve alerts according to the given parameters."
+      }
+    },
+    "apiinfo": {
+      "apiinfo.version": {
+        "path": "schemas/apiinfo/apiinfo.version.json",
+        "title": "apiinfo.version",
+        "description": "Retrieve the version of the Zabbix API. Only available to unauthenticated users and must be called without the auth parameter in the JSON-RPC request."
+      }
+    },
+    "auditlog": {
+      "auditlog.get": {
+        "path": "schemas/auditlog/auditlog.get.json",
+        "title": "auditlog.get",
+        "description": "Retrieve audit log records according to the given parameters. Restricted to Super admin user types (permissions manageable via user role settings)."
+      }
+    },
+    "authentication": {
+      "authentication.get": {
+        "path": "schemas/authentication/authentication.get.json",
+        "title": "authentication.get",
+        "description": "Retrieve authentication settings according to the given parameters. Only available to Super admin user type."
+      },
+      "authentication.update": {
+        "path": "schemas/authentication/authentication.update.json",
+        "title": "authentication.update",
+        "description": "Update existing authentication settings. Only available to Super admin user type. There is a single, singleton Authentication object (no ID field); pass any subset of its properties to update."
+      }
+    },
+    "autoregistration": {
+      "autoregistration.get": {
+        "path": "schemas/autoregistration/autoregistration.get.json",
+        "title": "autoregistration.get",
+        "description": "Retrieve autoregistration settings. Restricted to users with Super admin status."
+      },
+      "autoregistration.update": {
+        "path": "schemas/autoregistration/autoregistration.update.json",
+        "title": "autoregistration.update",
+        "description": "Update autoregistration settings. Restricted to users with Super admin status."
+      }
+    },
+    "connector": {
+      "connector.create": {
+        "path": "schemas/connector/connector.create.json",
+        "title": "connector.create",
+        "description": "Create new connectors."
+      },
+      "connector.delete": {
+        "path": "schemas/connector/connector.delete.json",
+        "title": "connector.delete",
+        "description": "Delete connectors."
+      },
+      "connector.get": {
+        "path": "schemas/connector/connector.get.json",
+        "title": "connector.get",
+        "description": "Retrieve connectors according to the given parameters."
+      },
+      "connector.update": {
+        "path": "schemas/connector/connector.update.json",
+        "title": "connector.update",
+        "description": "Update existing connectors. Only the connectorid property is required; only passed properties are updated, the rest remain unchanged."
+      }
+    },
+    "correlation": {
+      "correlation.create": {
+        "path": "schemas/correlation/correlation.create.json",
+        "title": "correlation.create",
+        "description": "Create new correlations."
+      },
+      "correlation.delete": {
+        "path": "schemas/correlation/correlation.delete.json",
+        "title": "correlation.delete",
+        "description": "Delete correlations. Params is an array of correlation IDs to delete."
+      },
+      "correlation.get": {
+        "path": "schemas/correlation/correlation.get.json",
+        "title": "correlation.get",
+        "description": "Retrieve correlations according to the given parameters."
+      },
+      "correlation.update": {
+        "path": "schemas/correlation/correlation.update.json",
+        "title": "correlation.update",
+        "description": "Update existing correlations."
+      }
+    },
+    "dashboard": {
+      "dashboard.create": {
+        "path": "schemas/dashboard/dashboard.create.json",
+        "title": "dashboard.create",
+        "description": "Create new dashboards."
+      },
+      "dashboard.delete": {
+        "path": "schemas/dashboard/dashboard.delete.json",
+        "title": "dashboard.delete",
+        "description": "Delete dashboards."
+      },
+      "dashboard.get": {
+        "path": "schemas/dashboard/dashboard.get.json",
+        "title": "dashboard.get",
+        "description": "Retrieve dashboards according to the given parameters."
+      },
+      "dashboard.update": {
+        "path": "schemas/dashboard/dashboard.update.json",
+        "title": "dashboard.update",
+        "description": "Update existing dashboards."
+      }
+    },
+    "dcheck": {
+      "dcheck.get": {
+        "path": "schemas/dcheck/dcheck.get.json",
+        "title": "dcheck.get",
+        "description": "Retrieve discovery checks according to the given parameters."
+      }
+    },
+    "dhost": {
+      "dhost.get": {
+        "path": "schemas/dhost/dhost.get.json",
+        "title": "dhost.get",
+        "description": "Retrieve discovered hosts according to the given parameters."
+      }
+    },
+    "discoveryrule": {
+      "discoveryrule.copy": {
+        "path": "schemas/discoveryrule/discoveryrule.copy.json",
+        "title": "discoveryrule.copy",
+        "description": "Copy LLD rules with all of the prototypes to the given hosts. Deprecated: configure LLD rules on templates and link the templates to other templates/hosts instead."
+      },
+      "discoveryrule.create": {
+        "path": "schemas/discoveryrule/discoveryrule.create.json",
+        "title": "discoveryrule.create",
+        "description": "Create new LLD rules."
+      },
+      "discoveryrule.delete": {
+        "path": "schemas/discoveryrule/discoveryrule.delete.json",
+        "title": "discoveryrule.delete",
+        "description": "Delete LLD rules. Accepts an array of LLD rule IDs to delete."
+      },
+      "discoveryrule.get": {
+        "path": "schemas/discoveryrule/discoveryrule.get.json",
+        "title": "discoveryrule.get",
+        "description": "Retrieve LLD rules according to the given parameters."
+      },
+      "discoveryrule.update": {
+        "path": "schemas/discoveryrule/discoveryrule.update.json",
+        "title": "discoveryrule.update",
+        "description": "Update existing LLD rules. The itemid property must be defined for each LLD rule; all other properties are optional and only passed properties will be updated."
+      }
+    },
+    "drule": {
+      "drule.create": {
+        "path": "schemas/drule/drule.create.json",
+        "title": "drule.create",
+        "description": "Create new network discovery rules."
+      },
+      "drule.delete": {
+        "path": "schemas/drule/drule.delete.json",
+        "title": "drule.delete",
+        "description": "Delete network discovery rules."
+      },
+      "drule.get": {
+        "path": "schemas/drule/drule.get.json",
+        "title": "drule.get",
+        "description": "Retrieve network discovery rules according to the given parameters."
+      },
+      "drule.update": {
+        "path": "schemas/drule/drule.update.json",
+        "title": "drule.update",
+        "description": "Update existing network discovery rules."
+      }
+    },
+    "dservice": {
+      "dservice.get": {
+        "path": "schemas/dservice/dservice.get.json",
+        "title": "dservice.get",
+        "description": "Retrieve discovered services according to the given parameters."
+      }
+    },
+    "event": {
+      "event.acknowledge": {
+        "path": "schemas/event/event.acknowledge.json",
+        "title": "event.acknowledge",
+        "description": "Update events: close, acknowledge/unacknowledge, add a message, change severity, suppress/unsuppress, or change event rank."
+      },
+      "event.get": {
+        "path": "schemas/event/event.get.json",
+        "title": "event.get",
+        "description": "Retrieve events according to the given parameters."
+      }
+    },
+    "graph": {
+      "graph.create": {
+        "path": "schemas/graph/graph.create.json",
+        "title": "graph.create",
+        "description": "Create new graphs."
+      },
+      "graph.delete": {
+        "path": "schemas/graph/graph.delete.json",
+        "title": "graph.delete",
+        "description": "Delete graphs."
+      },
+      "graph.get": {
+        "path": "schemas/graph/graph.get.json",
+        "title": "graph.get",
+        "description": "Retrieve graphs according to the given parameters."
+      },
+      "graph.update": {
+        "path": "schemas/graph/graph.update.json",
+        "title": "graph.update",
+        "description": "Update existing graphs. Only the graphid property is required; only passed properties are updated, the rest remain unchanged."
+      }
+    },
+    "graphitem": {
+      "graphitem.get": {
+        "path": "schemas/graphitem/graphitem.get.json",
+        "title": "graphitem.get",
+        "description": "Retrieve graph items according to the given parameters."
+      }
+    },
+    "graphprototype": {
+      "graphprototype.create": {
+        "path": "schemas/graphprototype/graphprototype.create.json",
+        "title": "graphprototype.create",
+        "description": "Create new graph prototypes."
+      },
+      "graphprototype.delete": {
+        "path": "schemas/graphprototype/graphprototype.delete.json",
+        "title": "graphprototype.delete",
+        "description": "Delete graph prototypes."
+      },
+      "graphprototype.get": {
+        "path": "schemas/graphprototype/graphprototype.get.json",
+        "title": "graphprototype.get",
+        "description": "Retrieve graph prototypes according to the given parameters."
+      },
+      "graphprototype.update": {
+        "path": "schemas/graphprototype/graphprototype.update.json",
+        "title": "graphprototype.update",
+        "description": "Update existing graph prototypes."
+      }
+    },
+    "hanode": {
+      "hanode.get": {
+        "path": "schemas/hanode/hanode.get.json",
+        "title": "hanode.get",
+        "description": "Retrieve a list of High availability cluster nodes according to the given parameters. Only available to Super admin user types."
+      }
+    },
+    "history": {
+      "history.clear": {
+        "path": "schemas/history/history.clear.json",
+        "title": "history.clear",
+        "description": "IDs of items to clear."
+      },
+      "history.get": {
+        "path": "schemas/history/history.get.json",
+        "title": "history.get",
+        "description": "Retrieve history data according to the given parameters. May return historical data of a deleted entity if this data has not been removed by the housekeeper yet."
+      },
+      "history.push": {
+        "path": "schemas/history/history.push.json",
+        "title": "history.push",
+        "description": "Send item history data to Zabbix server. The IP address of the Zabbix web interface must be specified in the Allowed hosts field of the Zabbix trapper item in order for the method to work."
+      }
+    },
+    "host": {
+      "host.create": {
+        "path": "schemas/host/host.create.json",
+        "title": "host.create",
+        "description": "Create new hosts."
+      },
+      "host.delete": {
+        "path": "schemas/host/host.delete.json",
+        "title": "host.delete",
+        "description": "Delete hosts."
+      },
+      "host.get": {
+        "path": "schemas/host/host.get.json",
+        "title": "host.get",
+        "description": "Retrieve hosts according to the given parameters."
+      },
+      "host.massadd": {
+        "path": "schemas/host/host.massadd.json",
+        "title": "host.massadd",
+        "description": "Simultaneously add multiple related objects to all the given hosts."
+      },
+      "host.massremove": {
+        "path": "schemas/host/host.massremove.json",
+        "title": "host.massremove",
+        "description": "Remove related objects from multiple hosts."
+      },
+      "host.massupdate": {
+        "path": "schemas/host/host.massupdate.json",
+        "title": "host.massupdate",
+        "description": "Simultaneously replace or remove related objects and update properties on multiple hosts."
+      },
+      "host.update": {
+        "path": "schemas/host/host.update.json",
+        "title": "host.update",
+        "description": "Update existing hosts."
+      }
+    },
+    "hostgroup": {
+      "hostgroup.create": {
+        "path": "schemas/hostgroup/hostgroup.create.json",
+        "title": "hostgroup.create",
+        "description": "Create new host groups."
+      },
+      "hostgroup.delete": {
+        "path": "schemas/hostgroup/hostgroup.delete.json",
+        "title": "hostgroup.delete",
+        "description": "Delete host groups."
+      },
+      "hostgroup.get": {
+        "path": "schemas/hostgroup/hostgroup.get.json",
+        "title": "hostgroup.get",
+        "description": "Retrieve host groups according to the given parameters."
+      },
+      "hostgroup.massadd": {
+        "path": "schemas/hostgroup/hostgroup.massadd.json",
+        "title": "hostgroup.massadd",
+        "description": "Simultaneously add multiple related objects to all the given host groups."
+      },
+      "hostgroup.massremove": {
+        "path": "schemas/hostgroup/hostgroup.massremove.json",
+        "title": "hostgroup.massremove",
+        "description": "Remove related objects from multiple host groups."
+      },
+      "hostgroup.massupdate": {
+        "path": "schemas/hostgroup/hostgroup.massupdate.json",
+        "title": "hostgroup.massupdate",
+        "description": "Replace hosts and templates with the specified ones in multiple host groups."
+      },
+      "hostgroup.propagate": {
+        "path": "schemas/hostgroup/hostgroup.propagate.json",
+        "title": "hostgroup.propagate",
+        "description": "Propagate permissions and tag filters to all subgroups of a host group."
+      },
+      "hostgroup.update": {
+        "path": "schemas/hostgroup/hostgroup.update.json",
+        "title": "hostgroup.update",
+        "description": "Update existing host groups."
+      }
+    },
+    "hostinterface": {
+      "hostinterface.create": {
+        "path": "schemas/hostinterface/hostinterface.create.json",
+        "title": "hostinterface.create",
+        "description": "Create new host interfaces."
+      },
+      "hostinterface.delete": {
+        "path": "schemas/hostinterface/hostinterface.delete.json",
+        "title": "hostinterface.delete",
+        "description": "Delete host interfaces."
+      },
+      "hostinterface.get": {
+        "path": "schemas/hostinterface/hostinterface.get.json",
+        "title": "hostinterface.get",
+        "description": "Retrieve host interfaces according to the given parameters."
+      },
+      "hostinterface.massadd": {
+        "path": "schemas/hostinterface/hostinterface.massadd.json",
+        "title": "hostinterface.massadd",
+        "description": "Simultaneously add host interfaces to multiple hosts."
+      },
+      "hostinterface.massremove": {
+        "path": "schemas/hostinterface/hostinterface.massremove.json",
+        "title": "hostinterface.massremove",
+        "description": "Remove host interfaces from the given hosts."
+      },
+      "hostinterface.replacehostinterfaces": {
+        "path": "schemas/hostinterface/hostinterface.replacehostinterfaces.json",
+        "title": "hostinterface.replacehostinterfaces",
+        "description": "Replace all host interfaces on a given host."
+      },
+      "hostinterface.update": {
+        "path": "schemas/hostinterface/hostinterface.update.json",
+        "title": "hostinterface.update",
+        "description": "Update existing host interfaces."
+      }
+    },
+    "hostprototype": {
+      "hostprototype.create": {
+        "path": "schemas/hostprototype/hostprototype.create.json",
+        "title": "hostprototype.create",
+        "description": "Create new host prototypes."
+      },
+      "hostprototype.delete": {
+        "path": "schemas/hostprototype/hostprototype.delete.json",
+        "title": "hostprototype.delete",
+        "description": "Delete host prototypes."
+      },
+      "hostprototype.get": {
+        "path": "schemas/hostprototype/hostprototype.get.json",
+        "title": "hostprototype.get",
+        "description": "Retrieve host prototypes according to the given parameters."
+      },
+      "hostprototype.update": {
+        "path": "schemas/hostprototype/hostprototype.update.json",
+        "title": "hostprototype.update",
+        "description": "Update existing host prototypes."
+      }
+    },
+    "housekeeping": {
+      "housekeeping.get": {
+        "path": "schemas/housekeeping/housekeeping.get.json",
+        "title": "housekeeping.get",
+        "description": "Retrieve housekeeping object according to the given parameters."
+      },
+      "housekeeping.update": {
+        "path": "schemas/housekeeping/housekeeping.update.json",
+        "title": "housekeeping.update",
+        "description": "Update existing housekeeping settings."
+      }
+    },
+    "httptest": {
+      "httptest.create": {
+        "path": "schemas/httptest/httptest.create.json",
+        "title": "httptest.create",
+        "description": "Create new web scenarios."
+      },
+      "httptest.delete": {
+        "path": "schemas/httptest/httptest.delete.json",
+        "title": "httptest.delete",
+        "description": "Delete web scenarios."
+      },
+      "httptest.get": {
+        "path": "schemas/httptest/httptest.get.json",
+        "title": "httptest.get",
+        "description": "Retrieve web scenarios according to the given parameters."
+      },
+      "httptest.update": {
+        "path": "schemas/httptest/httptest.update.json",
+        "title": "httptest.update",
+        "description": "Update existing web scenarios."
+      }
+    },
+    "iconmap": {
+      "iconmap.create": {
+        "path": "schemas/iconmap/iconmap.create.json",
+        "title": "iconmap.create",
+        "description": "Create new icon maps."
+      },
+      "iconmap.delete": {
+        "path": "schemas/iconmap/iconmap.delete.json",
+        "title": "iconmap.delete",
+        "description": "Delete icon maps."
+      },
+      "iconmap.get": {
+        "path": "schemas/iconmap/iconmap.get.json",
+        "title": "iconmap.get",
+        "description": "Retrieve icon maps according to the given parameters."
+      },
+      "iconmap.update": {
+        "path": "schemas/iconmap/iconmap.update.json",
+        "title": "iconmap.update",
+        "description": "Update existing icon maps."
+      }
+    },
+    "image": {
+      "image.create": {
+        "path": "schemas/image/image.create.json",
+        "title": "image.create",
+        "description": "Create new images."
+      },
+      "image.delete": {
+        "path": "schemas/image/image.delete.json",
+        "title": "image.delete",
+        "description": "Delete images."
+      },
+      "image.get": {
+        "path": "schemas/image/image.get.json",
+        "title": "image.get",
+        "description": "Retrieve images according to the given parameters."
+      },
+      "image.update": {
+        "path": "schemas/image/image.update.json",
+        "title": "image.update",
+        "description": "Update existing images."
+      }
+    },
+    "item": {
+      "item.create": {
+        "path": "schemas/item/item.create.json",
+        "title": "item.create",
+        "description": "Create new items. Web items cannot be created via the Zabbix API."
+      },
+      "item.delete": {
+        "path": "schemas/item/item.delete.json",
+        "title": "item.delete",
+        "description": "Delete items. IDs of the items to delete. Dependent items and item prototypes are removed automatically if the master item is deleted. Web items cannot be deleted via the Zabbix API."
+      },
+      "item.get": {
+        "path": "schemas/item/item.get.json",
+        "title": "item.get",
+        "description": "Retrieve items according to the given parameters."
+      },
+      "item.update": {
+        "path": "schemas/item/item.update.json",
+        "title": "item.update",
+        "description": "Update existing items. The itemid property must be defined for each item; all other properties are optional. Web items cannot be updated via the Zabbix API."
+      }
+    },
+    "itemprototype": {
+      "itemprototype.create": {
+        "path": "schemas/itemprototype/itemprototype.create.json",
+        "title": "itemprototype.create",
+        "description": "Create new item prototypes."
+      },
+      "itemprototype.delete": {
+        "path": "schemas/itemprototype/itemprototype.delete.json",
+        "title": "itemprototype.delete",
+        "description": "Delete item prototypes."
+      },
+      "itemprototype.get": {
+        "path": "schemas/itemprototype/itemprototype.get.json",
+        "title": "itemprototype.get",
+        "description": "Retrieve item prototypes according to the given parameters."
+      },
+      "itemprototype.update": {
+        "path": "schemas/itemprototype/itemprototype.update.json",
+        "title": "itemprototype.update",
+        "description": "Update existing item prototypes."
+      }
+    },
+    "maintenance": {
+      "maintenance.create": {
+        "path": "schemas/maintenance/maintenance.create.json",
+        "title": "maintenance.create",
+        "description": "Create new maintenances."
+      },
+      "maintenance.delete": {
+        "path": "schemas/maintenance/maintenance.delete.json",
+        "title": "maintenance.delete",
+        "description": "Delete maintenance periods."
+      },
+      "maintenance.get": {
+        "path": "schemas/maintenance/maintenance.get.json",
+        "title": "maintenance.get",
+        "description": "Retrieve maintenances according to the given parameters."
+      },
+      "maintenance.update": {
+        "path": "schemas/maintenance/maintenance.update.json",
+        "title": "maintenance.update",
+        "description": "Update existing maintenances."
+      }
+    },
+    "map": {
+      "map.create": {
+        "path": "schemas/map/map.create.json",
+        "title": "map.create",
+        "description": "Create new maps."
+      },
+      "map.delete": {
+        "path": "schemas/map/map.delete.json",
+        "title": "map.delete",
+        "description": "Delete maps."
+      },
+      "map.get": {
+        "path": "schemas/map/map.get.json",
+        "title": "map.get",
+        "description": "Retrieve maps according to the given parameters."
+      },
+      "map.update": {
+        "path": "schemas/map/map.update.json",
+        "title": "map.update",
+        "description": "Update existing maps."
+      }
+    },
+    "mediatype": {
+      "mediatype.create": {
+        "path": "schemas/mediatype/mediatype.create.json",
+        "title": "mediatype.create",
+        "description": "Create new media types."
+      },
+      "mediatype.delete": {
+        "path": "schemas/mediatype/mediatype.delete.json",
+        "title": "mediatype.delete",
+        "description": "Delete media types."
+      },
+      "mediatype.get": {
+        "path": "schemas/mediatype/mediatype.get.json",
+        "title": "mediatype.get",
+        "description": "Retrieve media types according to the given parameters."
+      },
+      "mediatype.update": {
+        "path": "schemas/mediatype/mediatype.update.json",
+        "title": "mediatype.update",
+        "description": "Update existing media types."
+      }
+    },
+    "mfa": {
+      "mfa.create": {
+        "path": "schemas/mfa/mfa.create.json",
+        "title": "mfa.create",
+        "description": "Create new MFA methods."
+      },
+      "mfa.delete": {
+        "path": "schemas/mfa/mfa.delete.json",
+        "title": "mfa.delete",
+        "description": "Delete MFA methods."
+      },
+      "mfa.get": {
+        "path": "schemas/mfa/mfa.get.json",
+        "title": "mfa.get",
+        "description": "Retrieve MFA methods according to the given parameters."
+      },
+      "mfa.update": {
+        "path": "schemas/mfa/mfa.update.json",
+        "title": "mfa.update",
+        "description": "Update existing MFA methods."
+      }
+    },
+    "module": {
+      "module.create": {
+        "path": "schemas/module/module.create.json",
+        "title": "module.create",
+        "description": "Install new frontend modules."
+      },
+      "module.delete": {
+        "path": "schemas/module/module.delete.json",
+        "title": "module.delete",
+        "description": "Uninstall modules."
+      },
+      "module.get": {
+        "path": "schemas/module/module.get.json",
+        "title": "module.get",
+        "description": "Retrieve modules according to the given parameters."
+      },
+      "module.update": {
+        "path": "schemas/module/module.update.json",
+        "title": "module.update",
+        "description": "Update existing modules."
+      }
+    },
+    "problem": {
+      "problem.get": {
+        "path": "schemas/problem/problem.get.json",
+        "title": "problem.get",
+        "description": "Retrieve unresolved problems (and, if requested, recently resolved ones) according to the given parameters."
+      }
+    },
+    "proxy": {
+      "proxy.create": {
+        "path": "schemas/proxy/proxy.create.json",
+        "title": "proxy.create",
+        "description": "Create new proxies."
+      },
+      "proxy.delete": {
+        "path": "schemas/proxy/proxy.delete.json",
+        "title": "proxy.delete",
+        "description": "Delete proxies."
+      },
+      "proxy.get": {
+        "path": "schemas/proxy/proxy.get.json",
+        "title": "proxy.get",
+        "description": "Retrieve proxies according to the given parameters."
+      },
+      "proxy.update": {
+        "path": "schemas/proxy/proxy.update.json",
+        "title": "proxy.update",
+        "description": "Update existing proxies."
+      }
+    },
+    "proxygroup": {
+      "proxygroup.create": {
+        "path": "schemas/proxygroup/proxygroup.create.json",
+        "title": "proxygroup.create",
+        "description": "Create new proxy groups."
+      },
+      "proxygroup.delete": {
+        "path": "schemas/proxygroup/proxygroup.delete.json",
+        "title": "proxygroup.delete",
+        "description": "Delete proxy groups."
+      },
+      "proxygroup.get": {
+        "path": "schemas/proxygroup/proxygroup.get.json",
+        "title": "proxygroup.get",
+        "description": "Retrieve proxy groups according to the given parameters."
+      },
+      "proxygroup.update": {
+        "path": "schemas/proxygroup/proxygroup.update.json",
+        "title": "proxygroup.update",
+        "description": "Update existing proxy groups."
+      }
+    },
+    "regexp": {
+      "regexp.create": {
+        "path": "schemas/regexp/regexp.create.json",
+        "title": "regexp.create",
+        "description": "Create new global regular expressions."
+      },
+      "regexp.delete": {
+        "path": "schemas/regexp/regexp.delete.json",
+        "title": "regexp.delete",
+        "description": "Delete global regular expressions."
+      },
+      "regexp.get": {
+        "path": "schemas/regexp/regexp.get.json",
+        "title": "regexp.get",
+        "description": "Retrieve global regular expressions according to the given parameters."
+      },
+      "regexp.update": {
+        "path": "schemas/regexp/regexp.update.json",
+        "title": "regexp.update",
+        "description": "Update existing global regular expressions."
+      }
+    },
+    "report": {
+      "report.create": {
+        "path": "schemas/report/report.create.json",
+        "title": "report.create",
+        "description": "Create new scheduled reports."
+      },
+      "report.delete": {
+        "path": "schemas/report/report.delete.json",
+        "title": "report.delete",
+        "description": "Delete scheduled reports."
+      },
+      "report.get": {
+        "path": "schemas/report/report.get.json",
+        "title": "report.get",
+        "description": "Retrieve scheduled reports according to the given parameters."
+      },
+      "report.update": {
+        "path": "schemas/report/report.update.json",
+        "title": "report.update",
+        "description": "Update existing scheduled reports."
+      }
+    },
+    "role": {
+      "role.create": {
+        "path": "schemas/role/role.create.json",
+        "title": "role.create",
+        "description": "Create new user roles."
+      },
+      "role.delete": {
+        "path": "schemas/role/role.delete.json",
+        "title": "role.delete",
+        "description": "Delete user roles."
+      },
+      "role.get": {
+        "path": "schemas/role/role.get.json",
+        "title": "role.get",
+        "description": "Retrieve user roles according to the given parameters."
+      },
+      "role.update": {
+        "path": "schemas/role/role.update.json",
+        "title": "role.update",
+        "description": "Update existing user roles."
+      }
+    },
+    "script": {
+      "script.create": {
+        "path": "schemas/script/script.create.json",
+        "title": "script.create",
+        "description": "Create new scripts."
+      },
+      "script.delete": {
+        "path": "schemas/script/script.delete.json",
+        "title": "script.delete",
+        "description": "Delete scripts."
+      },
+      "script.execute": {
+        "path": "schemas/script/script.execute.json",
+        "title": "script.execute",
+        "description": "Run a script on a host or event. Except for URL type scripts, which are not executable."
+      },
+      "script.get": {
+        "path": "schemas/script/script.get.json",
+        "title": "script.get",
+        "description": "Retrieve scripts according to the given parameters."
+      },
+      "script.getscriptsbyevents": {
+        "path": "schemas/script/script.getscriptsbyevents.json",
+        "title": "script.getscriptsbyevents",
+        "description": "Retrieve all available scripts on the given event, or a specific script if a script ID is provided. When manualinput is provided, it substitutes the {MANUALINPUT} macro with the specified value."
+      },
+      "script.getscriptsbyhosts": {
+        "path": "schemas/script/script.getscriptsbyhosts.json",
+        "title": "script.getscriptsbyhosts",
+        "description": "Retrieve all available scripts on the given host, or a specific script if a script ID is provided. When manualinput is provided, it substitutes the {MANUALINPUT} macro with the specified value."
+      },
+      "script.update": {
+        "path": "schemas/script/script.update.json",
+        "title": "script.update",
+        "description": "Update existing scripts. The scriptid property must be defined for each script; all other properties are optional and only the passed properties will be updated. An exception is the type property change from 5 (Webhook) to other: the parameters property will be cleaned."
+      }
+    },
+    "service": {
+      "service.create": {
+        "path": "schemas/service/service.create.json",
+        "title": "service.create",
+        "description": "Create new services."
+      },
+      "service.delete": {
+        "path": "schemas/service/service.delete.json",
+        "title": "service.delete",
+        "description": "Delete services."
+      },
+      "service.get": {
+        "path": "schemas/service/service.get.json",
+        "title": "service.get",
+        "description": "Retrieve services according to the given parameters."
+      },
+      "service.update": {
+        "path": "schemas/service/service.update.json",
+        "title": "service.update",
+        "description": "Update existing services."
+      }
+    },
+    "settings": {
+      "settings.get": {
+        "path": "schemas/settings/settings.get.json",
+        "title": "settings.get",
+        "description": "Retrieve the settings object according to the given parameters."
+      },
+      "settings.update": {
+        "path": "schemas/settings/settings.update.json",
+        "title": "settings.update",
+        "description": "Update existing common (system) settings."
+      }
+    },
+    "sla": {
+      "sla.create": {
+        "path": "schemas/sla/sla.create.json",
+        "title": "sla.create",
+        "description": "Create new SLA objects."
+      },
+      "sla.delete": {
+        "path": "schemas/sla/sla.delete.json",
+        "title": "sla.delete",
+        "description": "Delete SLA entries."
+      },
+      "sla.get": {
+        "path": "schemas/sla/sla.get.json",
+        "title": "sla.get",
+        "description": "Retrieve SLA objects according to the given parameters."
+      },
+      "sla.getsli": {
+        "path": "schemas/sla/sla.getsli.json",
+        "title": "sla.getsli",
+        "description": "Calculate the Service Level Indicator (SLI) data for a Service Level Agreement (SLA)."
+      },
+      "sla.update": {
+        "path": "schemas/sla/sla.update.json",
+        "title": "sla.update",
+        "description": "Update existing SLA entries."
+      }
+    },
+    "task": {
+      "task.create": {
+        "path": "schemas/task/task.create.json",
+        "title": "task.create",
+        "description": "Create new tasks. Accepts a single task object or an array of task objects (bulk create)."
+      },
+      "task.get": {
+        "path": "schemas/task/task.get.json",
+        "title": "task.get",
+        "description": "Retrieve tasks according to the given parameters. Only available to Super admin user type."
+      }
+    },
+    "template": {
+      "template.create": {
+        "path": "schemas/template/template.create.json",
+        "title": "template.create",
+        "description": "Create new templates."
+      },
+      "template.delete": {
+        "path": "schemas/template/template.delete.json",
+        "title": "template.delete",
+        "description": "Delete templates. Deleting a template causes deletion of all template entities (items, triggers, graphs, etc.). To leave template entities with the hosts, unlink the template first via template.update, template.massupdate, host.update, or host.massupdate."
+      },
+      "template.get": {
+        "path": "schemas/template/template.get.json",
+        "title": "template.get",
+        "description": "Retrieve templates according to the given parameters."
+      },
+      "template.massadd": {
+        "path": "schemas/template/template.massadd.json",
+        "title": "template.massadd",
+        "description": "Simultaneously add multiple related objects to the given templates."
+      },
+      "template.massremove": {
+        "path": "schemas/template/template.massremove.json",
+        "title": "template.massremove",
+        "description": "Remove related objects from multiple templates."
+      },
+      "template.massupdate": {
+        "path": "schemas/template/template.massupdate.json",
+        "title": "template.massupdate",
+        "description": "Simultaneously replace or remove related objects and update properties on multiple templates."
+      },
+      "template.update": {
+        "path": "schemas/template/template.update.json",
+        "title": "template.update",
+        "description": "Update existing templates."
+      }
+    },
+    "templatedashboard": {
+      "templatedashboard.create": {
+        "path": "schemas/templatedashboard/templatedashboard.create.json",
+        "title": "templatedashboard.create",
+        "description": "Create new template dashboards."
+      },
+      "templatedashboard.delete": {
+        "path": "schemas/templatedashboard/templatedashboard.delete.json",
+        "title": "templatedashboard.delete",
+        "description": "Delete template dashboards."
+      },
+      "templatedashboard.get": {
+        "path": "schemas/templatedashboard/templatedashboard.get.json",
+        "title": "templatedashboard.get",
+        "description": "Retrieve template dashboards according to the given parameters."
+      },
+      "templatedashboard.update": {
+        "path": "schemas/templatedashboard/templatedashboard.update.json",
+        "title": "templatedashboard.update",
+        "description": "Update existing template dashboards."
+      }
+    },
+    "templategroup": {
+      "templategroup.create": {
+        "path": "schemas/templategroup/templategroup.create.json",
+        "title": "templategroup.create",
+        "description": "Create new template groups."
+      },
+      "templategroup.delete": {
+        "path": "schemas/templategroup/templategroup.delete.json",
+        "title": "templategroup.delete",
+        "description": "Delete template groups. A template group cannot be deleted if it contains templates that belong to this group only."
+      },
+      "templategroup.get": {
+        "path": "schemas/templategroup/templategroup.get.json",
+        "title": "templategroup.get",
+        "description": "Retrieve template groups according to the given parameters."
+      },
+      "templategroup.massadd": {
+        "path": "schemas/templategroup/templategroup.massadd.json",
+        "title": "templategroup.massadd",
+        "description": "Simultaneously add multiple related objects to all the given template groups."
+      },
+      "templategroup.massremove": {
+        "path": "schemas/templategroup/templategroup.massremove.json",
+        "title": "templategroup.massremove",
+        "description": "Remove related objects from multiple template groups."
+      },
+      "templategroup.massupdate": {
+        "path": "schemas/templategroup/templategroup.massupdate.json",
+        "title": "templategroup.massupdate",
+        "description": "Replace templates with the specified ones in multiple template groups. All other templates, except the ones mentioned, will be excluded from the given template groups."
+      },
+      "templategroup.propagate": {
+        "path": "schemas/templategroup/templategroup.propagate.json",
+        "title": "templategroup.propagate",
+        "description": "Apply permissions to all of the given template groups' subgroups."
+      },
+      "templategroup.update": {
+        "path": "schemas/templategroup/templategroup.update.json",
+        "title": "templategroup.update",
+        "description": "Update existing template groups."
+      }
+    },
+    "token": {
+      "token.create": {
+        "path": "schemas/token/token.create.json",
+        "title": "token.create",
+        "description": "Create new tokens. A token created by this method also has to be generated (token.generate) before it is usable."
+      },
+      "token.delete": {
+        "path": "schemas/token/token.delete.json",
+        "title": "token.delete",
+        "description": "Delete tokens."
+      },
+      "token.generate": {
+        "path": "schemas/token/token.generate.json",
+        "title": "token.generate",
+        "description": "Generate tokens. A token can be generated by this method only if it has been created (token.create) first."
+      },
+      "token.get": {
+        "path": "schemas/token/token.get.json",
+        "title": "token.get",
+        "description": "Retrieve tokens according to the given parameters."
+      },
+      "token.update": {
+        "path": "schemas/token/token.update.json",
+        "title": "token.update",
+        "description": "Update existing tokens. The tokenid property must be defined for each token; all other properties are optional and only passed properties will be updated."
+      }
+    },
+    "trend": {
+      "trend.get": {
+        "path": "schemas/trend/trend.get.json",
+        "title": "trend.get",
+        "description": "Retrieve trend data according to the given parameters."
+      }
+    },
+    "trigger": {
+      "trigger.create": {
+        "path": "schemas/trigger/trigger.create.json",
+        "title": "trigger.create",
+        "description": "Create new triggers."
+      },
+      "trigger.delete": {
+        "path": "schemas/trigger/trigger.delete.json",
+        "title": "trigger.delete",
+        "description": "Delete triggers. IDs of the triggers to delete."
+      },
+      "trigger.get": {
+        "path": "schemas/trigger/trigger.get.json",
+        "title": "trigger.get",
+        "description": "Retrieve triggers according to the given parameters."
+      },
+      "trigger.update": {
+        "path": "schemas/trigger/trigger.update.json",
+        "title": "trigger.update",
+        "description": "Update existing triggers."
+      }
+    },
+    "triggerprototype": {
+      "triggerprototype.create": {
+        "path": "schemas/triggerprototype/triggerprototype.create.json",
+        "title": "triggerprototype.create",
+        "description": "Create new trigger prototypes."
+      },
+      "triggerprototype.delete": {
+        "path": "schemas/triggerprototype/triggerprototype.delete.json",
+        "title": "triggerprototype.delete",
+        "description": "Delete trigger prototypes."
+      },
+      "triggerprototype.get": {
+        "path": "schemas/triggerprototype/triggerprototype.get.json",
+        "title": "triggerprototype.get",
+        "description": "Retrieve trigger prototypes according to the given parameters."
+      },
+      "triggerprototype.update": {
+        "path": "schemas/triggerprototype/triggerprototype.update.json",
+        "title": "triggerprototype.update",
+        "description": "Update existing trigger prototypes."
+      }
+    },
+    "user": {
+      "user.checkAuthentication": {
+        "path": "schemas/user/user.checkAuthentication.json",
+        "title": "user.checkAuthentication",
+        "description": "Check and prolong the user session. Calling this method using the sessionid parameter prolongs the user session by default."
+      },
+      "user.create": {
+        "path": "schemas/user/user.create.json",
+        "title": "user.create",
+        "description": "Create new users."
+      },
+      "user.delete": {
+        "path": "schemas/user/user.delete.json",
+        "title": "user.delete",
+        "description": "Delete users."
+      },
+      "user.get": {
+        "path": "schemas/user/user.get.json",
+        "title": "user.get",
+        "description": "Retrieve users according to the given parameters."
+      },
+      "user.login": {
+        "path": "schemas/user/user.login.json",
+        "title": "user.login",
+        "description": "Log in to the API and generate an authentication token. This method must be called without the auth parameter in the JSON-RPC request, and is only available to unauthenticated users who do not belong to any user group with enabled multi-factor authentication."
+      },
+      "user.logout": {
+        "path": "schemas/user/user.logout.json",
+        "title": "user.logout",
+        "description": "Log out of the API and invalidate the current authentication token. The method accepts an empty array."
+      },
+      "user.provision": {
+        "path": "schemas/user/user.provision.json",
+        "title": "user.provision",
+        "description": "Provision LDAP users."
+      },
+      "user.resettotp": {
+        "path": "schemas/user/user.resettotp.json",
+        "title": "user.resettotp",
+        "description": "Reset user TOTP secrets. User sessions for the specified users will also be deleted (except for the user sending the request)."
+      },
+      "user.unblock": {
+        "path": "schemas/user/user.unblock.json",
+        "title": "user.unblock",
+        "description": "Unblock users."
+      },
+      "user.update": {
+        "path": "schemas/user/user.update.json",
+        "title": "user.update",
+        "description": "Update existing users."
+      }
+    },
+    "userdirectory": {
+      "userdirectory.create": {
+        "path": "schemas/userdirectory/userdirectory.create.json",
+        "title": "userdirectory.create",
+        "description": "Create new user directories."
+      },
+      "userdirectory.delete": {
+        "path": "schemas/userdirectory/userdirectory.delete.json",
+        "title": "userdirectory.delete",
+        "description": "Delete user directories. A user directory cannot be deleted when it is directly used for at least one user group. The default LDAP user directory cannot be deleted when authentication.ldap_configured is set to 1 or when there are more user directories left."
+      },
+      "userdirectory.get": {
+        "path": "schemas/userdirectory/userdirectory.get.json",
+        "title": "userdirectory.get",
+        "description": "Retrieve user directories according to the given parameters."
+      },
+      "userdirectory.test": {
+        "path": "schemas/userdirectory/userdirectory.test.json",
+        "title": "userdirectory.test",
+        "description": "Test user directory connection settings. Also allows testing what configured data matches the user directory settings for user provisioning (e.g., what user role, user groups, user medias will be assigned to the user); for this type of test the request should be made for a user directory that has provision_status set to enabled. Since userdirectory.get does not return the bind_password field, userdirectoryid and/or bind_password should be supplied."
+      },
+      "userdirectory.update": {
+        "path": "schemas/userdirectory/userdirectory.update.json",
+        "title": "userdirectory.update",
+        "description": "Update existing user directories. The userdirectoryid property must be defined for each user directory; all other properties are optional. Only the passed properties will be updated, all others will remain unchanged."
+      }
+    },
+    "usergroup": {
+      "usergroup.create": {
+        "path": "schemas/usergroup/usergroup.create.json",
+        "title": "usergroup.create",
+        "description": "Create new user groups."
+      },
+      "usergroup.delete": {
+        "path": "schemas/usergroup/usergroup.delete.json",
+        "title": "usergroup.delete",
+        "description": "Delete user groups. Note: the deprovisioned users group (disabled_usrgrpid in Authentication) cannot be deleted."
+      },
+      "usergroup.get": {
+        "path": "schemas/usergroup/usergroup.get.json",
+        "title": "usergroup.get",
+        "description": "Retrieve user groups according to the given parameters."
+      },
+      "usergroup.update": {
+        "path": "schemas/usergroup/usergroup.update.json",
+        "title": "usergroup.update",
+        "description": "Update existing user groups."
+      }
+    },
+    "usermacro": {
+      "usermacro.create": {
+        "path": "schemas/usermacro/usermacro.create.json",
+        "title": "usermacro.create",
+        "description": "Create new host macros."
+      },
+      "usermacro.createglobal": {
+        "path": "schemas/usermacro/usermacro.createglobal.json",
+        "title": "usermacro.createglobal",
+        "description": "Create new global macros."
+      },
+      "usermacro.delete": {
+        "path": "schemas/usermacro/usermacro.delete.json",
+        "title": "usermacro.delete",
+        "description": "Delete host macros. Params are the IDs of the host macros to delete."
+      },
+      "usermacro.deleteglobal": {
+        "path": "schemas/usermacro/usermacro.deleteglobal.json",
+        "title": "usermacro.deleteglobal",
+        "description": "Delete global macros. Params are the IDs of the global macros to delete."
+      },
+      "usermacro.get": {
+        "path": "schemas/usermacro/usermacro.get.json",
+        "title": "usermacro.get",
+        "description": "Retrieve host and global macros according to the given parameters."
+      },
+      "usermacro.update": {
+        "path": "schemas/usermacro/usermacro.update.json",
+        "title": "usermacro.update",
+        "description": "Update existing host macros. The hostmacroid property must be defined for each host macro; all other properties are optional and only the passed properties will be updated."
+      },
+      "usermacro.updateglobal": {
+        "path": "schemas/usermacro/usermacro.updateglobal.json",
+        "title": "usermacro.updateglobal",
+        "description": "Update existing global macros. The globalmacroid property must be defined for each global macro; all other properties are optional and only the passed properties will be updated."
+      }
+    },
+    "valuemap": {
+      "valuemap.create": {
+        "path": "schemas/valuemap/valuemap.create.json",
+        "title": "valuemap.create",
+        "description": "Create new value maps."
+      },
+      "valuemap.delete": {
+        "path": "schemas/valuemap/valuemap.delete.json",
+        "title": "valuemap.delete",
+        "description": "Delete value maps."
+      },
+      "valuemap.get": {
+        "path": "schemas/valuemap/valuemap.get.json",
+        "title": "valuemap.get",
+        "description": "Retrieve value maps according to the given parameters."
+      },
+      "valuemap.update": {
+        "path": "schemas/valuemap/valuemap.update.json",
+        "title": "valuemap.update",
+        "description": "Update existing value maps."
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/regexp/regexp.create",
+  "title": "regexp.create",
+  "description": "Create new global regular expressions.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/regexp/create",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the regular expression. Required for create operations."
+    },
+    "test_string": {
+      "type": "string",
+      "description": "Test string."
+    },
+    "expressions": {
+      "type": "array",
+      "description": "Expressions options. Required.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "expression": {
+            "type": "string",
+            "description": "Regular expression. Required."
+          },
+          "expression_type": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4],
+            "description": "Type of Regular expression. Required. Possible values: 0 - Character string included; 1 - Any character string included; 2 - Character string not included; 3 - Result is TRUE; 4 - Result is FALSE."
+          },
+          "exp_delimiter": {
+            "type": "string",
+            "enum": [",", ".", "/"],
+            "description": "Expression delimiter. Supported if expression_type is set to \"Any character string included\". Default: \",\"."
+          },
+          "case_sensitive": {
+            "type": "integer",
+            "enum": [0, 1],
+            "description": "Case sensitivity. Possible values: 0 - Case insensitive; 1 - Case sensitive. Default: 0."
+          }
+        },
+        "required": ["expression", "expression_type"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["name", "expressions"],
+  "additionalProperties": false
+}

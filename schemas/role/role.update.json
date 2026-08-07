@@ -1,0 +1,310 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/role/role.update",
+  "title": "role.update",
+  "description": "Update existing user roles.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/role/update",
+  "type": "object",
+  "properties": {
+    "roleid": {
+      "type": "string",
+      "description": "ID of the role. Property behavior: read-only; required for update operations."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the role."
+    },
+    "type": {
+      "type": "integer",
+      "description": "User type. Possible values: 1 - (default) User; 2 - Admin; 3 - Super admin.",
+      "enum": [
+        1,
+        2,
+        3
+      ]
+    },
+    "rules": {
+      "description": "Access rules to update for the role.",
+      "$ref": "#/$defs/roleRules"
+    }
+  },
+  "required": [
+    "roleid"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "uiElement": {
+      "type": "object",
+      "description": "UI element object.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the UI element. Possible values if type of the Role object is \"User\", \"Admin\", or \"Super admin\": monitoring.dashboard - Dashboards; monitoring.problems - Monitoring -> Problems; monitoring.hosts - Monitoring -> Hosts; monitoring.latest_data - Monitoring -> Latest data; monitoring.maps - Monitoring -> Maps; services.services - Services -> Services; services.sla_report - Services -> SLA report; inventory.overview - Inventory -> Overview; inventory.hosts - Inventory -> Hosts; reports.availability_report - Reports -> Availability report; reports.top_triggers - Reports -> Triggers top 100. Possible values if type is \"Admin\" or \"Super admin\": monitoring.discovery - Monitoring -> Discovery; services.sla - Services -> SLA; reports.scheduled_reports - Reports -> Scheduled reports; reports.notifications - Reports -> Notifications; configuration.template_groups - Data collection -> Template groups; configuration.host_groups - Data collection -> Host groups; configuration.templates - Data collection -> Templates; configuration.hosts - Data collection -> Hosts; configuration.maintenance - Data collection -> Maintenance; configuration.discovery - Data collection -> Discovery; configuration.trigger_actions - Alerts -> Actions -> Trigger actions; configuration.service_actions - Alerts -> Actions -> Service actions; configuration.discovery_actions - Alerts -> Actions -> Discovery actions; configuration.autoregistration_actions - Alerts -> Actions -> Autoregistration actions; configuration.internal_actions - Alerts -> Actions -> Internal actions. Possible values if type is \"Super admin\": reports.system_info - Reports -> System information; reports.audit - Reports -> Audit log; reports.action_log - Reports -> Action log; configuration.event_correlation - Data collection -> Event correlation; administration.media_types - Alerts -> Media types; administration.scripts - Alerts -> Scripts; administration.user_groups - Users -> User groups; administration.user_roles - Users -> User roles; administration.users - Users -> Users; administration.api_tokens - Users -> API tokens; administration.authentication - Users -> Authentication; administration.general - Administration -> General; administration.audit_log - Administration -> Audit log; administration.housekeeping - Administration -> Housekeeping; administration.proxy_groups - Administration -> Proxy groups; administration.proxies - Administration -> Proxies; administration.macros - Administration -> Macros; administration.queue - Administration -> Queue. Property behavior: required.",
+          "enum": [
+            "monitoring.dashboard",
+            "monitoring.problems",
+            "monitoring.hosts",
+            "monitoring.latest_data",
+            "monitoring.maps",
+            "services.services",
+            "services.sla_report",
+            "inventory.overview",
+            "inventory.hosts",
+            "reports.availability_report",
+            "reports.top_triggers",
+            "monitoring.discovery",
+            "services.sla",
+            "reports.scheduled_reports",
+            "reports.notifications",
+            "configuration.template_groups",
+            "configuration.host_groups",
+            "configuration.templates",
+            "configuration.hosts",
+            "configuration.maintenance",
+            "configuration.discovery",
+            "configuration.trigger_actions",
+            "configuration.service_actions",
+            "configuration.discovery_actions",
+            "configuration.autoregistration_actions",
+            "configuration.internal_actions",
+            "reports.system_info",
+            "reports.audit",
+            "reports.action_log",
+            "configuration.event_correlation",
+            "administration.media_types",
+            "administration.scripts",
+            "administration.user_groups",
+            "administration.user_roles",
+            "administration.users",
+            "administration.api_tokens",
+            "administration.authentication",
+            "administration.general",
+            "administration.audit_log",
+            "administration.housekeeping",
+            "administration.proxy_groups",
+            "administration.proxies",
+            "administration.macros",
+            "administration.queue"
+          ]
+        },
+        "status": {
+          "type": "integer",
+          "description": "Whether access to the UI element is enabled. Possible values: 0 - disabled; 1 - (default) enabled.",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "service": {
+      "type": "object",
+      "description": "Service object reference.",
+      "properties": {
+        "serviceid": {
+          "type": "string",
+          "description": "ID of the Service. Property behavior: required."
+        }
+      },
+      "required": [
+        "serviceid"
+      ],
+      "additionalProperties": false
+    },
+    "serviceTag": {
+      "type": "object",
+      "description": "Service tag object.",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "Tag name. If empty string is specified, the service tag will not be used for service matching. Property behavior: required."
+        },
+        "value": {
+          "type": "string",
+          "description": "Tag value. If no value or empty string is specified, only the tag name will be used for service matching."
+        }
+      },
+      "required": [
+        "tag"
+      ],
+      "additionalProperties": false
+    },
+    "module": {
+      "type": "object",
+      "description": "Module object.",
+      "properties": {
+        "moduleid": {
+          "type": "string",
+          "description": "ID of the module. Property behavior: required."
+        },
+        "status": {
+          "type": "integer",
+          "description": "Whether access to the module is enabled. Possible values: 0 - disabled; 1 - (default) enabled.",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "moduleid"
+      ],
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "description": "Action object.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the action. Possible values if type of the Role object is \"User\", \"Admin\", or \"Super admin\": edit_dashboards - Create and edit dashboards; edit_maps - Create and edit maps; add_problem_comments - Add problem comments; change_severity - Change problem severity; acknowledge_problems - Acknowledge problems; suppress_problems - Suppress problems; close_problems - Close problems; execute_scripts - Execute scripts; manage_api_tokens - Manage API tokens; change_problem_ranking - Change the problem ranking from cause to symptom, and vice versa. Possible values if type is \"Admin\" or \"Super admin\": edit_maintenance - Create and edit maintenances; manage_scheduled_reports - Manage scheduled reports; manage_sla - Manage SLA. Possible values if type is \"User\" or \"Admin\": invoke_execute_now - allows to execute item checks for users that have only read permissions on host. Property behavior: required.",
+          "enum": [
+            "edit_dashboards",
+            "edit_maps",
+            "add_problem_comments",
+            "change_severity",
+            "acknowledge_problems",
+            "suppress_problems",
+            "close_problems",
+            "execute_scripts",
+            "manage_api_tokens",
+            "change_problem_ranking",
+            "edit_maintenance",
+            "manage_scheduled_reports",
+            "manage_sla",
+            "invoke_execute_now"
+          ]
+        },
+        "status": {
+          "type": "integer",
+          "description": "Whether access to perform the action is enabled. Possible values: 0 - disabled; 1 - (default) enabled.",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "roleRules": {
+      "type": "object",
+      "description": "Role rules object.",
+      "properties": {
+        "ui": {
+          "type": "array",
+          "description": "Array of the UI element objects.",
+          "items": {
+            "$ref": "#/$defs/uiElement"
+          }
+        },
+        "ui.default_access": {
+          "type": "integer",
+          "description": "Whether access to new UI elements is enabled. Possible values: 0 - disabled; 1 - (default) enabled.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "services.read.mode": {
+          "type": "integer",
+          "description": "Read-only access to services. Possible values: 0 - read-only access to the services, specified by the services.read.list or matched by the services.read.tag properties; 1 - (default) read-only access to all services.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "services.read.list": {
+          "type": "array",
+          "description": "Array of Service objects. The specified services, including child services, will be granted a read-only access to the user role. Read-only access will not override read-write access to the services. Property behavior: supported if services.read.mode is set to \"0\".",
+          "items": {
+            "$ref": "#/$defs/service"
+          }
+        },
+        "services.read.tag": {
+          "description": "Service tag object. The tag matched services, including child services, will be granted a read-only access to the user role. Read-only access will not override read-write access to the services. Property behavior: supported if services.read.mode is set to \"0\".",
+          "$ref": "#/$defs/serviceTag"
+        },
+        "services.write.mode": {
+          "type": "integer",
+          "description": "Read-write access to services. Possible values: 0 - (default) read-write access to the services, specified by the services.write.list or matched by the services.write.tag properties; 1 - read-write access to all services.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "services.write.list": {
+          "type": "array",
+          "description": "Array of Service objects. The specified services, including child services, will be granted a read-write access to the user role. Read-write access will override read-only access to the services. Property behavior: supported if services.write.mode is set to \"0\".",
+          "items": {
+            "$ref": "#/$defs/service"
+          }
+        },
+        "services.write.tag": {
+          "description": "Service tag object. The tag matched services, including child services, will be granted a read-write access to the user role. Read-write access will override read-only access to the services. Property behavior: supported if services.write.mode is set to \"0\".",
+          "$ref": "#/$defs/serviceTag"
+        },
+        "modules": {
+          "type": "array",
+          "description": "Array of the module objects.",
+          "items": {
+            "$ref": "#/$defs/module"
+          }
+        },
+        "modules.default_access": {
+          "type": "integer",
+          "description": "Whether access to new modules is enabled. Possible values: 0 - disabled; 1 - (default) enabled.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "api.access": {
+          "type": "integer",
+          "description": "Whether access to API is enabled. Possible values: 0 - disabled; 1 - (default) enabled.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "api.mode": {
+          "type": "integer",
+          "description": "Mode for treating API methods listed in the api property. Possible values: 0 - (default) deny list; 1 - allow list.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "api": {
+          "type": "array",
+          "description": "Array of API methods.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "actions": {
+          "type": "array",
+          "description": "Array of the action objects.",
+          "items": {
+            "$ref": "#/$defs/action"
+          }
+        },
+        "actions.default_access": {
+          "type": "integer",
+          "description": "Whether access to new actions is enabled. Possible values: 0 - disabled; 1 - (default) enabled.",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

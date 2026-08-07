@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/dashboard/dashboard.update",
+  "title": "dashboard.update",
+  "description": "Update existing dashboards.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/dashboard/update",
+  "type": "object",
+  "properties": {
+    "dashboardid": {"type": "string", "description": "ID of the dashboard to update."},
+    "name": {"type": "string", "description": "Name of the dashboard."},
+    "userid": {"type": "string", "description": "ID of the user that is the owner of the dashboard. Changing the dashboard owner is restricted to Admins and Super admins."},
+    "private": {"type": "integer", "enum": [0, 1], "description": "Type of dashboard sharing. 0 - public dashboard; 1 - (default) private dashboard."},
+    "display_period": {"type": "integer", "enum": [10, 30, 60, 120, 600, 1800, 3600], "description": "Default page display period (in seconds). Possible values: 10, 30, 60, 120, 600, 1800, 3600. Default: 30."},
+    "auto_start": {"type": "integer", "enum": [0, 1], "description": "Auto start slideshow. 0 - do not auto start slideshow; 1 - (default) auto start slideshow."},
+    "pages": {
+      "type": "array",
+      "description": "Dashboard pages to replace the existing dashboard pages. Pages are matched by the dashboard_pageid property: pages without dashboard_pageid are created as new, and existing pages not reused in the request are deleted. Pages will be ordered in the same order as specified. Only the specified properties of the dashboard pages will be updated.",
+      "items": {"$ref": "#/$defs/dashboardPage"}
+    },
+    "users": {
+      "type": "array",
+      "description": "Dashboard user shares to replace the existing user shares on the dashboard.",
+      "items": {"$ref": "#/$defs/dashboardUser"}
+    },
+    "userGroups": {
+      "type": "array",
+      "description": "Dashboard user group shares to replace the existing user group shares on the dashboard.",
+      "items": {"$ref": "#/$defs/dashboardUserGroup"}
+    }
+  },
+  "required": ["dashboardid"],
+  "additionalProperties": false,
+  "$defs": {
+    "dashboardPage": {
+      "type": "object",
+      "description": "Dashboard page object.",
+      "properties": {
+        "dashboard_pageid": {"type": "string", "description": "ID of an existing dashboard page to update. Omit to create a new page. Existing pages not referenced in the request are deleted."},
+        "name": {"type": "string", "description": "Dashboard page name. Default: empty string."},
+        "display_period": {"type": "integer", "enum": [0, 10, 30, 60, 120, 600, 1800, 3600], "description": "Dashboard page display period (in seconds). Possible values: 0, 10, 30, 60, 120, 600, 1800, 3600. Default: 0 (uses default page display period)."},
+        "widgets": {
+          "type": "array",
+          "description": "Array of dashboard widget objects.",
+          "items": {"$ref": "#/$defs/dashboardWidget"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "dashboardWidget": {
+      "type": "object",
+      "description": "Dashboard widget object.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["actionlog", "clock", "discovery", "favgraphs", "favmaps", "gauge", "geomap", "graph", "graphprototype", "honeycomb", "hostavail", "hostnavigator", "itemhistory", "itemnavigator", "item", "map", "navtree", "piechart", "problemhosts", "problems", "problemsbysv", "slareport", "svggraph", "systeminfo", "tophosts", "toptriggers", "trigover", "url", "web"],
+          "description": "Type of the dashboard widget."
+        },
+        "name": {"type": "string", "description": "Custom widget name."},
+        "x": {"type": "integer", "description": "Horizontal position from left side of dashboard. Range 0-71."},
+        "y": {"type": "integer", "description": "Vertical position from top of dashboard. Range 0-63."},
+        "width": {"type": "integer", "description": "Widget width. Range 1-72."},
+        "height": {"type": "integer", "description": "Widget height. Range 1-64."},
+        "view_mode": {"type": "integer", "enum": [0, 1], "description": "Widget view mode. 0 - (default) default widget view; 1 - with hidden header."},
+        "fields": {
+          "type": "array",
+          "description": "Array of dashboard widget field objects.",
+          "items": {"$ref": "#/$defs/dashboardWidgetField"}
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "dashboardWidgetField": {
+      "type": "object",
+      "description": "Dashboard widget field object.",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+          "description": "Type of widget field. 0 - Integer; 1 - String; 2 - Host group; 3 - Host; 4 - Item; 5 - Item prototype; 6 - Graph; 7 - Graph prototype; 8 - Map; 9 - Service; 10 - SLA; 11 - User; 12 - Action; 13 - Media type."
+        },
+        "name": {"type": "string", "description": "Widget field name, per the Dashboard widget fields documentation."},
+        "value": {"description": "Widget field value. Type depends on the field's type property."}
+      },
+      "required": ["type", "name", "value"],
+      "additionalProperties": false
+    },
+    "dashboardUser": {
+      "type": "object",
+      "description": "Dashboard user share object.",
+      "properties": {
+        "userid": {"type": "string", "description": "ID of the user."},
+        "permission": {"type": "integer", "enum": [2, 3], "description": "Type of permission level. 2 - read only; 3 - read-write."}
+      },
+      "required": ["userid", "permission"],
+      "additionalProperties": false
+    },
+    "dashboardUserGroup": {
+      "type": "object",
+      "description": "Dashboard user group share object.",
+      "properties": {
+        "usrgrpid": {"type": "string", "description": "ID of the user group."},
+        "permission": {"type": "integer", "enum": [2, 3], "description": "Type of permission level. 2 - read only; 3 - read-write."}
+      },
+      "required": ["usrgrpid", "permission"],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/hostprototype/hostprototype.create",
+  "title": "hostprototype.create",
+  "description": "Create new host prototypes.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/hostprototype/create",
+  "type": "object",
+  "properties": {
+    "host": {
+      "type": "string",
+      "description": "Technical name of the host prototype. Property behavior: required for create operations; read-only for inherited objects."
+    },
+    "name": {
+      "type": "string",
+      "description": "Visible name of the host prototype. Default: host property value. Property behavior: read-only for inherited objects."
+    },
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Status of the host prototype. Possible values: 0 - (default) monitored host; 1 - unmonitored host."
+    },
+    "inventory_mode": {
+      "type": "integer",
+      "enum": [-1, 0, 1],
+      "description": "Host inventory population mode. Possible values: -1 - (default) disabled; 0 - manual; 1 - automatic."
+    },
+    "discover": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Host prototype discovery status. Possible values: 0 - (default) new hosts will be discovered; 1 - new hosts will not be discovered and existing hosts will be marked as lost."
+    },
+    "custom_interfaces": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Source of custom interfaces for hosts created by the host prototype. Possible values: 0 - (default) inherit interfaces from parent host; 1 - use host prototypes custom interfaces. Property behavior: read-only for inherited objects."
+    },
+    "uuid": {
+      "type": "string",
+      "description": "Universal unique identifier, used for linking imported host prototypes to already existing ones. Auto-generated, if not given. Property behavior: supported if the host prototype belongs to a template."
+    },
+    "ruleid": {
+      "type": "string",
+      "description": "ID of the LLD rule that the host prototype belongs to. Parameter behavior: required."
+    },
+    "groupLinks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/groupLink" },
+      "description": "Group links to be created for the host prototype. Parameter behavior: required."
+    },
+    "groupPrototypes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/groupPrototype" },
+      "description": "Group prototypes to be created for the host prototype."
+    },
+    "macros": {
+      "oneOf": [
+        { "type": "object" },
+        { "type": "array", "items": { "type": "object" } }
+      ],
+      "description": "User macros to be created for the host prototype. See the User macro object (reference/usermacro/object)."
+    },
+    "tags": {
+      "oneOf": [
+        { "$ref": "#/$defs/hostPrototypeTag" },
+        { "type": "array", "items": { "$ref": "#/$defs/hostPrototypeTag" } }
+      ],
+      "description": "Host prototype tags. See Host prototype tag object."
+    },
+    "interfaces": {
+      "oneOf": [
+        { "$ref": "#/$defs/customInterface" },
+        { "type": "array", "items": { "$ref": "#/$defs/customInterface" } }
+      ],
+      "description": "Host prototype custom interfaces."
+    },
+    "templates": {
+      "oneOf": [
+        { "$ref": "#/$defs/templateRef" },
+        { "type": "array", "items": { "$ref": "#/$defs/templateRef" } }
+      ],
+      "description": "Templates to be linked to the host prototype. The templates must have only the templateid property defined."
+    }
+  },
+  "required": ["host", "ruleid", "groupLinks"],
+  "additionalProperties": false,
+  "$defs": {
+    "groupLink": {
+      "type": "object",
+      "description": "Group link object. Links a host prototype with a host group.",
+      "properties": {
+        "groupid": {
+          "type": "string",
+          "description": "ID of the host group. Property behavior: required."
+        }
+      },
+      "required": ["groupid"],
+      "additionalProperties": false
+    },
+    "groupPrototype": {
+      "type": "object",
+      "description": "Group prototype object. Defines a group that will be created for a discovered host.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the group prototype. Property behavior: required for create operations."
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+    "hostPrototypeTag": {
+      "type": "object",
+      "description": "Host prototype tag object.",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "Host prototype tag name. Property behavior: required."
+        },
+        "value": {
+          "type": "string",
+          "description": "Host prototype tag value."
+        }
+      },
+      "required": ["tag"],
+      "additionalProperties": false
+    },
+    "customInterface": {
+      "type": "object",
+      "description": "Custom interface object. Supported if custom_interfaces of Host prototype object is set to \"use host prototypes custom interfaces\".",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "enum": [1, 2, 3, 4],
+          "description": "Interface type. Possible values: 1 - Agent; 2 - SNMP; 3 - IPMI; 4 - JMX. Property behavior: required."
+        },
+        "useip": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Whether the connection should be made via IP. Possible values: 0 - connect using host DNS name; 1 - connect using host IP address. Property behavior: required."
+        },
+        "ip": {
+          "type": "string",
+          "description": "IP address used by the interface. Can contain macros. Property behavior: required if useip is set to \"connect using host IP address\" (1)."
+        },
+        "dns": {
+          "type": "string",
+          "description": "DNS name used by the interface. Can contain macros. Property behavior: required if useip is set to \"connect using host DNS name\" (0)."
+        },
+        "port": {
+          "type": "string",
+          "description": "Port number used by the interface. Can contain user and LLD macros. Property behavior: required."
+        },
+        "main": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Whether the interface is used as default on the host. Only one interface of some type can be set as default on a host. Possible values: 0 - not default; 1 - default. Property behavior: required."
+        },
+        "details": {
+          "$ref": "#/$defs/customInterfaceDetails",
+          "description": "Additional object for custom interface details. Property behavior: required if type is set to \"SNMP\" (2)."
+        }
+      },
+      "required": ["type", "useip", "port", "main"],
+      "additionalProperties": false
+    },
+    "customInterfaceDetails": {
+      "type": "object",
+      "description": "Custom interface details object (SNMP interface details).",
+      "properties": {
+        "version": {
+          "type": "integer",
+          "enum": [1, 2, 3],
+          "description": "SNMP interface version. Possible values: 1 - SNMPv1; 2 - SNMPv2c; 3 - SNMPv3. Property behavior: required."
+        },
+        "bulk": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Whether to use bulk SNMP requests. Possible values: 0 - don't use bulk requests; 1 - (default) use bulk requests."
+        },
+        "community": {
+          "type": "string",
+          "description": "SNMP community. Property behavior: required if version is set to \"SNMPv1\" (1) or \"SNMPv2c\" (2)."
+        },
+        "max_repetitions": {
+          "type": "integer",
+          "description": "Max repetition value for native SNMP bulk requests (GetBulkRequest-PDUs). Used only for discovery[] and walk[] items in SNMPv2 and v3. Default: 10."
+        },
+        "securityname": {
+          "type": "string",
+          "description": "SNMPv3 security name. Property behavior: supported if version is set to \"SNMPv3\" (3)."
+        },
+        "securitylevel": {
+          "type": "integer",
+          "enum": [0, 1, 2],
+          "description": "SNMPv3 security level. Possible values: 0 - (default) noAuthNoPriv; 1 - authNoPriv; 2 - authPriv. Property behavior: supported if version is set to \"SNMPv3\" (3)."
+        },
+        "authpassphrase": {
+          "type": "string",
+          "description": "SNMPv3 authentication passphrase. Property behavior: supported if version is set to \"SNMPv3\" (3) and securitylevel is set to \"authNoPriv\" (1) or \"authPriv\" (2)."
+        },
+        "privpassphrase": {
+          "type": "string",
+          "description": "SNMPv3 privacy passphrase. Property behavior: supported if version is set to \"SNMPv3\" (3) and securitylevel is set to \"authPriv\" (2)."
+        },
+        "authprotocol": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4, 5],
+          "description": "SNMPv3 authentication protocol. Possible values: 0 - (default) MD5; 1 - SHA1; 2 - SHA224; 3 - SHA256; 4 - SHA384; 5 - SHA512. Property behavior: supported if version is set to \"SNMPv3\" (3) and securitylevel is set to \"authNoPriv\" (1) or \"authPriv\" (2)."
+        },
+        "privprotocol": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4, 5],
+          "description": "SNMPv3 privacy protocol. Used only by SNMPv3 interfaces. Possible values: 0 - (default) DES; 1 - AES128; 2 - AES192; 3 - AES256; 4 - AES192C; 5 - AES256C. Property behavior: supported if version is set to \"SNMPv3\" (3) and securitylevel is set to \"authPriv\" (2)."
+        },
+        "contextname": {
+          "type": "string",
+          "description": "SNMPv3 context name. Property behavior: supported if version is set to \"SNMPv3\" (3)."
+        }
+      },
+      "required": ["version"],
+      "additionalProperties": false
+    },
+    "templateRef": {
+      "type": "object",
+      "description": "Reference to an existing template by templateid only.",
+      "properties": {
+        "templateid": { "type": "string", "description": "ID of the template." }
+      },
+      "required": ["templateid"],
+      "additionalProperties": false
+    }
+  }
+}

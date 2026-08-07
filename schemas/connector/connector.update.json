@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/connector/connector.update",
+  "title": "connector.update",
+  "description": "Update existing connectors. Only the connectorid property is required; only passed properties are updated, the rest remain unchanged.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/connector/update",
+  "type": "object",
+  "properties": {
+    "connectorid": {
+      "type": "string",
+      "description": "ID of the connector. Read-only; required for update operations."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the connector."
+    },
+    "url": {
+      "type": "string",
+      "description": "Endpoint URL, that is, URL of the receiver. User macros are supported."
+    },
+    "protocol": {
+      "type": "integer",
+      "enum": [0],
+      "description": "Communication protocol. Possible values: 0 - (default) Zabbix Streaming Protocol v1.0."
+    },
+    "data_type": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Data type. Possible values: 0 - (default) Item values; 1 - Events."
+    },
+    "item_value_type": {
+      "type": "integer",
+      "description": "A sum of item value types to be sent (bitmask). Possible values: 1 - Numeric (float); 2 - Character; 4 - Log; 8 - Numeric (unsigned); 16 - Text; 32 - Binary (supported since Zabbix 7.0.5). Default: 31 - All item types (except binary). Supported if data_type is set to \"Item values\" (0)."
+    },
+    "max_records": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647,
+      "description": "Maximum number of events or items that can be sent within one message. Possible values: 0-2147483647 (max value of 32-bit signed integer). Default: 0 - Unlimited."
+    },
+    "max_senders": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100,
+      "description": "Number of sender processes to run for this connector. Possible values: 1-100. Default: 1."
+    },
+    "max_attempts": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Number of attempts. Possible values: 1-5. Default: 1."
+    },
+    "attempt_interval": {
+      "type": "string",
+      "description": "The interval between retry attempts. Accepts seconds. Possible values: 0s-10s. Default: 5s. Supported if max_attempts is greater than 1."
+    },
+    "timeout": {
+      "type": "string",
+      "description": "Timeout. Time suffixes are supported (e.g., 30s, 1m). User macros are supported. Possible values: 1s-60s. Default: 5s."
+    },
+    "http_proxy": {
+      "type": "string",
+      "description": "HTTP(S) proxy connection string given as [protocol]://[username[:password]@]proxy.example.com[:port]. User macros are supported."
+    },
+    "authtype": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5],
+      "description": "HTTP authentication method. Possible values: 0 - (default) None; 1 - Basic; 2 - NTLM; 3 - Kerberos; 4 - Digest; 5 - Bearer."
+    },
+    "username": {
+      "type": "string",
+      "description": "User name. User macros are supported. Supported if authtype is set to \"Basic\", \"NTLM\", \"Kerberos\", or \"Digest\"."
+    },
+    "password": {
+      "type": "string",
+      "description": "Password. User macros are supported. Supported if authtype is set to \"Basic\", \"NTLM\", \"Kerberos\", or \"Digest\"."
+    },
+    "token": {
+      "type": "string",
+      "description": "Bearer token. User macros are supported. Required if authtype is set to \"Bearer\"."
+    },
+    "verify_peer": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to validate that the host's certificate is authentic. Possible values: 0 - Do not validate; 1 - (default) Validate."
+    },
+    "verify_host": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to validate that the host name for the connection matches the one in the host's certificate. Possible values: 0 - Do not validate; 1 - (default) Validate."
+    },
+    "ssl_cert_file": {
+      "type": "string",
+      "description": "Public SSL Key file path. User macros are supported."
+    },
+    "ssl_key_file": {
+      "type": "string",
+      "description": "Private SSL Key file path. User macros are supported."
+    },
+    "ssl_key_password": {
+      "type": "string",
+      "description": "Password for SSL Key file. User macros are supported."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the connector."
+    },
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether the connector is enabled. Possible values: 0 - Disabled; 1 - (default) Enabled."
+    },
+    "tags_evaltype": {
+      "type": "integer",
+      "enum": [0, 2],
+      "description": "Tag evaluation method. Possible values: 0 - (default) And/Or; 2 - Or."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Connector tag filter to replace the current tag filter.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "description": "Tag name. Required."
+          },
+          "operator": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 12, 13],
+            "description": "Condition operator. Possible values: 0 - (default) Equals; 1 - Does not equal; 2 - Contains; 3 - Does not contain; 12 - Exists; 13 - Does not exist."
+          },
+          "value": {
+            "type": "string",
+            "description": "Tag value."
+          }
+        },
+        "required": ["tag"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["connectorid"],
+  "additionalProperties": false
+}

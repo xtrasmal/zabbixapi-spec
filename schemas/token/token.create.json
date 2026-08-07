@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/token/token.create",
+  "title": "token.create",
+  "description": "Create new tokens. A token created by this method also has to be generated (token.generate) before it is usable.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/token/create",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the token. Required for create operations."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the token."
+    },
+    "userid": {
+      "type": "string",
+      "description": "ID of the user that the token has been assigned to. Default: current user. Property behavior: constant (can be set on create but not changed afterwards)."
+    },
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Token status. Possible values: 0 - (default) enabled token; 1 - disabled token."
+    },
+    "expires_at": {
+      "type": "integer",
+      "description": "Token expiration date and time. \"0\" for never-expiring tokens."
+    }
+  },
+  "required": ["name"],
+  "additionalProperties": false
+}

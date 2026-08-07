@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/triggerprototype/triggerprototype.delete",
+  "title": "triggerprototype.delete",
+  "description": "Delete trigger prototypes.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/triggerprototype/delete",
+  "type": "array",
+  "items": {
+    "type": "string"
+  },
+  "minItems": 1
+}

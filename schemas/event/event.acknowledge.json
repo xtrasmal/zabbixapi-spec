@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/event/event.acknowledge",
+  "title": "event.acknowledge",
+  "description": "Update events: close, acknowledge/unacknowledge, add a message, change severity, suppress/unsuppress, or change event rank.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/event/acknowledge",
+  "type": "object",
+  "properties": {
+    "eventids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "IDs of the events to acknowledge. Required."
+    },
+    "action": {
+      "type": "integer",
+      "description": "Event update action(s). Possible bitmap values: 1 - close problem; 4 - add message; 6 - acknowledge event; 8 - change severity; 16 - unacknowledge event; 32 - suppress event; 64 - unsuppress event; 128 - change event rank to cause; 256 - change event rank to symptom. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 34 for acknowledge and suppress event). Required."
+    },
+    "cause_eventid": {
+      "type": "string",
+      "description": "Cause event ID. Required if action contains the \"change event rank to symptom\" bit."
+    },
+    "message": {
+      "type": "string",
+      "description": "Text of the message. Required if action contains the \"add message\" bit."
+    },
+    "severity": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5],
+      "description": "New severity for events. Possible values: 0 - not classified; 1 - information; 2 - warning; 3 - average; 4 - high; 5 - disaster. Required if action contains the \"change severity\" bit."
+    },
+    "suppress_until": {
+      "type": "integer",
+      "description": "Unix timestamp until which event must be suppressed. If set to \"0\", the suppression will be indefinite. Required if action contains the \"suppress event\" bit."
+    }
+  },
+  "required": ["eventids", "action"],
+  "additionalProperties": false
+}

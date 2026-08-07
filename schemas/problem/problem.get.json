@@ -1,0 +1,211 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/problem/problem.get",
+  "title": "problem.get",
+  "description": "Retrieve unresolved problems (and, if requested, recently resolved ones) according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/problem/get",
+  "type": "object",
+  "properties": {
+    "eventids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only problems with the given IDs."
+    },
+    "groupids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only problems created by objects that belong to the given host groups."
+    },
+    "hostids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only problems created by objects that belong to the given hosts."
+    },
+    "objectids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only problems created by the given objects."
+    },
+    "source": {
+      "type": "integer",
+      "enum": [0, 3, 4],
+      "description": "Return only problems with the given type. Refer to the problem event object page for a list of supported event types. Possible values: 0 - event created by a trigger; 3 - internal event; 4 - event created on service status update. Default: 0 - problem created by a trigger."
+    },
+    "object": {
+      "type": "integer",
+      "enum": [0, 4, 5, 6],
+      "description": "Return only problems created by objects of the given type. Refer to the problem event object page for a list of supported object types. Possible values if source is set to \"event created by a trigger\": 0 - trigger. Possible values if source is set to \"internal event\": 0 - trigger; 4 - item; 5 - LLD rule. Possible values if source is set to \"event created on service status update\": 6 - service. Default: 0 - trigger."
+    },
+    "acknowledged": {
+      "type": "boolean",
+      "description": "If set to true return only acknowledged problems."
+    },
+    "action": {
+      "type": "integer",
+      "description": "Return only problems for which the given event update actions have been performed. For multiple actions, use a sum of any acceptable bitmap values as bitmask (for example, 34 for acknowledge and suppress event). Possible bitmap values (see event.acknowledge): 1 - close problem; 4 - add message; 6 - acknowledge event; 8 - change severity; 16 - unacknowledge event; 32 - suppress event; 64 - unsuppress event; 128 - change event rank to cause; 256 - change event rank to symptom."
+    },
+    "action_userids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only problems with the given IDs of users who performed the problem event update actions."
+    },
+    "suppressed": {
+      "type": "boolean",
+      "description": "If set to true return only suppressed problems."
+    },
+    "symptom": {
+      "type": "boolean",
+      "description": "If set to true return only symptom problem events."
+    },
+    "severities": {
+      "oneOf": [
+        { "type": "integer", "enum": [0, 1, 2, 3, 4, 5] },
+        {
+          "type": "array",
+          "items": { "type": "integer", "enum": [0, 1, 2, 3, 4, 5] }
+        }
+      ],
+      "description": "Return only problems with given event severities. Applies only if object is trigger. Possible values: 0 - not classified; 1 - information; 2 - warning; 3 - average; 4 - high; 5 - disaster."
+    },
+    "evaltype": {
+      "type": "integer",
+      "enum": [0, 2],
+      "description": "Tag evaluation method. Possible values: 0 - (default) And/Or; 2 - Or."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Return only problems with the given tags. Format: [{\"tag\": \"<tag>\", \"value\": \"<value>\", \"operator\": \"<operator>\"}, ...]. An empty array returns all problems.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "description": "Problem tag name."
+          },
+          "value": {
+            "type": "string",
+            "description": "Problem tag value."
+          },
+          "operator": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5],
+            "description": "Possible values: 0 - (default) Contains; 1 - Equals; 2 - Does not contain; 3 - Does not equal; 4 - Exists; 5 - Does not exist."
+          }
+        }
+      }
+    },
+    "recent": {
+      "type": "boolean",
+      "description": "If set to true, return recent problems, including those resolved within the ok_period and any unresolved problems. If set to false, return only unresolved problems."
+    },
+    "eventid_from": {
+      "type": "string",
+      "description": "Return only problems with IDs greater or equal to the given ID."
+    },
+    "eventid_till": {
+      "type": "string",
+      "description": "Return only problems with IDs less or equal to the given ID."
+    },
+    "time_from": {
+      "type": "integer",
+      "description": "Return only problems that have been created after or at the given time."
+    },
+    "time_till": {
+      "type": "integer",
+      "description": "Return only problems that have been created before or at the given time."
+    },
+    "selectAcknowledges": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return an acknowledges property with the problem updates. Problem updates are sorted in reverse chronological order. The problem update object has the following properties: acknowledgeid - (ID) ID of the update; userid - (ID) ID of the user that updated the event; eventid - (ID) ID of the updated event; clock - (timestamp) time when the event was updated; message - (string) text of the message; action - (integer) type of update action (see event.acknowledge); old_severity - (integer) event severity before this update action; new_severity - (integer) event severity after this update action; suppress_until - (timestamp) time till event will be suppressed; taskid - (ID) ID of the task if the current event is undergoing a rank change. Supports count."
+    },
+    "selectTags": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a tags property with the problem tags. Output format: [{\"tag\": \"<tag>\", \"value\": \"<value>\"}, ...]."
+    },
+    "selectSuppressionData": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a suppression_data property with the list of active maintenances and manual suppressions: maintenanceid - (ID) ID of the maintenance; userid - (ID) ID of user who suppressed the problem; suppress_until - (integer) time until the problem is suppressed."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Accepts an object, where the keys are property names, and the values are either a single value or an array of values to match against. Does not support properties of text data type."
+    },
+    "sortfield": {
+      "oneOf": [
+        { "type": "string", "enum": ["eventid"] },
+        { "type": "array", "items": { "type": "string", "enum": ["eventid"] } }
+      ],
+      "description": "Sort the result by the given properties. Possible values: eventid."
+    },
+    "countOutput": {
+      "type": "boolean",
+      "description": "Return the number of records in the result instead of the actual data."
+    },
+    "editable": {
+      "type": "boolean",
+      "description": "If set to true, return only objects that the user has write permissions to. Default: false."
+    },
+    "excludeSearch": {
+      "type": "boolean",
+      "description": "Return results that do not match the criteria given in the search parameter."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Limit the number of records returned."
+    },
+    "output": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "preservekeys": {
+      "type": "boolean",
+      "description": "Use IDs as keys in the resulting array."
+    },
+    "search": {
+      "type": "object",
+      "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."
+    },
+    "searchByAny": {
+      "type": "boolean",
+      "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."
+    },
+    "searchWildcardsEnabled": {
+      "type": "boolean",
+      "description": "If true, enables the use of '*' as a wildcard character. Default: false."
+    },
+    "sortorder": {
+      "oneOf": [
+        { "enum": ["ASC", "DESC"] },
+        { "type": "array", "items": { "enum": ["ASC", "DESC"] } }
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {
+      "type": "boolean",
+      "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."
+    }
+  },
+  "additionalProperties": false
+}

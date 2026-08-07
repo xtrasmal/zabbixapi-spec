@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/hostgroup/hostgroup.massupdate",
+  "title": "hostgroup.massupdate",
+  "description": "Replace hosts and templates with the specified ones in multiple host groups.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/hostgroup/massupdate",
+  "type": "object",
+  "properties": {
+    "groups": {
+      "oneOf": [
+        { "$ref": "#/$defs/hostGroupRef" },
+        { "type": "array", "items": { "$ref": "#/$defs/hostGroupRef" } }
+      ],
+      "description": "Host groups to be updated. The host groups must have only the groupid property defined. Parameter behavior: required."
+    },
+    "hosts": {
+      "oneOf": [
+        { "$ref": "#/$defs/hostRef" },
+        { "type": "array", "items": { "$ref": "#/$defs/hostRef" } }
+      ],
+      "description": "Hosts to replace the current hosts on the given host groups. All other hosts, except the ones mentioned, will be excluded from host groups. Discovered hosts will not be affected. The hosts must have only the hostid property defined. Parameter behavior: required."
+    }
+  },
+  "required": ["groups", "hosts"],
+  "additionalProperties": false,
+  "$defs": {
+    "hostGroupRef": {
+      "type": "object",
+      "description": "Reference to an existing host group by groupid only.",
+      "properties": {
+        "groupid": { "type": "string", "description": "ID of the host group." }
+      },
+      "required": ["groupid"],
+      "additionalProperties": false
+    },
+    "hostRef": {
+      "type": "object",
+      "description": "Reference to an existing host by hostid only.",
+      "properties": {
+        "hostid": { "type": "string", "description": "ID of the host." }
+      },
+      "required": ["hostid"],
+      "additionalProperties": false
+    }
+  }
+}

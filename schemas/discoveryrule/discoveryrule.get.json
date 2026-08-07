@@ -1,0 +1,354 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/discoveryrule/discoveryrule.get",
+  "title": "discoveryrule.get",
+  "description": "Retrieve LLD rules according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/discoveryrule/get",
+  "type": "object",
+  "properties": {
+    "itemids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only LLD rules with the given IDs."
+    },
+    "groupids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only LLD rules that belong to the hosts from the given groups."
+    },
+    "hostids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only LLD rules that belong to the given hosts."
+    },
+    "inherited": {
+      "type": "boolean",
+      "description": "If set to true return only LLD rules inherited from a template."
+    },
+    "interfaceids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only LLD rules use the given host interfaces."
+    },
+    "monitored": {
+      "type": "boolean",
+      "description": "If set to true return only enabled LLD rules that belong to monitored hosts."
+    },
+    "templated": {
+      "type": "boolean",
+      "description": "If set to true return only LLD rules that belong to templates."
+    },
+    "templateids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only LLD rules that belong to the given templates."
+    },
+    "selectFilter": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return a filter property with data of the filter used by the LLD rule."
+    },
+    "selectGraphs": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Returns a graphs property with graph prototypes that belong to the LLD rule. Supports count."
+    },
+    "selectHostPrototypes": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return a hostPrototypes property with host prototypes that belong to the LLD rule. Supports count."
+    },
+    "selectHosts": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return a hosts property with an array of hosts that the LLD rule belongs to."
+    },
+    "selectItems": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return an items property with item prototypes that belong to the LLD rule. Supports count."
+    },
+    "selectTriggers": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return a triggers property with trigger prototypes that belong to the LLD rule. Supports count."
+    },
+    "selectLLDMacroPaths": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return an lld_macro_paths property with a list of LLD macros and paths to values assigned to each corresponding macro."
+    },
+    "selectPreprocessing": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return a preprocessing property with LLD rule preprocessing options."
+    },
+    "selectOverrides": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Return an lld_rule_overrides property with a list of override filters, conditions and operations that are performed on prototype objects."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Accepts an object, where the keys are property names, and the values are either a single value or an array of values to match against. Does not support properties of text data type. Supports an additional property: host - technical name of the host that the LLD rule belongs to."
+    },
+    "limitSelects": {
+      "type": "integer",
+      "description": "Limits the number of records returned by subselects. Applies to the following subselects: selectItems, selectGraphs, selectTriggers."
+    },
+    "sortfield": {
+      "oneOf": [
+        {
+          "enum": [
+            "itemid",
+            "name",
+            "key_",
+            "delay",
+            "type",
+            "status"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "enum": [
+              "itemid",
+              "name",
+              "key_",
+              "delay",
+              "type",
+              "status"
+            ]
+          }
+        }
+      ],
+      "description": "Sort the result by the given properties. Possible values: itemid, name, key_, delay, type, status."
+    },
+    "countOutput": {
+      "type": "boolean",
+      "description": "Return the number of records in the result instead of the actual data."
+    },
+    "editable": {
+      "type": "boolean",
+      "description": "If set to true, return only objects that the user has write permissions to. Default: false."
+    },
+    "excludeSearch": {
+      "type": "boolean",
+      "description": "Return results that do not match the criteria given in the search parameter."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Limit the number of records returned."
+    },
+    "output": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "preservekeys": {
+      "type": "boolean",
+      "description": "Use IDs as keys in the resulting array."
+    },
+    "search": {
+      "type": "object",
+      "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."
+    },
+    "searchByAny": {
+      "type": "boolean",
+      "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."
+    },
+    "searchWildcardsEnabled": {
+      "type": "boolean",
+      "description": "If true, enables the use of '*' as a wildcard character. Default: false."
+    },
+    "sortorder": {
+      "oneOf": [
+        {
+          "enum": [
+            "ASC",
+            "DESC"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          }
+        }
+      ]
+    },
+    "startSearch": {
+      "type": "boolean",
+      "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."
+    }
+  },
+  "additionalProperties": false
+}

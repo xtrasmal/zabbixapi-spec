@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/7.0/api/proxy/proxy.get",
+  "title": "proxy.get",
+  "description": "Retrieve proxies according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/proxy/get",
+  "type": "object",
+  "properties": {
+    "proxyids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only proxies with the given IDs."
+    },
+    "proxy_groupids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only proxies that belong to the given proxy groups."
+    },
+    "selectAssignedHosts": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return an assignedHosts property with the hosts assigned to the proxy. Supports count."
+    },
+    "selectHosts": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a hosts property with the hosts monitored by the proxy. Supports count."
+    },
+    "selectProxyGroup": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a proxyGroup property with the proxy group object."
+    },
+    "sortfield": {
+      "oneOf": [
+        {"type": "string", "enum": ["proxyid", "name", "operating_mode"]},
+        {"type": "array", "items": {"type": "string", "enum": ["proxyid", "name", "operating_mode"]}}
+      ],
+      "description": "Sort the result by the given properties. Possible values: proxyid, name, operating_mode."
+    },
+    "countOutput": {
+      "type": "boolean",
+      "description": "Return the number of records in the result instead of the actual data."
+    },
+    "editable": {
+      "type": "boolean",
+      "description": "If set to true, return only objects that the user has write permissions to. Default: false."
+    },
+    "excludeSearch": {
+      "type": "boolean",
+      "description": "Return results that do not match the criteria given in the search parameter."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Does not support text-type properties."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Limit the number of records returned."
+    },
+    "output": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "preservekeys": {
+      "type": "boolean",
+      "description": "Use IDs as keys in the resulting array."
+    },
+    "search": {
+      "type": "object",
+      "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."
+    },
+    "searchByAny": {
+      "type": "boolean",
+      "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."
+    },
+    "searchWildcardsEnabled": {
+      "type": "boolean",
+      "description": "If true, enables the use of '*' as a wildcard character. Default: false."
+    },
+    "sortorder": {
+      "oneOf": [
+        {"enum": ["ASC", "DESC"]},
+        {"type": "array", "items": {"enum": ["ASC", "DESC"]}}
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {
+      "type": "boolean",
+      "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."
+    }
+  },
+  "additionalProperties": false
+}
