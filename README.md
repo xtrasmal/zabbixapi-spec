@@ -81,21 +81,34 @@ the schemas mirror the documented types. If you need wire-tolerant validation,
 loosen numeric fields to accept `["integer","string"]` in your own copy rather
 than treating the strict schemas as wrong.
 
-## Validate the whole corpus
+## Linting
+
+`./lint.sh` is the official linter for this corpus. Run it from the repo root:
 
 ```bash
-python3 - <<'PY'
-import json, glob
-from jsonschema import Draft202012Validator
-bad = 0
-for f in glob.glob("schemas/**/*.json", recursive=True):
-    try:
-        Draft202012Validator.check_schema(json.load(open(f)))
-    except Exception as e:
-        bad += 1; print("INVALID:", f, e)
-print("all conform" if not bad else f"{bad} invalid")
-PY
+./lint.sh          # full report
+./lint.sh --quiet  # summary + failures only
 ```
+
+It checks every `schemas/<object>/<object>.<method>.json` for:
+
+1. **Meta-schema conformance** — valid draft 2020-12 (reference `jsonschema` engine).
+2. **Conventions** — `$schema`, dotted `$id`
+   (`https://zabbix.com/7.0/api/<object>/<object>.<method>`), `title` equal to the
+   dotted method name, non-empty `description`, a `$comment` citing the doc Source
+   URL, `additionalProperties:false` on object schemas, and the delete-style
+   array-of-id-strings shape (`items.type:string` + `minItems`, or `maxItems:0`
+   for empty-param methods).
+3. **Naming** — filename prefix matches its directory (`<object>`).
+4. **Index sync** — `methods.json` matches the files on disk (object set, method
+   set, paths, and counts).
+5. **No stray files** — only `.json` lives under `schemas/`.
+6. **Regression guard** — object/method totals match `EXPECT_OBJECTS` /
+   `EXPECT_METHODS` in `lint.sh`; bump those when intentionally adding or removing
+   a schema.
+
+Exit codes: `0` clean, `1` lint failures, `2` missing dependency (`jq`, `python3`,
+or the `jsonschema` module). Convention rules live in `lint/rules.jq`.
 
 ## Source
 
