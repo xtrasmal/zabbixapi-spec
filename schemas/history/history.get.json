@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://zabbix.com/7.0/api/history/get",
+  "$id": "https://zabbix.com/7.0/api/history/history.get",
   "title": "history.get",
   "description": "Retrieve history data according to the given parameters. May return historical data of a deleted entity if this data has not been removed by the housekeeper yet.",
   "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/history/get",

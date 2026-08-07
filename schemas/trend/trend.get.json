@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://zabbix.com/7.0/api/trend/get",
+  "$id": "https://zabbix.com/7.0/api/trend/trend.get",
   "title": "trend.get",
   "description": "Retrieve trend data according to the given parameters.",
   "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/trend/get. NOTE: unlike most get methods, trend.get's documented parameter table is exhaustive and deliberately does NOT include the common get parameters (filter, search, searchByAny, searchWildcardsEnabled, excludeSearch, startSearch, editable, sortfield, sortorder, preservekeys) -- CTrend::get() reads directly from the trends/trends_uint tables and does not support them. Only itemids, time_from, time_till, countOutput, limit, and output are honored; the default merge-in-common-params rule was deliberately not applied here per the object's own docs.",

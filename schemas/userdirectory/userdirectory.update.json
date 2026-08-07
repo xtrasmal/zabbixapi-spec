@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://zabbix.com/7.0/api/userdirectory/update",
+  "$id": "https://zabbix.com/7.0/api/userdirectory/userdirectory.update",
   "title": "userdirectory.update",
   "description": "Update existing user directories. The userdirectoryid property must be defined for each user directory; all other properties are optional. Only the passed properties will be updated, all others will remain unchanged.",
   "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/userdirectory/update",

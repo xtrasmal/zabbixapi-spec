@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://zabbix.com/7.0/api/userdirectory/test",
+  "$id": "https://zabbix.com/7.0/api/userdirectory/userdirectory.test",
   "title": "userdirectory.test",
   "description": "Test user directory connection settings. Also allows testing what configured data matches the user directory settings for user provisioning (e.g., what user role, user groups, user medias will be assigned to the user); for this type of test the request should be made for a user directory that has provision_status set to enabled. Since userdirectory.get does not return the bind_password field, userdirectoryid and/or bind_password should be supplied.",
   "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/userdirectory/test",

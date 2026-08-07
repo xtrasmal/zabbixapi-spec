@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://zabbix.com/7.0/api/history/push",
+  "$id": "https://zabbix.com/7.0/api/history/history.push",
   "title": "history.push",
   "description": "Send item history data to Zabbix server. The IP address of the Zabbix web interface must be specified in the Allowed hosts field of the Zabbix trapper item in order for the method to work.",
   "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/history/push",

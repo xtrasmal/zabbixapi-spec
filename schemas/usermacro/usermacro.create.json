@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://zabbix.com/7.0/api/usermacro/create",
+  "$id": "https://zabbix.com/7.0/api/usermacro/usermacro.create",
   "title": "usermacro.create",
   "description": "Create new host macros.",
   "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/usermacro/create",

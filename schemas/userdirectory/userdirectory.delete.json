@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://zabbix.com/7.0/api/userdirectory/delete",
+  "$id": "https://zabbix.com/7.0/api/userdirectory/userdirectory.delete",
   "title": "userdirectory.delete",
   "description": "Delete user directories. A user directory cannot be deleted when it is directly used for at least one user group. The default LDAP user directory cannot be deleted when authentication.ldap_configured is set to 1 or when there are more user directories left.",
   "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/userdirectory/delete",

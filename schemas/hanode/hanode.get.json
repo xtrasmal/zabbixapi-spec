@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://zabbix.com/7.0/api/hanode/get",
+  "$id": "https://zabbix.com/7.0/api/hanode/hanode.get",
   "title": "hanode.get",
   "description": "Retrieve a list of High availability cluster nodes according to the given parameters. Only available to Super admin user types.",
   "$comment": "Source: https://www.zabbix.com/documentation/7.0/en/manual/api/reference/hanode/get",
