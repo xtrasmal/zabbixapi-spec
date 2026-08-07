@@ -83,32 +83,47 @@ than treating the strict schemas as wrong.
 
 ## Linting
 
-`./lint.sh` is the official linter for this corpus. Run it from the repo root:
+Two independent checks. Run both — they do not overlap. Spectral tells you the
+files are valid JSON Schema; `lint.sh` tells you they follow the repo conventions.
+
+### 1. JSON Schema validity — Spectral
+
+Validates every file against the official draft 2020-12 meta-schema (plus a
+parse / duplicate-key layer). Ruleset: `.spectral.yaml`. From the repo root:
+
+```bash
+spectral lint 'schemas/**/*.json'
+```
+
+Quote the glob so Spectral's own `**` recursion walks every object directory;
+unquoted, zsh (without `globstar`) will not recurse. Exit code is `0` clean,
+non-zero on any error — drops straight into CI or a pre-commit hook. Spectral is
+a global [mise](https://mise.jdx.dev) tool, so it is already on `PATH` in a
+normal shell. If a fresh shell can't find it: `mise reshim`, or call it via
+`mise exec -- spectral lint 'schemas/**/*.json'`.
+
+### 2. House conventions — `./lint.sh`
+
+Enforces this repo's own rules (this does **not** validate JSON Schema itself):
 
 ```bash
 ./lint.sh          # full report
 ./lint.sh --quiet  # summary + failures only
 ```
 
-It checks every `schemas/<object>/<object>.<method>.json` for:
+- `$schema`, dotted `$id` (`https://zabbix.com/7.0/api/<object>/<object>.<method>`),
+  `title` equal to the dotted method name, non-empty `description`, a `$comment`
+  citing the doc Source URL.
+- `additionalProperties:false` on object schemas; delete-style array-of-id-strings
+  shape (`items.type:string` + `minItems`, or `maxItems:0` for empty-param methods).
+- filename prefix matches its directory (`<object>`).
+- `methods.json` in sync with files on disk (object set, method set, paths, counts).
+- only `.json` lives under `schemas/`.
+- object/method count regression guard (`EXPECT_OBJECTS` / `EXPECT_METHODS` in
+  `lint.sh`; bump those when intentionally adding or removing a schema).
 
-1. **Meta-schema conformance** — valid draft 2020-12 (reference `jsonschema` engine).
-2. **Conventions** — `$schema`, dotted `$id`
-   (`https://zabbix.com/7.0/api/<object>/<object>.<method>`), `title` equal to the
-   dotted method name, non-empty `description`, a `$comment` citing the doc Source
-   URL, `additionalProperties:false` on object schemas, and the delete-style
-   array-of-id-strings shape (`items.type:string` + `minItems`, or `maxItems:0`
-   for empty-param methods).
-3. **Naming** — filename prefix matches its directory (`<object>`).
-4. **Index sync** — `methods.json` matches the files on disk (object set, method
-   set, paths, and counts).
-5. **No stray files** — only `.json` lives under `schemas/`.
-6. **Regression guard** — object/method totals match `EXPECT_OBJECTS` /
-   `EXPECT_METHODS` in `lint.sh`; bump those when intentionally adding or removing
-   a schema.
-
-Exit codes: `0` clean, `1` lint failures, `2` missing dependency (`jq`, `python3`,
-or the `jsonschema` module). Convention rules live in `lint/rules.jq`.
+Exit codes: `0` clean, `1` failures, `2` missing dependency (`jq`, `python3`).
+Convention rules live in `lint/rules.jq`.
 
 ## Source
 

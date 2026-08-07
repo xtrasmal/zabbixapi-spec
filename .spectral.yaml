@@ -1,0 +1,22 @@
+# .spectral.yaml — independent JSON Schema conformance check.
+#
+# Validates every schemas/<object>/<object>.<method>.json against the OFFICIAL
+# JSON Schema draft 2020-12 meta-schema (an external authority, not this repo's
+# own conventions). Complements lint.sh, which enforces house conventions and
+# uses a different validation engine (python jsonschema); this is a second,
+# independent opinion via Spectral/ajv.
+#
+# Run: spectral lint 'schemas/**/*.json'
+rules:
+  valid-json-schema-2020-12:
+    description: File must conform to the official JSON Schema draft 2020-12 meta-schema.
+    message: "{{error}}"
+    given: "$"
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        dialect: draft2020-12
+        allErrors: true
+        schema:
+          $ref: "https://json-schema.org/draft/2020-12/schema"

@@ -1,14 +1,18 @@
 #!/usr/bin/env bash
-# lint.sh — the official linter for the Zabbix 7.0 API JSON Schema corpus.
+# lint.sh — house-rules / convention checker for the Zabbix 7.0 API JSON Schema corpus.
+#
+# This does NOT validate JSON Schema itself. Spectral owns that, independently:
+#   spectral lint 'schemas/**/*.json'   (see .spectral.yaml)
+# The two checks do not overlap — Spectral says the files are valid JSON Schema;
+# this says they follow the repo's conventions.
 #
 # Runs, over every schemas/<object>/<object>.<method>.json:
-#   1. draft 2020-12 meta-schema conformance             (python jsonschema)
-#   2. repo conventions: $schema / $id / title / $comment,
+#   1. repo conventions: $schema / $id / title / $comment,
 #      additionalProperties, delete-array shape           (jq: lint/rules.jq)
-#   3. filename <-> directory <-> title/$id agreement
-#   4. methods.json index is in sync with the files on disk (python)
-#   5. no stray non-.json files under schemas/
-#   6. object/method count regression guard
+#   2. filename <-> directory <-> title/$id agreement
+#   3. methods.json index is in sync with the files on disk (python)
+#   4. no stray non-.json files under schemas/
+#   5. object/method count regression guard
 #
 # Usage : ./lint.sh [--quiet|-q]
 # Exit  : 0 clean, 1 lint failures, 2 missing dependency.
@@ -39,8 +43,6 @@ count_lines() { printf '%s\n' "$1" | grep -c '.'; }
 # ---- dependencies -----------------------------------------------------------
 command -v jq      >/dev/null 2>&1 || { fail_line "FATAL: jq not found"; exit 2; }
 command -v python3 >/dev/null 2>&1 || { fail_line "FATAL: python3 not found"; exit 2; }
-python3 -c 'import jsonschema' 2>/dev/null \
-  || { fail_line "FATAL: python module 'jsonschema' not installed (pip install jsonschema)"; exit 2; }
 [[ -f "$RULES" ]] || { fail_line "FATAL: rules file missing: $RULES"; exit 2; }
 
 errors=0
@@ -75,23 +77,7 @@ while IFS= read -r f; do
   fail_line "[stray] ${f#"$ROOT"/}: non-.json file under schemas/"; errors=$((errors+1))
 done < <(find "$SCHEMA_DIR" -type f ! -name '*.json')
 
-# ---- 1: meta-schema conformance ---------------------------------------------
-say "${DIM}== draft 2020-12 meta-schema ==${RST}"
-meta_out="$(python3 - "$SCHEMA_DIR" <<'PY'
-import sys, glob, json
-from jsonschema import Draft202012Validator
-for f in sorted(glob.glob(sys.argv[1] + "/**/*.json", recursive=True)):
-    try:
-        Draft202012Validator.check_schema(json.load(open(f)))
-    except Exception as e:
-        print(f"[metaschema] {f}: {str(e).splitlines()[0][:160]}")
-PY
-)"
-if [[ -n "$meta_out" ]]; then
-  fail_line "$meta_out"; errors=$((errors + $(count_lines "$meta_out")))
-fi
-
-# ---- 4 + 6: methods.json sync + counts --------------------------------------
+# ---- methods.json sync + counts ---------------------------------------------
 say "${DIM}== methods.json index + counts ==${RST}"
 idx_out="$(python3 - "$ROOT" "$EXPECT_OBJECTS" "$EXPECT_METHODS" <<'PY'
 import sys, os, glob, json
@@ -138,7 +124,7 @@ fi
 nfiles="$(find "$SCHEMA_DIR" -name '*.json' | wc -l | tr -d ' ')"
 nobj="$(find "$SCHEMA_DIR" -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')"
 if [[ $errors -eq 0 ]]; then
-  printf '%sPASS%s  %s schemas across %s objects — meta-schema, conventions, and index all clean\n' \
+  printf '%sPASS%s  %s schemas across %s objects — conventions and index clean (JSON Schema validity: run spectral)\n' \
     "$GRN" "$RST" "$nfiles" "$nobj"
   exit 0
 fi
