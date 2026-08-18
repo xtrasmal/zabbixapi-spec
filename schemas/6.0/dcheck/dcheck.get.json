@@ -2,38 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/dcheck/dcheck.get",
   "title": "dcheck.get",
-  "description": "Retrieve discovery checks according to the given parameters.",
+  "description": "",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/dcheck/get",
   "type": "object",
   "properties": {
-    "dcheckids": {
-      "oneOf": [
-        { "type": "string" },
-        { "type": "array", "items": { "type": "string" } }
-      ],
-      "description": "Return only discovery checks with the given IDs."
-    },
-    "druleids": {
-      "oneOf": [
-        { "type": "string" },
-        { "type": "array", "items": { "type": "string" } }
-      ],
-      "description": "Return only discovery checks that belong to the given discovery rules."
-    },
-    "dserviceids": {
-      "oneOf": [
-        { "type": "string" },
-        { "type": "array", "items": { "type": "string" } }
-      ],
-      "description": "Return only discovery checks that have detected the given discovered services."
-    },
-    "selectDRules": {
-      "oneOf": [
-        { "type": "array", "items": { "type": "string" } },
-        { "enum": ["extend", "count"] }
-      ],
-      "description": "Return discovery rules related to the discovery checks."
-    },
     "countOutput": {
       "type": "boolean",
       "description": "Return the number of records in the result instead of the actual data."
@@ -56,8 +28,18 @@
     },
     "output": {
       "oneOf": [
-        { "type": "array", "items": { "type": "string" } },
-        { "enum": ["extend", "count"] }
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": [
+            "extend",
+            "count"
+          ]
+        }
       ],
       "description": "Object properties to be returned. Default: extend."
     },
@@ -79,18 +61,35 @@
     },
     "sortfield": {
       "oneOf": [
-        { "enum": ["dcheckid", "druleid"] },
+        {
+          "type": "string"
+        },
         {
           "type": "array",
-          "items": { "enum": ["dcheckid", "druleid"] }
+          "items": {
+            "type": "string"
+          }
         }
       ],
-      "description": "Sort the result by the given properties. Possible values are: dcheckid and druleid."
+      "description": "Sort the result by the given properties."
     },
     "sortorder": {
       "oneOf": [
-        { "enum": ["ASC", "DESC"] },
-        { "type": "array", "items": { "enum": ["ASC", "DESC"] } }
+        {
+          "enum": [
+            "ASC",
+            "DESC"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          }
+        }
       ],
       "description": "Order of sorting. ASC or DESC."
     },

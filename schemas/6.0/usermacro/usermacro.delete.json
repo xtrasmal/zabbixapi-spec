@@ -2,12 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/usermacro/usermacro.delete",
   "title": "usermacro.delete",
-  "description": "Delete host macros.",
+  "description": "",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/usermacro/delete",
   "type": "array",
   "items": {
-    "type": "string",
-    "description": "ID of the host macro to delete."
+    "type": "string"
   },
   "minItems": 1
 }

@@ -2,80 +2,10 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/correlation/correlation.get",
   "title": "correlation.get",
-  "description": "Retrieve correlations according to the given parameters.",
+  "description": "",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/correlation/get",
   "type": "object",
   "properties": {
-    "correlationids": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      ],
-      "description": "Return only correlations with the given IDs."
-    },
-    "selectFilter": {
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        {
-          "enum": [
-            "extend",
-            "count"
-          ]
-        }
-      ],
-      "description": "Return a filter property with the correlation conditions."
-    },
-    "selectOperations": {
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        {
-          "enum": [
-            "extend",
-            "count"
-          ]
-        }
-      ],
-      "description": "Return an operations property with the correlation operations."
-    },
-    "sortfield": {
-      "oneOf": [
-        {
-          "enum": [
-            "correlationid",
-            "name",
-            "status"
-          ]
-        },
-        {
-          "type": "array",
-          "items": {
-            "enum": [
-              "correlationid",
-              "name",
-              "status"
-            ]
-          }
-        }
-      ],
-      "description": "Sort the result by the given properties. Possible values are: correlationid, name and status."
-    },
     "countOutput": {
       "type": "boolean",
       "description": "Return the number of records in the result instead of the actual data."
@@ -128,6 +58,20 @@
     "searchWildcardsEnabled": {
       "type": "boolean",
       "description": "If true, enables the use of '*' as a wildcard character. Default: false."
+    },
+    "sortfield": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Sort the result by the given properties."
     },
     "sortorder": {
       "oneOf": [
