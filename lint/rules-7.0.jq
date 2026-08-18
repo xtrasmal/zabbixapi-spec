@@ -1,10 +1,10 @@
-# lint/rules.jq — Zabbix 7.0 API JSON Schema convention rules.
+# lint/rules-7.0.jq — Zabbix 7.0 API JSON Schema convention rules.
 #
-# Input : one schema document (a single schemas/<object>/<object>.<method>.json).
+# Input : one schema document (a single schemas/7.0/<object>/<object>.<method>.json).
 # Args  : --arg object <object>   --arg method <method>
 # Output: one line per convention violation. No output means the file is clean.
 #
-# Reused by lint.sh. A copy lives at ~/.claude/helpers/jq/zabbix-schema-lint.jq.
+# Reused by lint-7.0.sh. A copy lives at ~/.claude/helpers/jq/zabbix-schema-lint.jq.
 
 def want($cond; $msg): if $cond then empty else $msg end;
 

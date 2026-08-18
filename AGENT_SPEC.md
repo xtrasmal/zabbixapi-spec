@@ -65,11 +65,11 @@ emitting a guessed schema.
 Write files to (paths are absolute):
 
 ```
-/Users/xander/code/www/idiot/zabbixapi-spec/schemas/<object>/<method>.json
+/Users/xander/code/www/idiot/zabbixapi-spec/schemas/7.0/<object>/<method>.json
 ```
 
 Where `<method>` is the dotted method name, e.g.
-`schemas/host/host.get.json`, `schemas/host/host.massadd.json`.
+`schemas/7.0/host/host.get.json`, `schemas/7.0/host/host.massadd.json`.
 
 ## Schema rules
 

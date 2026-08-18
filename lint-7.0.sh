@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
-# lint.sh — house-rules / convention checker for the Zabbix 7.0 API JSON Schema corpus.
+# lint-7.0.sh — house-rules / convention checker for the Zabbix 7.0 API JSON Schema corpus.
 #
 # This does NOT validate JSON Schema itself. Spectral owns that, independently:
-#   spectral lint 'schemas/**/*.json'   (see .spectral.yaml)
+#   spectral lint 'schemas/7.0/**/*.json'   (see .spectral.yaml)
 # The two checks do not overlap — Spectral says the files are valid JSON Schema;
 # this says they follow the repo's conventions.
 #
-# Runs, over every schemas/<object>/<object>.<method>.json:
+# Runs, over every schemas/7.0/<object>/<object>.<method>.json:
 #   1. repo conventions: $schema / $id / title / $comment,
-#      additionalProperties, delete-array shape           (jq: lint/rules.jq)
+#      additionalProperties, delete-array shape           (jq: lint/rules-7.0.jq)
 #   2. filename <-> directory <-> title/$id agreement
-#   3. methods.json index is in sync with the files on disk (python)
-#   4. no stray non-.json files under schemas/
+#   3. zabbix-7.0.json index is in sync with the files on disk (python)
+#   4. no stray non-.json files under schemas/7.0/
 #   5. object/method count regression guard
 #
-# Usage : ./lint.sh [--quiet|-q]
+# Usage : ./lint-7.0.sh [--quiet|-q]
 # Exit  : 0 clean, 1 lint failures, 2 missing dependency.
 
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SCHEMA_DIR="$ROOT/schemas"
-RULES="$ROOT/lint/rules.jq"
+SCHEMA_DIR="$ROOT/schemas/7.0"
+RULES="$ROOT/lint/rules-7.0.jq"
 
 # Regression guard — this repo is a fixed snapshot of the Zabbix 7.0 API.
 # Bump these only when a schema is intentionally added or removed.
@@ -74,22 +74,22 @@ done < <(find "$SCHEMA_DIR" -name '*.json' | sort)
 # ---- 5: stray files ---------------------------------------------------------
 while IFS= read -r f; do
   [[ -z "$f" ]] && continue
-  fail_line "[stray] ${f#"$ROOT"/}: non-.json file under schemas/"; errors=$((errors+1))
+  fail_line "[stray] ${f#"$ROOT"/}: non-.json file under schemas/7.0/"; errors=$((errors+1))
 done < <(find "$SCHEMA_DIR" -type f ! -name '*.json')
 
-# ---- methods.json sync + counts ---------------------------------------------
-say "${DIM}== methods.json index + counts ==${RST}"
+# ---- zabbix-7.0.json sync + counts ---------------------------------------------
+say "${DIM}== zabbix-7.0.json index + counts ==${RST}"
 idx_out="$(python3 - "$ROOT" "$EXPECT_OBJECTS" "$EXPECT_METHODS" <<'PY'
 import sys, os, glob, json
 root, exp_obj, exp_meth = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
 disk = {}
-for f in glob.glob(root + "/schemas/*/*.json"):
+for f in glob.glob(root + "/schemas/7.0/*/*.json"):
     o = os.path.basename(os.path.dirname(f)); m = os.path.basename(f)[:-5]
     disk.setdefault(o, {})[m] = os.path.relpath(f, root)
 try:
-    idx = json.load(open(root + "/methods.json"))
+    idx = json.load(open(root + "/schemas/zabbix-7.0.json"))
 except Exception as e:
-    print(f"[index] cannot read methods.json: {e}"); sys.exit()
+    print(f"[index] cannot read schemas/zabbix-7.0.json: {e}"); sys.exit()
 io = idx.get("objects", {})
 if set(io) != set(disk):
     print("[index] object set mismatch: missing", sorted(set(disk) - set(io)),
@@ -108,9 +108,9 @@ if idx.get("method_count") != nfiles:
 if idx.get("object_count") != nobj:
     print(f"[index] object_count {idx.get('object_count')} != {nobj} dirs on disk")
 if nobj != exp_obj:
-    print(f"[count] {nobj} objects != expected {exp_obj} (update EXPECT_OBJECTS in lint.sh if intentional)")
+    print(f"[count] {nobj} objects != expected {exp_obj} (update EXPECT_OBJECTS in lint-7.0.sh if intentional)")
 if nfiles != exp_meth:
-    print(f"[count] {nfiles} methods != expected {exp_meth} (update EXPECT_METHODS in lint.sh if intentional)")
+    print(f"[count] {nfiles} methods != expected {exp_meth} (update EXPECT_METHODS in lint-7.0.sh if intentional)")
 for o in sorted(disk):
     if not disk[o]:
         print(f"[count] object '{o}' has 0 schema files")
