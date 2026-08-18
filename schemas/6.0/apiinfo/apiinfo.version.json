@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/apiinfo/apiinfo.version",
+  "title": "apiinfo.version",
+  "description": "Retrieve the version of the Zabbix API. Only available to unauthenticated users; must be called without the auth parameter.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/apiinfo/version",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false
+}

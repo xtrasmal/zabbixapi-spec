@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/housekeeping/housekeeping.get",
+  "title": "housekeeping.get",
+  "description": "Retrieve the housekeeping object according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/housekeeping/get",
+  "type": "object",
+  "properties": {
+    "output": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": ["extend", "count"]
+        }
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    }
+  },
+  "additionalProperties": false
+}

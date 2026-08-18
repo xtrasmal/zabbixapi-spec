@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/mediatype/mediatype.create",
+  "title": "mediatype.create",
+  "description": "Create new media types.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/mediatype/create",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the media type."
+    },
+    "type": {
+      "type": "integer",
+      "description": "Transport used by the media type. Possible values: 0 - email; 1 - script; 2 - SMS; 4 - Webhook.",
+      "enum": [0, 1, 2, 4]
+    },
+    "exec_path": {
+      "type": "string",
+      "description": "For script media types, exec_path contains the name of the executed script. Required for script media types."
+    },
+    "gsm_modem": {
+      "type": "string",
+      "description": "Serial device name of the GSM modem. Required for SMS media types."
+    },
+    "passwd": {
+      "type": "string",
+      "description": "Authentication password. Used for email media types."
+    },
+    "smtp_email": {
+      "type": "string",
+      "description": "Email address from which notifications will be sent. Required for email media types."
+    },
+    "smtp_helo": {
+      "type": "string",
+      "description": "SMTP HELO. Required for email media types."
+    },
+    "smtp_server": {
+      "type": "string",
+      "description": "SMTP server. Required for email media types."
+    },
+    "smtp_port": {
+      "type": "integer",
+      "description": "SMTP server port to connect to."
+    },
+    "smtp_security": {
+      "type": "integer",
+      "description": "SMTP connection security level to use. Possible values: 0 - None; 1 - STARTTLS; 2 - SSL/TLS.",
+      "enum": [0, 1, 2]
+    },
+    "smtp_verify_host": {
+      "type": "integer",
+      "description": "SSL verify host for SMTP. Possible values: 0 - No; 1 - Yes.",
+      "enum": [0, 1]
+    },
+    "smtp_verify_peer": {
+      "type": "integer",
+      "description": "SSL verify peer for SMTP. Possible values: 0 - No; 1 - Yes.",
+      "enum": [0, 1]
+    },
+    "smtp_authentication": {
+      "type": "integer",
+      "description": "SMTP authentication method to use. Possible values: 0 - None; 1 - Normal password.",
+      "enum": [0, 1]
+    },
+    "status": {
+      "type": "integer",
+      "description": "Whether the media type is enabled. Possible values: 0 - (default) enabled; 1 - disabled.",
+      "enum": [0, 1]
+    },
+    "username": {
+      "type": "string",
+      "description": "User name. Used for email media types."
+    },
+    "exec_params": {
+      "type": "string",
+      "description": "Script parameters. Each parameter ends with a new line feed."
+    },
+    "maxsessions": {
+      "type": "integer",
+      "description": "The maximum number of alerts that can be processed in parallel. Possible values for SMS: 1 - (default). Possible values for other media types: 0-100."
+    },
+    "maxattempts": {
+      "type": "integer",
+      "description": "The maximum number of attempts to send an alert. Possible values: 1-100. Default value: 3."
+    },
+    "attempt_interval": {
+      "type": "string",
+      "description": "The interval between retry attempts. Accepts seconds and time unit with suffix. Possible values: 0-1h. Default value: 10s."
+    },
+    "content_type": {
+      "type": "integer",
+      "description": "Message format. Possible values: 0 - plain text; 1 - (default) html.",
+      "enum": [0, 1]
+    },
+    "script": {
+      "type": "string",
+      "description": "Media type webhook script javascript body."
+    },
+    "timeout": {
+      "type": "string",
+      "description": "Media type webhook script timeout. Accepts seconds and time unit with suffix. Possible values: 1-60s. Default value: 30s."
+    },
+    "process_tags": {
+      "type": "integer",
+      "description": "Defines should the webhook script response to be interpreted as tags and these tags should be added to associated event. Possible values: 0 - (default) Ignore webhook script response; 1 - Process webhook script response as tags.",
+      "enum": [0, 1]
+    },
+    "show_event_menu": {
+      "type": "integer",
+      "description": "Show media type entry in problem.get and event.get property urls. Possible values: 0 - (default) Do not add urls entry; 1 - Add media type to urls property.",
+      "enum": [0, 1]
+    },
+    "event_menu_url": {
+      "type": "string",
+      "description": "Define url property of media type entry in urls property of problem.get and event.get."
+    },
+    "event_menu_name": {
+      "type": "string",
+      "description": "Define name property of media type entry in urls property of problem.get and event.get."
+    },
+    "parameters": {
+      "type": "array",
+      "description": "Webhook parameters to be created for the media type.",
+      "items": {
+        "type": "object",
+        "description": "Webhook input parameter passed to the webhook script when it is called.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Parameter name."
+          },
+          "value": {
+            "type": "string",
+            "description": "Parameter value, supports macros."
+          }
+        },
+        "required": ["name"],
+        "additionalProperties": false
+      }
+    },
+    "description": {
+      "type": "string",
+      "description": "Media type description."
+    },
+    "message_templates": {
+      "type": "array",
+      "description": "Message templates to be created for the media type.",
+      "items": {
+        "type": "object",
+        "description": "Message template defining a default message for action operations to send a notification.",
+        "properties": {
+          "eventsource": {
+            "type": "integer",
+            "description": "Event source. Possible values: 0 - triggers; 1 - discovery; 2 - autoregistration; 3 - internal; 4 - services.",
+            "enum": [0, 1, 2, 3, 4]
+          },
+          "recovery": {
+            "type": "integer",
+            "description": "Operation mode. Possible values: 0 - operations; 1 - recovery operations; 2 - update operations.",
+            "enum": [0, 1, 2]
+          },
+          "subject": {
+            "type": "string",
+            "description": "Message subject."
+          },
+          "message": {
+            "type": "string",
+            "description": "Message text."
+          }
+        },
+        "required": ["eventsource", "recovery"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["name", "type"],
+  "additionalProperties": false
+}

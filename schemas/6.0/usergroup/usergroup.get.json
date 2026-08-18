@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/usergroup/usergroup.get",
+  "title": "usergroup.get",
+  "description": "Retrieve user groups according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/usergroup/get",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Return only user groups with the given status. 0 - (default) enabled; 1 - disabled."
+    },
+    "userids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only user groups that contain the given users."
+    },
+    "usrgrpids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only user groups with the given IDs."
+    },
+    "selectTagFilters": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return user group tag based permissions in the tag_filters property. It has the following properties: groupid - (string) ID of the host group; tag - (string) tag name; value - (string) tag value."
+    },
+    "selectUsers": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return the users from the user group in the users property. See user.get for restrictions based on user type."
+    },
+    "selectRights": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return user group rights in the rights property. It has the following properties: permission - (integer) access level to the host group; id - (string) ID of the host group."
+    },
+    "limitSelects": {
+      "type": "integer",
+      "description": "Limits the number of records returned by subselects."
+    },
+    "countOutput": {"type": "boolean", "description": "Return the number of records in the result instead of the actual data."},
+    "editable": {"type": "boolean", "description": "If set to true, return only objects that the user has write permissions to. Default: false."},
+    "excludeSearch": {"type": "boolean", "description": "Return results that do not match the criteria given in the search parameter."},
+    "filter": {"type": "object", "description": "Return only those results that exactly match the given filter. Does not support text-type properties."},
+    "limit": {"type": "integer", "description": "Limit the number of records returned."},
+    "output": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "User group object properties to be returned. Since Zabbix 6.0.38, Admin and User type users may retrieve only the following properties: usrgrpid, name, gui_access, users_status, debug_mode. Default: extend."
+    },
+    "preservekeys": {"type": "boolean", "description": "Use IDs as keys in the resulting array."},
+    "search": {"type": "object", "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."},
+    "searchByAny": {"type": "boolean", "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."},
+    "searchWildcardsEnabled": {"type": "boolean", "description": "If true, enables the use of '*' as a wildcard character. Default: false."},
+    "sortfield": {
+      "oneOf": [
+        {"type": "string", "enum": ["usrgrpid", "name"]},
+        {"type": "array", "items": {"type": "string", "enum": ["usrgrpid", "name"]}}
+      ],
+      "description": "Sort the result by the given properties. Possible values are: usrgrpid, name."
+    },
+    "sortorder": {
+      "oneOf": [
+        {"enum": ["ASC", "DESC"]},
+        {"type": "array", "items": {"enum": ["ASC", "DESC"]}}
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {"type": "boolean", "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."}
+  },
+  "additionalProperties": false
+}

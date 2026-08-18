@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/template/template.massremove",
+  "title": "template.massremove",
+  "description": "Remove related objects from multiple templates.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/template/massremove",
+  "type": "object",
+  "properties": {
+    "templateids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "IDs of the templates to be updated."},
+    "groupids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Host groups to remove the given templates from."},
+    "macros": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "User macros to delete from the given templates."},
+    "templateids_clear": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Templates to unlink and clear from the given templates (upstream)."},
+    "templateids_link": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Templates to unlink from the given templates (upstream)."}
+  },
+  "required": ["templateids"],
+  "additionalProperties": false
+}

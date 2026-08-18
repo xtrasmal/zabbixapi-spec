@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/host/host.massadd",
+  "title": "host.massadd",
+  "description": "Simultaneously add multiple related objects to all the given hosts.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/host/massadd",
+  "type": "object",
+  "properties": {
+    "hosts": {
+      "type": "array",
+      "description": "Hosts to be updated. The hosts must have the hostid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hostid": {"type": "string", "description": "ID of the host."}
+        },
+        "required": ["hostid"]
+      }
+    },
+    "groups": {
+      "type": "array",
+      "description": "Host groups to add to the given hosts. The host groups must have the groupid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "groupid": {"type": "string", "description": "ID of the host group."}
+        },
+        "required": ["groupid"]
+      }
+    },
+    "interfaces": {
+      "type": "array",
+      "description": "Host interfaces to be created for the given hosts.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "details": {
+            "type": "object",
+            "description": "Additional object for interface. Required if interface type is SNMP.",
+            "properties": {
+              "version": {"type": "integer", "enum": [1, 2, 3], "description": "SNMP interface version. Possible values: 1 - SNMPv1; 2 - SNMPv2c; 3 - SNMPv3."},
+              "bulk": {"type": "integer", "enum": [0, 1], "description": "Whether to use bulk SNMP requests. Possible values: 0 - don't use bulk requests; 1 - (default) use bulk requests."},
+              "community": {"type": "string", "description": "SNMP community (required). Used only by SNMPv1 and SNMPv2 interfaces."},
+              "securityname": {"type": "string", "description": "SNMPv3 security name. Used only by SNMPv3 interfaces."},
+              "securitylevel": {"type": "integer", "enum": [0, 1, 2], "description": "SNMPv3 security level. Used only by SNMPv3 interfaces. Possible values: 0 - (default) noAuthNoPriv; 1 - authNoPriv; 2 - authPriv."},
+              "authpassphrase": {"type": "string", "description": "SNMPv3 authentication passphrase. Used only by SNMPv3 interfaces."},
+              "privpassphrase": {"type": "string", "description": "SNMPv3 privacy passphrase. Used only by SNMPv3 interfaces."},
+              "authprotocol": {"type": "integer", "enum": [0, 1, 2, 3, 4, 5], "description": "SNMPv3 authentication protocol. Used only by SNMPv3 interfaces. Possible values: 0 - (default) MD5; 1 - SHA1; 2 - SHA224; 3 - SHA256; 4 - SHA384; 5 - SHA512."},
+              "privprotocol": {"type": "integer", "enum": [0, 1, 2, 3, 4, 5], "description": "SNMPv3 privacy protocol. Used only by SNMPv3 interfaces. Possible values: 0 - (default) DES; 1 - AES128; 2 - AES192; 3 - AES256; 4 - AES192C; 5 - AES256C."},
+              "contextname": {"type": "string", "description": "SNMPv3 context name. Used only by SNMPv3 interfaces."}
+            },
+            "required": ["version"]
+          },
+          "dns": {"type": "string", "description": "DNS name used by the interface. Can be empty if the connection is made via IP."},
+          "ip": {"type": "string", "description": "IP address used by the interface. Can be empty if the connection is made via DNS."},
+          "main": {"type": "integer", "enum": [0, 1], "description": "Whether the interface is used as default on the host. Only one interface of some type can be set as default on a host. Possible values: 0 - not default; 1 - default."},
+          "port": {"type": "string", "description": "Port number used by the interface. Can contain user macros."},
+          "type": {"type": "integer", "enum": [1, 2, 3, 4], "description": "Interface type. Possible values: 1 - agent; 2 - SNMP; 3 - IPMI; 4 - JMX."},
+          "useip": {"type": "integer", "enum": [0, 1], "description": "Whether the connection should be made via IP. Possible values: 0 - connect using host DNS name; 1 - connect using host IP address for this host interface."}
+        },
+        "required": ["dns", "ip", "main", "port", "type", "useip"]
+      }
+    },
+    "macros": {
+      "type": "array",
+      "description": "User macros to be created for the given hosts.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hostmacroid": {"type": "string", "description": "(readonly) ID of the host macro."},
+          "macro": {"type": "string", "description": "Macro string."},
+          "value": {"type": "string", "description": "Value of the macro."},
+          "type": {"type": "integer", "enum": [0, 1, 2], "description": "Type of macro. Possible values: 0 - (default) Text macro; 1 - Secret macro; 2 - Vault secret."},
+          "description": {"type": "string", "description": "Description of the macro."}
+        },
+        "required": ["macro", "value"]
+      }
+    },
+    "templates": {
+      "type": "array",
+      "description": "Templates to link to the given hosts. The templates must have the templateid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": {"type": "string", "description": "ID of the template."}
+        },
+        "required": ["templateid"]
+      }
+    }
+  },
+  "required": ["hosts"],
+  "additionalProperties": false
+}

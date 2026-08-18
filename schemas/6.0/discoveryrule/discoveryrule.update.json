@@ -1,0 +1,454 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/discoveryrule/discoveryrule.update",
+  "title": "discoveryrule.update",
+  "description": "Update existing LLD rules.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/discoveryrule/update",
+  "type": "object",
+  "$defs": {
+    "parameter": {
+      "type": "object",
+      "description": "Additional parameter for script type LLD rules. Object with 'name' and 'value' properties, where name must be unique among the array.",
+      "properties": {
+        "name": { "type": "string", "description": "Parameter name." },
+        "value": { "type": "string", "description": "Parameter value." }
+      },
+      "additionalProperties": false
+    },
+    "filterCondition": {
+      "type": "object",
+      "description": "The LLD rule filter condition object defines a separate check to perform on the value of an LLD macro.",
+      "properties": {
+        "macro": { "type": "string", "description": "LLD macro to perform the check on." },
+        "value": { "type": "string", "description": "Value to compare with." },
+        "formulaid": {
+          "type": "string",
+          "description": "Arbitrary unique ID that is used to reference the condition from a custom expression. Can only contain capital-case letters. The ID must be defined by the user when modifying filter conditions, but will be generated anew when requesting them afterward."
+        },
+        "operator": {
+          "type": "integer",
+          "enum": [8, 9, 12, 13],
+          "description": "Condition operator. Possible values: 8 - (default) matches regular expression; 9 - does not match regular expression; 12 - exists; 13 - does not exist."
+        }
+      },
+      "required": ["macro", "value"],
+      "additionalProperties": false
+    },
+    "filter": {
+      "type": "object",
+      "description": "The LLD rule filter object defines a set of conditions that can be used to filter discovered objects.",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "description": "Set of filter conditions to use for filtering results.",
+          "items": { "$ref": "#/$defs/filterCondition" }
+        },
+        "evaltype": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3],
+          "description": "Filter condition evaluation method. Possible values: 0 - and/or; 1 - and; 2 - or; 3 - custom expression."
+        },
+        "formula": {
+          "type": "string",
+          "description": "User-defined expression to be used for evaluating conditions of filters with a custom expression. The expression must contain IDs that reference specific filter conditions by its formulaid. The IDs used in the expression must exactly match the ones defined in the filter conditions: no condition can remain unused or omitted. Required for custom expression filters."
+        }
+      },
+      "required": ["conditions", "evaltype"],
+      "additionalProperties": false
+    },
+    "lldMacroPath": {
+      "type": "object",
+      "description": "The LLD macro path has the following properties.",
+      "properties": {
+        "lld_macro": { "type": "string", "description": "LLD macro." },
+        "path": { "type": "string", "description": "Selector for value which will be assigned to corresponding macro." }
+      },
+      "required": ["lld_macro", "path"],
+      "additionalProperties": false
+    },
+    "preprocessing": {
+      "type": "object",
+      "description": "The LLD rule preprocessing object.",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "enum": [5, 11, 12, 15, 16, 17, 20, 21, 23, 24, 25, 27],
+          "description": "The preprocessing option type. Possible values: 5 - Regular expression matching; 11 - XML XPath; 12 - JSONPath; 15 - Does not match regular expression; 16 - Check for error in JSON; 17 - Check for error in XML; 20 - Discard unchanged with heartbeat; 21 - JavaScript; 23 - Prometheus to JSON; 24 - CSV to JSON; 25 - Replace; 27 - XML to JSON."
+        },
+        "params": {
+          "type": "string",
+          "description": "Additional parameters used by preprocessing option. Multiple parameters are separated by LF (\\n) character."
+        },
+        "error_handler": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3],
+          "description": "Action type used in case of preprocessing step failure. Possible values: 0 - Error message is set by Zabbix server; 1 - Discard value; 2 - Set custom value; 3 - Set custom error message."
+        },
+        "error_handler_params": {
+          "type": "string",
+          "description": "Error handler parameters. Used with error_handler. Must be empty, if error_handler is 0 or 1. Can be empty if error_handler is 2. Cannot be empty, if error_handler is 3."
+        }
+      },
+      "required": ["type", "params", "error_handler", "error_handler_params"],
+      "additionalProperties": false
+    },
+    "overrideFilterCondition": {
+      "type": "object",
+      "description": "The LLD rule override filter condition object defines a separate check to perform on the value of an LLD macro.",
+      "properties": {
+        "macro": { "type": "string", "description": "LLD macro to perform the check on." },
+        "value": { "type": "string", "description": "Value to compare with." },
+        "formulaid": {
+          "type": "string",
+          "description": "Arbitrary unique ID that is used to reference the condition from a custom expression. Can only contain capital-case letters. The ID must be defined by the user when modifying filter conditions, but will be generated anew when requesting them afterward."
+        },
+        "operator": {
+          "type": "integer",
+          "enum": [8, 9, 12, 13],
+          "description": "Condition operator. Possible values: 8 - (default) matches regular expression; 9 - does not match regular expression; 12 - exists; 13 - does not exist."
+        }
+      },
+      "required": ["macro", "value"],
+      "additionalProperties": false
+    },
+    "overrideFilter": {
+      "type": "object",
+      "description": "The LLD rule override filter object defines a set of conditions that if they match the discovered object the override is applied.",
+      "properties": {
+        "evaltype": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3],
+          "description": "Override filter condition evaluation method. Possible values: 0 - and/or; 1 - and; 2 - or; 3 - custom expression."
+        },
+        "conditions": {
+          "type": "array",
+          "description": "Set of override filter conditions to use for matching the discovered objects.",
+          "items": { "$ref": "#/$defs/overrideFilterCondition" }
+        },
+        "formula": {
+          "type": "string",
+          "description": "User-defined expression to be used for evaluating conditions of override filters with a custom expression. The expression must contain IDs that reference specific override filter conditions by its formulaid. The IDs used in the expression must exactly match the ones defined in the override filter conditions: no condition can remain unused or omitted. Required for custom expression override filters."
+        }
+      },
+      "required": ["evaltype", "conditions"],
+      "additionalProperties": false
+    },
+    "opstatus": {
+      "type": "object",
+      "description": "LLD rule override operation status that is set to discovered object.",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Override the status for selected object. Possible values: 0 - Create enabled; 1 - Create disabled."
+        }
+      },
+      "required": ["status"],
+      "additionalProperties": false
+    },
+    "opdiscover": {
+      "type": "object",
+      "description": "LLD rule override operation discover status that is set to discovered object.",
+      "properties": {
+        "discover": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Override the discover status for selected object. Possible values: 0 - Yes, continue discovering the objects; 1 - No, new objects will not be discovered and existing ones will be marked as lost."
+        }
+      },
+      "required": ["discover"],
+      "additionalProperties": false
+    },
+    "opperiod": {
+      "type": "object",
+      "description": "LLD rule override operation period is an update interval value (supports custom intervals) that is set to discovered item.",
+      "properties": {
+        "delay": {
+          "type": "string",
+          "description": "Override the update interval of the item prototype. Accepts seconds or a time unit with suffix (30s,1m,2h,1d) as well as flexible and scheduling intervals and user macros or LLD macros. Multiple intervals are separated by a semicolon."
+        }
+      },
+      "required": ["delay"],
+      "additionalProperties": false
+    },
+    "ophistory": {
+      "type": "object",
+      "description": "LLD rule override operation history value that is set to discovered item.",
+      "properties": {
+        "history": {
+          "type": "string",
+          "description": "Override the history of item prototype which is a time unit of how long the history data should be stored. Also accepts user macro and LLD macro."
+        }
+      },
+      "required": ["history"],
+      "additionalProperties": false
+    },
+    "optrends": {
+      "type": "object",
+      "description": "LLD rule override operation trends value that is set to discovered item.",
+      "properties": {
+        "trends": {
+          "type": "string",
+          "description": "Override the trends of item prototype which is a time unit of how long the trends data should be stored. Also accepts user macro and LLD macro."
+        }
+      },
+      "required": ["trends"],
+      "additionalProperties": false
+    },
+    "opseverity": {
+      "type": "object",
+      "description": "LLD rule override operation severity value that is set to discovered trigger.",
+      "properties": {
+        "severity": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4, 5],
+          "description": "Override the severity of trigger prototype. Possible values are: 0 - (default) not classified; 1 - information; 2 - warning; 3 - average; 4 - high; 5 - disaster."
+        }
+      },
+      "required": ["severity"],
+      "additionalProperties": false
+    },
+    "optag": {
+      "type": "object",
+      "description": "LLD rule override operation tag object contains tag name and value that are set to discovered object.",
+      "properties": {
+        "tag": { "type": "string", "description": "New tag name. Also accepts user macro and LLD macro." },
+        "value": { "type": "string", "description": "New tag value. Also accepts user macro and LLD macro." }
+      },
+      "required": ["tag"],
+      "additionalProperties": false
+    },
+    "optemplate": {
+      "type": "object",
+      "description": "LLD rule override operation template object that is linked to discovered host.",
+      "properties": {
+        "templateid": { "type": "string", "description": "Override the template of host prototype linked templates." }
+      },
+      "required": ["templateid"],
+      "additionalProperties": false
+    },
+    "opinventory": {
+      "type": "object",
+      "description": "LLD rule override operation inventory mode value that is set to discovered host.",
+      "properties": {
+        "inventory_mode": {
+          "type": "integer",
+          "enum": [-1, 0, 1],
+          "description": "Override the host prototype inventory mode. Possible values are: -1 - disabled; 0 - (default) manual; 1 - automatic."
+        }
+      },
+      "required": ["inventory_mode"],
+      "additionalProperties": false
+    },
+    "overrideOperation": {
+      "type": "object",
+      "description": "The LLD rule override operation is combination of conditions and actions to perform on the prototype object.",
+      "properties": {
+        "operationobject": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3],
+          "description": "Type of discovered object to perform the action to. Possible values: 0 - Item prototype; 1 - Trigger prototype; 2 - Graph prototype; 3 - Host prototype."
+        },
+        "operator": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 8, 9],
+          "description": "Override condition operator. Possible values: 0 - (default) equals; 1 - does not equal; 2 - contains; 3 - does not contain; 8 - matches; 9 - does not match."
+        },
+        "value": { "type": "string", "description": "Pattern to match item, trigger, graph or host prototype name depending on selected object." },
+        "opstatus": { "$ref": "#/$defs/opstatus", "description": "Override operation status object for item, trigger and host prototype objects." },
+        "opdiscover": { "$ref": "#/$defs/opdiscover", "description": "Override operation discover status object (all object types)." },
+        "opperiod": { "$ref": "#/$defs/opperiod", "description": "Override operation period (update interval) object for item prototype object." },
+        "ophistory": { "$ref": "#/$defs/ophistory", "description": "Override operation history object for item prototype object." },
+        "optrends": { "$ref": "#/$defs/optrends", "description": "Override operation trends object for item prototype object." },
+        "opseverity": { "$ref": "#/$defs/opseverity", "description": "Override operation severity object for trigger prototype object." },
+        "optag": {
+          "type": "array",
+          "description": "Override operation tag object for trigger and host prototype objects.",
+          "items": { "$ref": "#/$defs/optag" }
+        },
+        "optemplate": {
+          "type": "array",
+          "description": "Override operation template object for host prototype object.",
+          "items": { "$ref": "#/$defs/optemplate" }
+        },
+        "opinventory": { "$ref": "#/$defs/opinventory", "description": "Override operation inventory object for host prototype object." }
+      },
+      "required": ["operationobject"],
+      "additionalProperties": false
+    },
+    "override": {
+      "type": "object",
+      "description": "The LLD rule overrides object defines a set of rules (filters, conditions and operations) that are used to override properties of different prototype objects.",
+      "properties": {
+        "name": { "type": "string", "description": "Unique override name." },
+        "step": { "type": "integer", "description": "Unique order number of the override." },
+        "stop": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Stop processing next overrides if matches. Possible values: 0 - (default) don't stop processing overrides; 1 - stop processing overrides if filter matches."
+        },
+        "filter": { "$ref": "#/$defs/overrideFilter", "description": "Override filter." },
+        "operations": {
+          "type": "array",
+          "description": "Override operations.",
+          "items": { "$ref": "#/$defs/overrideOperation" }
+        }
+      },
+      "required": ["name", "step"],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "itemid": { "type": "string", "description": "ID of the LLD rule to update." },
+    "delay": {
+      "type": "string",
+      "description": "Update interval of the LLD rule. Accepts seconds or time unit with suffix and with or without one or more custom intervals that consist of either flexible intervals and scheduling intervals as serialized strings. Also accepts user macros. Flexible intervals could be written as two macros separated by a forward slash. Intervals are separated by a semicolon. Optional for Zabbix trapper, dependent items and for Zabbix agent (active) with mqtt.get key."
+    },
+    "hostid": { "type": "string", "description": "ID of the host that the LLD rule belongs to." },
+    "interfaceid": {
+      "type": "string",
+      "description": "ID of the LLD rule's host interface. Used only for host LLD rules. Not required for Zabbix agent (active), Zabbix internal, Zabbix trapper, dependent, database monitor and script LLD rules. Optional for HTTP agent LLD rules."
+    },
+    "key_": { "type": "string", "description": "LLD rule key." },
+    "name": { "type": "string", "description": "Name of the LLD rule." },
+    "type": {
+      "type": "integer",
+      "enum": [0, 2, 3, 5, 7, 10, 11, 12, 13, 14, 16, 18, 19, 20, 21],
+      "description": "Type of the LLD rule. Possible values: 0 - Zabbix agent; 2 - Zabbix trapper; 3 - simple check; 5 - Zabbix internal; 7 - Zabbix agent (active); 10 - external check; 11 - database monitor; 12 - IPMI agent; 13 - SSH agent; 14 - TELNET agent; 16 - JMX agent; 18 - Dependent item; 19 - HTTP agent; 20 - SNMP agent; 21 - Script."
+    },
+    "url": {
+      "type": "string",
+      "description": "URL string, required for HTTP agent LLD rule. Supports user macros, {HOST.IP}, {HOST.CONN}, {HOST.DNS}, {HOST.HOST}, {HOST.NAME}, {ITEM.ID}, {ITEM.KEY}."
+    },
+    "allow_traps": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "HTTP agent LLD rule field. Allow to populate value as in trapper item type also. Possible values: 0 - (default) Do not allow to accept incoming data; 1 - Allow to accept incoming data."
+    },
+    "authtype": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "Used only by SSH agent or HTTP agent LLD rules. SSH agent authentication method possible values: 0 - (default) password; 1 - public key. HTTP agent authentication method possible values: 0 - (default) none; 1 - basic; 2 - NTLM."
+    },
+    "description": { "type": "string", "description": "Description of the LLD rule." },
+    "follow_redirects": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "HTTP agent LLD rule field. Follow response redirects while polling data. Possible values: 0 - Do not follow redirects; 1 - (default) Follow redirects."
+    },
+    "headers": {
+      "type": "object",
+      "description": "HTTP agent LLD rule field. Object with HTTP(S) request headers, where header name is used as key and header value as value. Example: { \"User-Agent\": \"Zabbix\" }",
+      "additionalProperties": { "type": "string" }
+    },
+    "http_proxy": { "type": "string", "description": "HTTP agent LLD rule field. HTTP(S) proxy connection string." },
+    "ipmi_sensor": { "type": "string", "description": "IPMI sensor. Used only by IPMI LLD rules." },
+    "jmx_endpoint": {
+      "type": "string",
+      "description": "JMX agent custom connection string. Default value: service:jmx:rmi:///jndi/rmi://{HOST.CONN}:{HOST.PORT}/jmxrmi"
+    },
+    "lifetime": {
+      "type": "string",
+      "description": "Time period after which items that are no longer discovered will be deleted. Accepts seconds, time unit with suffix and user macro. Default: 30d."
+    },
+    "master_itemid": {
+      "type": "string",
+      "description": "Master item ID. Recursion up to 3 dependent items and maximum count of dependent items equal to 999 are allowed. Discovery rule cannot be master item for another discovery rule. Required for Dependent item."
+    },
+    "output_format": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "HTTP agent LLD rule field. Should response be converted to JSON. Possible values: 0 - (default) Store raw; 1 - Convert to JSON."
+    },
+    "params": {
+      "type": "string",
+      "description": "Additional parameters depending on the type of the LLD rule: executed script for SSH and Telnet LLD rules; SQL query for database monitor LLD rules; formula for calculated LLD rules."
+    },
+    "parameters": {
+      "type": "array",
+      "description": "Additional parameters for script type LLD rule. Array of objects with 'name' and 'value' properties, where name must be unique.",
+      "items": { "$ref": "#/$defs/parameter" }
+    },
+    "password": {
+      "type": "string",
+      "description": "Password for authentication. Used by simple check, SSH, Telnet, database monitor, JMX and HTTP agent LLD rules."
+    },
+    "post_type": {
+      "type": "integer",
+      "enum": [0, 2, 3],
+      "description": "HTTP agent LLD rule field. Type of post data body stored in posts property. Possible values: 0 - (default) Raw data; 2 - JSON data; 3 - XML data."
+    },
+    "posts": { "type": "string", "description": "HTTP agent LLD rule field. HTTP(S) request body data. Used with post_type." },
+    "privatekey": { "type": "string", "description": "Name of the private key file." },
+    "publickey": { "type": "string", "description": "Name of the public key file." },
+    "query_fields": {
+      "type": "array",
+      "description": "HTTP agent LLD rule field. Query parameters. Array of objects with 'key':'value' pairs, where value can be empty string.",
+      "items": { "type": "object", "additionalProperties": { "type": "string" } }
+    },
+    "request_method": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3],
+      "description": "HTTP agent LLD rule field. Type of request method. Possible values: 0 - (default) GET; 1 - POST; 2 - PUT; 3 - HEAD."
+    },
+    "retrieve_mode": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "HTTP agent LLD rule field. What part of response should be stored. Possible values: 0 - (default) Body; 1 - Headers; 2 - Both body and headers will be stored. For request_method HEAD only 1 is allowed value."
+    },
+    "snmp_oid": { "type": "string", "description": "SNMP OID." },
+    "ssl_cert_file": { "type": "string", "description": "HTTP agent LLD rule field. Public SSL Key file path." },
+    "ssl_key_file": { "type": "string", "description": "HTTP agent LLD rule field. Private SSL Key file path." },
+    "ssl_key_password": { "type": "string", "description": "HTTP agent LLD rule field. Password for SSL Key file." },
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Status of the LLD rule. Possible values: 0 - (default) enabled LLD rule; 1 - disabled LLD rule."
+    },
+    "status_codes": {
+      "type": "string",
+      "description": "HTTP agent LLD rule field. Ranges of required HTTP status codes separated by commas. Also supports user macros as part of comma separated list. Example: 200,200-{$M},{$M},200-400"
+    },
+    "timeout": {
+      "type": "string",
+      "description": "Item data polling request timeout. Used for HTTP agent and script LLD rules. Supports user macros. default: 3s maximum value: 60s"
+    },
+    "trapper_hosts": { "type": "string", "description": "Allowed hosts. Used by trapper LLD rules or HTTP agent LLD rules." },
+    "username": {
+      "type": "string",
+      "description": "Username for authentication. Used by simple check, SSH, Telnet, database monitor, JMX and HTTP agent LLD rules. Required by SSH and Telnet LLD rules."
+    },
+    "uuid": {
+      "type": "string",
+      "description": "Universal unique identifier, used for linking imported LLD rules to already existing ones. Used only for LLD rules on templates. Auto-generated, if not given."
+    },
+    "verify_host": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "HTTP agent LLD rule field. Whether to validate that the host name for the connection matches the one in the host's certificate. Possible values: 0 - (default) Do not validate; 1 - Validate."
+    },
+    "verify_peer": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "HTTP agent LLD rule field. Whether to validate that the host's certificate is authentic. Possible values: 0 - (default) Do not validate; 1 - Validate."
+    },
+    "filter": { "$ref": "#/$defs/filter", "description": "LLD rule filter to replace the current filter." },
+    "preprocessing": {
+      "type": "array",
+      "description": "LLD rule preprocessing options to replace the existing preprocessing options.",
+      "items": { "$ref": "#/$defs/preprocessing" }
+    },
+    "lld_macro_paths": {
+      "type": "array",
+      "description": "LLD rule lld_macro_path options to replace the existing lld_macro_path options.",
+      "items": { "$ref": "#/$defs/lldMacroPath" }
+    },
+    "overrides": {
+      "type": "array",
+      "description": "LLD rule overrides options to replace the existing overrides options.",
+      "items": { "$ref": "#/$defs/override" }
+    }
+  },
+  "required": ["itemid"],
+  "additionalProperties": false
+}

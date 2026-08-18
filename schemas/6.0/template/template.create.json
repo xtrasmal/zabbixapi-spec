@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/template/template.create",
+  "title": "template.create",
+  "description": "Create new templates.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/template/create",
+  "type": "object",
+  "properties": {
+    "host": {"type": "string", "description": "Technical name of the template."},
+    "description": {"type": "string", "description": "Description of the template."},
+    "name": {"type": "string", "description": "Visible name of the template. Default: host property value."},
+    "uuid": {"type": "string", "description": "Universal unique identifier, used for linking imported templates to already existing ones. Auto-generated, if not given."},
+    "groups": {
+      "type": "array",
+      "description": "Host groups to add the template to. The host groups must have the groupid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "groupid": {"type": "string", "description": "ID of the host group."}
+        },
+        "required": ["groupid"]
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Template tags.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {"type": "string", "description": "Template tag name."},
+          "value": {"type": "string", "description": "Template tag value."}
+        },
+        "required": ["tag"]
+      }
+    },
+    "templates": {
+      "type": "array",
+      "description": "Templates to be linked to the template. The templates must have the templateid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": {"type": "string", "description": "ID of the template."}
+        },
+        "required": ["templateid"]
+      }
+    },
+    "macros": {
+      "type": "array",
+      "description": "User macros to be created for the template.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hostmacroid": {"type": "string", "description": "(readonly) ID of the host macro."},
+          "macro": {"type": "string", "description": "Macro string."},
+          "value": {"type": "string", "description": "Value of the macro."},
+          "type": {"type": "integer", "enum": [0, 1, 2], "description": "Type of macro. Possible values: 0 - (default) Text macro; 1 - Secret macro; 2 - Vault secret."},
+          "description": {"type": "string", "description": "Description of the macro."}
+        },
+        "required": ["macro", "value"]
+      }
+    }
+  },
+  "required": ["host", "groups"],
+  "additionalProperties": false
+}

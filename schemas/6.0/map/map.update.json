@@ -1,0 +1,451 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/map/map.update",
+  "title": "map.update",
+  "description": "Update existing maps.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/map/update",
+  "type": "object",
+  "$defs": {
+    "mapElementTag": {
+      "type": "object",
+      "properties": {
+        "tag": {"type": "string", "description": "Map element tag name."},
+        "operator": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4, 5],
+          "description": "Map element tag condition operator. Possible values: 0 - (default) Contains; 1 - Equals; 2 - Does not contain; 3 - Does not equal; 4 - Exists; 5 - Does not exist."
+        },
+        "value": {"type": "string", "description": "Map element tag value."}
+      },
+      "required": ["tag"],
+      "additionalProperties": false
+    },
+    "mapElementUrl": {
+      "type": "object",
+      "description": "Map element URL object - a clickable link available for a specific map element.",
+      "properties": {
+        "name": {"type": "string", "description": "Link caption."},
+        "url": {"type": "string", "description": "Link URL."},
+        "selementid": {"type": "string", "description": "ID of the map element that the URL belongs to."}
+      },
+      "required": ["name", "url"],
+      "additionalProperties": false
+    },
+    "mapElementHost": {
+      "type": "object",
+      "description": "Map element Host object - defines one host element.",
+      "properties": {
+        "hostid": {"type": "string", "description": "Host ID."}
+      },
+      "required": ["hostid"],
+      "additionalProperties": false
+    },
+    "mapElementHostGroup": {
+      "type": "object",
+      "description": "Map element Host group object - defines one host group element.",
+      "properties": {
+        "groupid": {"type": "string", "description": "Host group ID."}
+      },
+      "required": ["groupid"],
+      "additionalProperties": false
+    },
+    "mapElementMap": {
+      "type": "object",
+      "description": "Map element Map object - defines one map element.",
+      "properties": {
+        "sysmapid": {"type": "string", "description": "Map ID."}
+      },
+      "required": ["sysmapid"],
+      "additionalProperties": false
+    },
+    "mapElementTrigger": {
+      "type": "object",
+      "description": "Map element Trigger object - defines one or more trigger elements.",
+      "properties": {
+        "triggerid": {"type": "string", "description": "Trigger ID."}
+      },
+      "required": ["triggerid"],
+      "additionalProperties": false
+    },
+    "mapElement": {
+      "type": "object",
+      "description": "The map element object defines an object displayed on a map.",
+      "properties": {
+        "selementid": {
+          "type": "string",
+          "description": "Normally a readonly, auto-generated ID of the map element. To create map links between new map elements, set this to an arbitrary temporary value and reference it in the link's selementid1/selementid2 properties; it will be replaced with the correct generated ID."
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {"$ref": "#/$defs/mapElementHost"},
+              {"$ref": "#/$defs/mapElementHostGroup"},
+              {"$ref": "#/$defs/mapElementMap"},
+              {"$ref": "#/$defs/mapElementTrigger"}
+            ]
+          },
+          "description": "Element data object. Required for host, host group, trigger and map type elements."
+        },
+        "elementtype": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4],
+          "description": "Type of map element. Possible values: 0 - host; 1 - map; 2 - trigger; 3 - host group; 4 - image."
+        },
+        "iconid_off": {"type": "string", "description": "ID of the image used to display the element in default state."},
+        "areatype": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "How separate host group hosts should be displayed. Possible values: 0 - (default) the host group element will take up the whole map; 1 - the host group element will have a fixed size."
+        },
+        "elementsubtype": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "How a host group element should be displayed on a map. Possible values: 0 - (default) display the host group as a single element; 1 - display each host in the group separately."
+        },
+        "evaltype": {
+          "type": "integer",
+          "enum": [0, 2],
+          "description": "Map element tag filtering condition evaluation method. Possible values: 0 - (default) AND / OR; 2 - OR."
+        },
+        "height": {"type": "integer", "description": "Height of the fixed size host group element in pixels. Default: 200."},
+        "iconid_disabled": {"type": "string", "description": "ID of the image used to display disabled map elements. Unused for image elements."},
+        "iconid_maintenance": {"type": "string", "description": "ID of the image used to display map elements in maintenance. Unused for image elements."},
+        "iconid_on": {"type": "string", "description": "ID of the image used to display map elements with problems. Unused for image elements."},
+        "label": {"type": "string", "description": "Label of the element."},
+        "label_location": {
+          "type": "integer",
+          "enum": [-1, 0, 1, 2, 3],
+          "description": "Location of the map element label. Possible values: -1 - (default) default location; 0 - bottom; 1 - left; 2 - right; 3 - top."
+        },
+        "permission": {
+          "type": "integer",
+          "enum": [-1, 2, 3],
+          "description": "Type of permission level. Possible values: -1 - none; 2 - read only; 3 - read-write."
+        },
+        "urls": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/mapElementUrl"},
+          "description": "Map element URLs."
+        },
+        "use_iconmap": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Whether icon mapping must be used for host elements. Possible values: 0 - do not use icon mapping; 1 - (default) use icon mapping."
+        },
+        "viewtype": {
+          "type": "integer",
+          "enum": [0],
+          "description": "Host group element placing algorithm. Possible values: 0 - (default) grid."
+        },
+        "width": {"type": "integer", "description": "Width of the fixed size host group element in pixels. Default: 200."},
+        "x": {"type": "integer", "description": "X-coordinates of the element in pixels. Default: 0."},
+        "y": {"type": "integer", "description": "Y-coordinates of the element in pixels. Default: 0."},
+        "tags": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/mapElementTag"},
+          "description": "Map element tags used for tag-based filtering (see evaltype)."
+        }
+      },
+      "required": ["elements", "elementtype", "iconid_off"],
+      "additionalProperties": false
+    },
+    "mapLinkTrigger": {
+      "type": "object",
+      "description": "The map link trigger object defines a map link status indicator based on the state of a trigger.",
+      "properties": {
+        "triggerid": {"type": "string", "description": "ID of the trigger used as a link indicator."},
+        "color": {"type": "string", "description": "Indicator color as a hexadecimal color code. Default: DD0000."},
+        "drawtype": {
+          "type": "integer",
+          "enum": [0, 2, 3, 4],
+          "description": "Indicator draw style. Possible values: 0 - (default) line; 2 - bold line; 3 - dotted line; 4 - dashed line."
+        },
+        "linkid": {"type": "string", "description": "ID of the map link that the link trigger belongs to."}
+      },
+      "required": ["triggerid"],
+      "additionalProperties": false
+    },
+    "mapLink": {
+      "type": "object",
+      "description": "The map link object defines a link between two map elements.",
+      "properties": {
+        "selementid1": {"type": "string", "description": "ID of the first map element linked on one end."},
+        "selementid2": {"type": "string", "description": "ID of the first map element linked on the other end."},
+        "color": {"type": "string", "description": "Line color as a hexadecimal color code. Default: 000000."},
+        "drawtype": {
+          "type": "integer",
+          "enum": [0, 2, 3, 4],
+          "description": "Link line draw style. Possible values: 0 - (default) line; 2 - bold line; 3 - dotted line; 4 - dashed line."
+        },
+        "label": {"type": "string", "description": "Link label."},
+        "linktriggers": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/mapLinkTrigger"},
+          "description": "Map link triggers to use as link status indicators."
+        },
+        "permission": {
+          "type": "integer",
+          "enum": [-1, 2, 3],
+          "description": "Type of permission level. Possible values: -1 - none; 2 - read only; 3 - read-write."
+        },
+        "sysmapid": {"type": "string", "description": "ID of the map the link belongs to."}
+      },
+      "required": ["selementid1", "selementid2"],
+      "additionalProperties": false
+    },
+    "mapUrl": {
+      "type": "object",
+      "description": "The map URL object defines a clickable link that will be available for all elements of a specific type on the map.",
+      "properties": {
+        "name": {"type": "string", "description": "Link caption."},
+        "url": {"type": "string", "description": "Link URL."},
+        "elementtype": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4],
+          "description": "Type of map element for which the URL will be available. Possible values: 0 - host; 1 - map; 2 - trigger; 3 - host group; 4 - image. Default: 0."
+        },
+        "sysmapid": {"type": "string", "description": "ID of the map that the URL belongs to."}
+      },
+      "required": ["name", "url"],
+      "additionalProperties": false
+    },
+    "mapUser": {
+      "type": "object",
+      "description": "List of map permissions based on users.",
+      "properties": {
+        "userid": {"type": "string", "description": "User ID."},
+        "permission": {
+          "type": "integer",
+          "enum": [2, 3],
+          "description": "Type of permission level. Possible values: 2 - read only; 3 - read-write."
+        }
+      },
+      "required": ["userid", "permission"],
+      "additionalProperties": false
+    },
+    "mapUserGroup": {
+      "type": "object",
+      "description": "List of map permissions based on user groups.",
+      "properties": {
+        "usrgrpid": {"type": "string", "description": "User group ID."},
+        "permission": {
+          "type": "integer",
+          "enum": [2, 3],
+          "description": "Type of permission level. Possible values: 2 - read only; 3 - read-write."
+        }
+      },
+      "required": ["usrgrpid", "permission"],
+      "additionalProperties": false
+    },
+    "mapShape": {
+      "type": "object",
+      "description": "The map shape object defines a geometric shape (with or without text) displayed on a map.",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Type of map shape element. Possible values: 0 - rectangle; 1 - ellipse. Property is required when new shapes are created."
+        },
+        "x": {"type": "integer", "description": "X-coordinates of the shape in pixels. Default: 0."},
+        "y": {"type": "integer", "description": "Y-coordinates of the shape in pixels. Default: 0."},
+        "width": {"type": "integer", "description": "Width of the shape in pixels. Default: 200."},
+        "height": {"type": "integer", "description": "Height of the shape in pixels. Default: 200."},
+        "text": {"type": "string", "description": "Text of the shape."},
+        "font": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          "description": "Font of the text within shape. Possible values: 0 - Georgia, serif; 1 - Palatino Linotype, Book Antiqua, Palatino, serif; 2 - Times New Roman, Times, serif; 3 - Arial, Helvetica, sans-serif; 4 - Arial Black, Gadget, sans-serif; 5 - Comic Sans MS, cursive, sans-serif; 6 - Impact, Charcoal, sans-serif; 7 - Lucida Sans Unicode, Lucida Grande, sans-serif; 8 - Tahoma, Geneva, sans-serif; 9 - Trebuchet MS, Helvetica, sans-serif; 10 - Verdana, Geneva, sans-serif; 11 - Courier New, Courier, monospace; 12 - Lucida Console, Monaco, monospace. Default: 9."
+        },
+        "font_size": {"type": "integer", "description": "Font size in pixels. Default: 11."},
+        "font_color": {"type": "string", "description": "Font color. Default: '000000'."},
+        "text_halign": {
+          "type": "integer",
+          "enum": [0, 1, 2],
+          "description": "Horizontal alignment of text. Possible values: 0 - center; 1 - left; 2 - right. Default: 0."
+        },
+        "text_valign": {
+          "type": "integer",
+          "enum": [0, 1, 2],
+          "description": "Vertical alignment of text. Possible values: 0 - middle; 1 - top; 2 - bottom. Default: 0."
+        },
+        "border_type": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3],
+          "description": "Type of the border. Possible values: 0 - none; 1 - solid line; 2 - dotted; 3 - dashed. Default: 0."
+        },
+        "border_width": {"type": "integer", "description": "Width of the border in pixels. Default: 0."},
+        "border_color": {"type": "string", "description": "Border color. Default: '000000'."},
+        "background_color": {"type": "string", "description": "Background color (fill color). Default: (empty)."},
+        "zindex": {"type": "integer", "description": "Value used to order all shapes and lines (z-index). Default: 0."}
+      },
+      "required": ["type"],
+      "additionalProperties": false
+    },
+    "mapLine": {
+      "type": "object",
+      "description": "The map line object defines a line displayed on a map.",
+      "properties": {
+        "x1": {"type": "integer", "description": "X-coordinates of the line point 1 in pixels. Default: 0."},
+        "y1": {"type": "integer", "description": "Y-coordinates of the line point 1 in pixels. Default: 0."},
+        "x2": {"type": "integer", "description": "X-coordinates of the line point 2 in pixels. Default: 200."},
+        "y2": {"type": "integer", "description": "Y-coordinates of the line point 2 in pixels. Default: 200."},
+        "line_type": {
+          "type": "integer",
+          "enum": [0, 1, 2, 3],
+          "description": "Type of the lines. Possible values: 0 - none; 1 - solid line; 2 - dotted; 3 - dashed. Default: 0."
+        },
+        "line_width": {"type": "integer", "description": "Width of the lines in pixels. Default: 0."},
+        "line_color": {"type": "string", "description": "Line color. Default: '000000'."},
+        "zindex": {"type": "integer", "description": "Value used to order all shapes and lines (z-index). Default: 0."}
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "sysmapid": {"type": "string", "description": "ID of the map to update."},
+    "height": {"type": "integer", "description": "Height of the map in pixels."},
+    "name": {"type": "string", "description": "Name of the map."},
+    "width": {"type": "integer", "description": "Width of the map in pixels."},
+    "backgroundid": {"type": "string", "description": "ID of the image used as the background for the map."},
+    "expand_macros": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to expand macros in labels when configuring the map. Possible values: 0 - (default) do not expand macros; 1 - expand macros."
+    },
+    "expandproblem": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether the problem trigger will be displayed for elements with a single problem. Possible values: 0 - always display the number of problems; 1 - (default) display the problem trigger if there's only one problem."
+    },
+    "grid_align": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to enable grid aligning. Possible values: 0 - disable grid aligning; 1 - (default) enable grid aligning."
+    },
+    "grid_show": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to show the grid on the map. Possible values: 0 - do not show the grid; 1 - (default) show the grid."
+    },
+    "grid_size": {
+      "type": "integer",
+      "enum": [20, 40, 50, 75, 100],
+      "description": "Size of the map grid in pixels. Supported values: 20, 40, 50, 75 and 100. Default: 50."
+    },
+    "highlight": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether icon highlighting is enabled. Possible values: 0 - highlighting disabled; 1 - (default) highlighting enabled."
+    },
+    "iconmapid": {"type": "string", "description": "ID of the icon map used on the map."},
+    "label_format": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to enable advanced labels. Possible values: 0 - (default) disable advanced labels; 1 - enable advanced labels."
+    },
+    "label_location": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3],
+      "description": "Location of the map element label. Possible values: 0 - (default) bottom; 1 - left; 2 - right; 3 - top."
+    },
+    "label_string_host": {"type": "string", "description": "Custom label for host elements. Required for maps with custom host label type."},
+    "label_string_hostgroup": {"type": "string", "description": "Custom label for host group elements. Required for maps with custom host group label type."},
+    "label_string_image": {"type": "string", "description": "Custom label for image elements. Required for maps with custom image label type."},
+    "label_string_map": {"type": "string", "description": "Custom label for map elements. Required for maps with custom map label type."},
+    "label_string_trigger": {"type": "string", "description": "Custom label for trigger elements. Required for maps with custom trigger label type."},
+    "label_type": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4],
+      "description": "Map element label type. Possible values: 0 - label; 1 - IP address; 2 - (default) element name; 3 - status only; 4 - nothing."
+    },
+    "label_type_host": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5],
+      "description": "Label type for host elements. Possible values: 0 - label; 1 - IP address; 2 - (default) element name; 3 - status only; 4 - nothing; 5 - custom."
+    },
+    "label_type_hostgroup": {
+      "type": "integer",
+      "enum": [0, 2, 3, 4, 5],
+      "description": "Label type for host group elements. Possible values: 0 - label; 2 - (default) element name; 3 - status only; 4 - nothing; 5 - custom."
+    },
+    "label_type_image": {
+      "type": "integer",
+      "enum": [0, 2, 4, 5],
+      "description": "Label type for host group elements. Possible values: 0 - label; 2 - (default) element name; 4 - nothing; 5 - custom."
+    },
+    "label_type_map": {
+      "type": "integer",
+      "enum": [0, 2, 3, 4, 5],
+      "description": "Label type for map elements. Possible values: 0 - label; 2 - (default) element name; 3 - status only; 4 - nothing; 5 - custom."
+    },
+    "label_type_trigger": {
+      "type": "integer",
+      "enum": [0, 2, 3, 4, 5],
+      "description": "Label type for trigger elements. Possible values: 0 - label; 2 - (default) element name; 3 - status only; 4 - nothing; 5 - custom."
+    },
+    "markelements": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to highlight map elements that have recently changed their status. Possible values: 0 - (default) do not highlight elements; 1 - highlight elements."
+    },
+    "severity_min": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5],
+      "description": "Minimum severity of the triggers that will be displayed on the map. Possible values: 0 - (default) not classified; 1 - information; 2 - warning; 3 - average; 4 - high; 5 - disaster."
+    },
+    "show_unack": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "How problems should be displayed. Possible values: 0 - (default) display the count of all problems; 1 - display only the count of unacknowledged problems; 2 - display the count of acknowledged and unacknowledged problems separately."
+    },
+    "userid": {"type": "string", "description": "Map owner user ID."},
+    "private": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Type of map sharing. Possible values: 0 - public map; 1 - (default) private map."
+    },
+    "show_suppressed": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether suppressed problems are shown. Possible values: 0 - (default) hide suppressed problems; 1 - show suppressed problems."
+    },
+    "links": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/mapLink"},
+      "description": "Map links to replace the existing links."
+    },
+    "selements": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/mapElement"},
+      "description": "Map elements to replace the existing elements."
+    },
+    "urls": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/mapUrl"},
+      "description": "Map URLs to replace the existing URLs."
+    },
+    "users": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/mapUser"},
+      "description": "Map user shares to replace the existing elements."
+    },
+    "userGroups": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/mapUserGroup"},
+      "description": "Map user group shares to replace the existing elements."
+    },
+    "shapes": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/mapShape"},
+      "description": "Map shapes to replace the existing shapes."
+    },
+    "lines": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/mapLine"},
+      "description": "Map lines to replace the existing lines."
+    }
+  },
+  "required": ["sysmapid"],
+  "additionalProperties": false
+}

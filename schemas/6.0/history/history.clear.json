@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/history/history.clear",
+  "title": "history.clear",
+  "description": "Clear item history. Available only to Admin and Super admin user types (revocable via user role settings).",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/history/clear",
+  "type": "array",
+  "items": {"type": "string", "description": "ID of the item to clear."},
+  "minItems": 1
+}

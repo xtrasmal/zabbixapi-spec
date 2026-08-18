@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/hostgroup/hostgroup.get",
+  "title": "hostgroup.get",
+  "description": "Retrieve host groups according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/hostgroup/get",
+  "type": "object",
+  "properties": {
+    "graphids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only host groups that contain hosts or templates with the given graphs."
+    },
+    "groupids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only host groups with the given host group IDs."
+    },
+    "hostids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only host groups that contain the given hosts."
+    },
+    "maintenanceids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only host groups that are affected by the given maintenances."
+    },
+    "monitored_hosts": {
+      "type": "boolean",
+      "description": "Return only host groups that contain monitored hosts."
+    },
+    "real_hosts": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts."
+    },
+    "templated_hosts": {
+      "type": "boolean",
+      "description": "Return only host groups that contain templates."
+    },
+    "templateids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only host groups that contain the given templates."
+    },
+    "triggerids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only host groups that contain hosts or templates with the given triggers."
+    },
+    "with_graphs": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts with graphs."
+    },
+    "with_graph_prototypes": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts with graph prototypes."
+    },
+    "with_hosts_and_templates": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts or templates."
+    },
+    "with_httptests": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts with web checks. Overrides the with_monitored_httptests parameter."
+    },
+    "with_items": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts or templates with items. Overrides the with_monitored_items and with_simple_graph_items parameters."
+    },
+    "with_item_prototypes": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts with item prototypes. Overrides the with_simple_graph_item_prototypes parameter."
+    },
+    "with_simple_graph_item_prototypes": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts with item prototypes, which are enabled for creation and have numeric type of information."
+    },
+    "with_monitored_httptests": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts with enabled web checks."
+    },
+    "with_monitored_items": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts or templates with enabled items. Overrides the with_simple_graph_items parameter."
+    },
+    "with_monitored_triggers": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts with enabled triggers. All of the items used in the trigger must also be enabled."
+    },
+    "with_simple_graph_items": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts with numeric items."
+    },
+    "with_triggers": {
+      "type": "boolean",
+      "description": "Return only host groups that contain hosts with triggers. Overrides the with_monitored_triggers parameter."
+    },
+    "selectDiscoveryRule": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a discoveryRule property with the LLD rule that created the host group. See the Discovery rule object."
+    },
+    "selectGroupDiscovery": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a groupDiscovery property with the host group discovery object. The host group discovery object links a discovered host group to a host group prototype and has the following properties: groupid - (string) ID of the discovered host group; lastcheck - (timestamp) time when the host group was last discovered; name - (string) name of the host group prototype; parent_group_prototypeid - (string) ID of the host group prototype from which the host group has been created; ts_delete - (timestamp) time when a host group that is no longer discovered will be deleted."
+    },
+    "selectHosts": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a hosts property with the hosts that belong to the host group. See the Host object. Supports count."
+    },
+    "selectTemplates": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a templates property with the templates that belong to the host group. See the Template object. Supports count."
+    },
+    "limitSelects": {
+      "type": "integer",
+      "description": "Limits the number of records returned by subselects. Applies to the following subselects: selectHosts - results will be sorted by host; selectTemplates - results will be sorted by host."
+    },
+    "sortfield": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Sort the result by the given properties. Possible values are: groupid, name."
+    },
+    "countOutput": {
+      "type": "boolean",
+      "description": "Return the number of records in the result instead of the actual data."
+    },
+    "editable": {
+      "type": "boolean",
+      "description": "If set to true, return only objects that the user has write permissions to. Default: false."
+    },
+    "excludeSearch": {
+      "type": "boolean",
+      "description": "Return results that do not match the criteria given in the search parameter."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Does not support text-type properties."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Limit the number of records returned."
+    },
+    "output": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "preservekeys": {
+      "type": "boolean",
+      "description": "Use IDs as keys in the resulting array."
+    },
+    "search": {
+      "type": "object",
+      "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."
+    },
+    "searchByAny": {
+      "type": "boolean",
+      "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."
+    },
+    "searchWildcardsEnabled": {
+      "type": "boolean",
+      "description": "If true, enables the use of '*' as a wildcard character. Default: false."
+    },
+    "sortorder": {
+      "oneOf": [
+        { "enum": ["ASC", "DESC"] },
+        { "type": "array", "items": { "enum": ["ASC", "DESC"] } }
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {
+      "type": "boolean",
+      "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."
+    }
+  },
+  "additionalProperties": false
+}

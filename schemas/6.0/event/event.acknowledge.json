@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/event/event.acknowledge",
+  "title": "event.acknowledge",
+  "description": "Update events: close, acknowledge/unacknowledge, add a message, or change severity. Only trigger events (problem events) can be updated.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/event/acknowledge",
+  "type": "object",
+  "properties": {
+    "eventids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "IDs of the events to acknowledge. Required."
+    },
+    "action": {
+      "type": "integer",
+      "description": "Event update action(s). Possible bitmap values are: 1 - close problem; 4 - add message; 6 - acknowledge event; 8 - change severity; 16 - unacknowledge event. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 6 for acknowledge event and add message). Required."
+    },
+    "message": {
+      "type": "string",
+      "description": "Text of the message. Required, if action contains 'add message' flag."
+    },
+    "severity": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5],
+      "description": "New severity for events. Required, if action contains 'change severity' flag. Possible values: 0 - not classified; 1 - information; 2 - warning; 3 - average; 4 - high; 5 - disaster."
+    }
+  },
+  "required": ["eventids", "action"],
+  "additionalProperties": false
+}

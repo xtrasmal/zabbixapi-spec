@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/housekeeping/housekeeping.update",
+  "title": "housekeeping.update",
+  "description": "Update existing housekeeping settings.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/housekeeping/update",
+  "type": "object",
+  "properties": {
+    "hk_events_mode": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Enable internal housekeeping for events and alerts. Possible values: 0 - Disable; 1 - (default) Enable."
+    },
+    "hk_events_trigger": {
+      "type": "string",
+      "description": "Trigger data storage period. Accepts seconds and time unit with suffix. Default: 365d."
+    },
+    "hk_events_service": {
+      "type": "string",
+      "description": "Service data storage period. Accepts seconds and time unit with suffix. Default: 1d."
+    },
+    "hk_events_internal": {
+      "type": "string",
+      "description": "Internal data storage period. Accepts seconds and time unit with suffix. Default: 1d."
+    },
+    "hk_events_discovery": {
+      "type": "string",
+      "description": "Network discovery data storage period. Accepts seconds and time unit with suffix. Default: 1d."
+    },
+    "hk_events_autoreg": {
+      "type": "string",
+      "description": "Autoregistration data storage period. Accepts seconds and time unit with suffix. Default: 1d."
+    },
+    "hk_services_mode": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Enable internal housekeeping for services. Possible values: 0 - Disable; 1 - (default) Enable."
+    },
+    "hk_services": {
+      "type": "string",
+      "description": "Services data storage period. Accepts seconds and time unit with suffix. Default: 365d."
+    },
+    "hk_audit_mode": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Enable internal housekeeping for audit. Possible values: 0 - Disable; 1 - (default) Enable."
+    },
+    "hk_audit": {
+      "type": "string",
+      "description": "Audit data storage period. Accepts seconds and time unit with suffix. Default: 365d."
+    },
+    "hk_sessions_mode": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Enable internal housekeeping for sessions. Possible values: 0 - Disable; 1 - (default) Enable."
+    },
+    "hk_sessions": {
+      "type": "string",
+      "description": "Sessions data storage period. Accepts seconds and time unit with suffix. Default: 365d."
+    },
+    "hk_history_mode": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Enable internal housekeeping for history. Possible values: 0 - Disable; 1 - (default) Enable."
+    },
+    "hk_history_global": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Override item history period. Possible values: 0 - Do not override; 1 - (default) Override."
+    },
+    "hk_history": {
+      "type": "string",
+      "description": "History data storage period. Accepts seconds and time unit with suffix. Default: 90d."
+    },
+    "hk_trends_mode": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Enable internal housekeeping for trends. Possible values: 0 - Disable; 1 - (default) Enable."
+    },
+    "hk_trends_global": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Override item trend period. Possible values: 0 - Do not override; 1 - (default) Override."
+    },
+    "hk_trends": {
+      "type": "string",
+      "description": "Trends data storage period. Accepts seconds and time unit with suffix. Default: 365d."
+    },
+    "compression_status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Enable TimescaleDB compression for history and trends. Possible values: 0 - (default) Off; 1 - On."
+    },
+    "compress_older": {
+      "type": "string",
+      "description": "Compress history and trends records older than specified period. Accepts seconds and time unit with suffix. Default: 7d."
+    }
+  },
+  "additionalProperties": false
+}

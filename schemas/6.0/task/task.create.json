@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/task/task.create",
+  "title": "task.create",
+  "description": "Create a new task, such as collecting diagnostic data or checking items/low-level discovery rules without a config reload. Only available to the Super admin user type.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/task/create",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "integer",
+      "description": "Task type. Possible values: 1 - Diagnostic information; 6 - Check now.",
+      "enum": [1, 6]
+    },
+    "request": {
+      "description": "Task request object according to the task type. 'Check now' tasks can only be created for the following types of items/discovery rules: Zabbix agent, SNMPv1/v2/v3 agent, Simple check, Internal check, External check, Database monitor, HTTP agent, IPMI agent, SSH agent, TELNET agent, Calculated check, JMX agent.",
+      "oneOf": [
+        { "$ref": "#/$defs/checkNowRequest" },
+        { "$ref": "#/$defs/diagnosticInformationRequest" }
+      ]
+    },
+    "proxy_hostid": {
+      "type": "integer",
+      "description": "Proxy about which the Diagnostic information task will collect data. Ignored for 'Check now' tasks."
+    }
+  },
+  "required": ["type", "request"],
+  "additionalProperties": false,
+  "$defs": {
+    "statisticRequest": {
+      "type": "object",
+      "description": "Statistic request object. Used to define what type of information should be collected about server/proxy internal processes.",
+      "properties": {
+        "stats": {
+          "description": "Statistic object properties to be returned. Default: extend will return all available statistic fields.",
+          "oneOf": [
+            { "type": "array", "items": { "type": "string" } },
+            { "enum": ["extend", "count"] }
+          ]
+        },
+        "top": {
+          "type": "object",
+          "description": "Object to sort and limit returned statistic values. Example: { \"source.alerts\": 10 }."
+        }
+      },
+      "additionalProperties": false
+    },
+    "checkNowRequest": {
+      "type": "object",
+      "description": "'Check now' task request object.",
+      "properties": {
+        "itemid": {
+          "type": "string",
+          "description": "ID of item or low-level discovery rule."
+        }
+      },
+      "required": ["itemid"],
+      "additionalProperties": false
+    },
+    "diagnosticInformationRequest": {
+      "type": "object",
+      "description": "'Diagnostic information' task request object.",
+      "properties": {
+        "historycache": {
+          "description": "History cache statistic request. Available on server and proxy.",
+          "$ref": "#/$defs/statisticRequest"
+        },
+        "valuecache": {
+          "description": "Value (items) cache statistic request. Available on server.",
+          "$ref": "#/$defs/statisticRequest"
+        },
+        "preprocessing": {
+          "description": "Preprocessing manager statistic request. Available on server and proxy.",
+          "$ref": "#/$defs/statisticRequest"
+        },
+        "alerting": {
+          "description": "Alert manager statistic request. Available on server.",
+          "$ref": "#/$defs/statisticRequest"
+        },
+        "lld": {
+          "description": "LLD manager statistic request. Available on server.",
+          "$ref": "#/$defs/statisticRequest"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

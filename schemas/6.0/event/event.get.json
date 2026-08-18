@@ -1,0 +1,231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/event/event.get",
+  "title": "event.get",
+  "description": "Retrieve events according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/event/get",
+  "type": "object",
+  "properties": {
+    "eventids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only events with the given IDs."
+    },
+    "groupids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only events created by objects that belong to the given host groups."
+    },
+    "hostids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only events created by objects that belong to the given hosts."
+    },
+    "objectids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only events created by the given objects."
+    },
+    "source": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4],
+      "description": "Return only events with the given type. Refer to the event object page for a list of supported event types. Possible values: 0 - event created by a trigger; 1 - event created by a discovery rule; 2 - event created by active agent autoregistration; 3 - internal event; 4 - event created on service status update. Default: 0 - trigger events."
+    },
+    "object": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4, 5, 6],
+      "description": "Return only events created by objects of the given type. Refer to the event object page for a list of supported object types. Possible values for trigger events: 0 - trigger. Possible values for discovery events: 1 - discovered host; 2 - discovered service. Possible values for autoregistration events: 3 - auto-registered host. Possible values for internal events: 0 - trigger; 4 - item; 5 - LLD rule. Possible values for service events: 6 - service. Default: 0 - trigger."
+    },
+    "acknowledged": {
+      "type": "boolean",
+      "description": "If set to true return only acknowledged events."
+    },
+    "suppressed": {
+      "type": "boolean",
+      "description": "If set to true return only suppressed events."
+    },
+    "severities": {
+      "oneOf": [
+        { "type": "integer", "enum": [0, 1, 2, 3, 4, 5] },
+        {
+          "type": "array",
+          "items": { "type": "integer", "enum": [0, 1, 2, 3, 4, 5] }
+        }
+      ],
+      "description": "Return only events with given event severities. Applies only if object is trigger. Possible values: 0 - not classified; 1 - information; 2 - warning; 3 - average; 4 - high; 5 - disaster."
+    },
+    "evaltype": {
+      "type": "integer",
+      "enum": [0, 2],
+      "description": "Rules for tag searching. Possible values: 0 - (default) And/Or; 2 - Or."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Return only events with given tags. Exact match by tag and case-insensitive search by value and operator. Format: [{\"tag\": \"\", \"value\": \"\", \"operator\": \"\"}, ...]. An empty array returns all events.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "description": "Event tag name."
+          },
+          "value": {
+            "type": "string",
+            "description": "Event tag value."
+          },
+          "operator": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5],
+            "description": "Possible operator types: 0 - (default) Like; 1 - Equal; 2 - Not like; 3 - Not equal; 4 - Exists; 5 - Not exists."
+          }
+        }
+      }
+    },
+    "eventid_from": {
+      "type": "string",
+      "description": "Return only events with IDs greater or equal to the given ID."
+    },
+    "eventid_till": {
+      "type": "string",
+      "description": "Return only events with IDs less or equal to the given ID."
+    },
+    "time_from": {
+      "type": "integer",
+      "description": "Return only events that have been created after or at the given time."
+    },
+    "time_till": {
+      "type": "integer",
+      "description": "Return only events that have been created before or at the given time."
+    },
+    "problem_time_from": {
+      "type": "integer",
+      "description": "Returns only events that were in the problem state starting with problem_time_from. Applies only if the source is trigger event and object is trigger. Mandatory if problem_time_till is specified."
+    },
+    "problem_time_till": {
+      "type": "integer",
+      "description": "Returns only events that were in the problem state until problem_time_till. Applies only if the source is trigger event and object is trigger. Mandatory if problem_time_from is specified."
+    },
+    "value": {
+      "oneOf": [
+        { "type": "integer" },
+        { "type": "array", "items": { "type": "integer" } }
+      ],
+      "description": "Return only events with the given values. Possible values for trigger and service events: 0 - OK; 1 - problem. Possible values for discovery events: 0 - host or service up; 1 - host or service down; 2 - host or service discovered; 3 - host or service lost. Possible values for internal events: 0 - \"normal\" state; 1 - \"unknown\" or \"not supported\" state. This parameter is not used for active agent autoregistration events."
+    },
+    "selectHosts": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a hosts property with hosts containing the object that created the event. Supported only for events generated by triggers, items or LLD rules."
+    },
+    "selectRelatedObject": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a relatedObject property with the object that created the event. The type of object returned depends on the event type."
+    },
+    "select_alerts": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return an alerts property with alerts generated by the event. Alerts are sorted in reverse chronological order."
+    },
+    "select_acknowledges": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return an acknowledges property with event updates. Event updates are sorted in reverse chronological order. The event update object has the following properties: acknowledgeid - (string) acknowledgment's ID; userid - (string) ID of the user that updated the event; eventid - (string) ID of the updated event; clock - (timestamp) time when the event was updated; message - (string) text of the message; action - (integer) update action that was performed, see event.acknowledge; old_severity - (integer) event severity before this update action; new_severity - (integer) event severity after this update action; username - (string) username of the user that updated the event; name - (string) name of the user that updated the event; surname - (string) surname of the user that updated the event. Supports count."
+    },
+    "selectTags": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a tags property with event tags."
+    },
+    "selectSuppressionData": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Return a suppression_data property with the list of maintenances: maintenanceid - (string) ID of the maintenance; suppress_until - (integer) time until the event is suppressed."
+    },
+    "sortfield": {
+      "oneOf": [
+        { "type": "string", "enum": ["eventid", "objectid", "clock"] },
+        {
+          "type": "array",
+          "items": { "type": "string", "enum": ["eventid", "objectid", "clock"] }
+        }
+      ],
+      "description": "Sort the result by the given properties. Possible values are: eventid, objectid and clock."
+    },
+    "countOutput": {
+      "type": "boolean",
+      "description": "Return the number of records in the result instead of the actual data."
+    },
+    "editable": {
+      "type": "boolean",
+      "description": "If set to true, return only objects that the user has write permissions to. Default: false."
+    },
+    "excludeSearch": {
+      "type": "boolean",
+      "description": "Return results that do not match the criteria given in the search parameter."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Does not support text-type properties."
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Limit the number of records returned."
+    },
+    "output": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "preservekeys": {
+      "type": "boolean",
+      "description": "Use IDs as keys in the resulting array."
+    },
+    "search": {
+      "type": "object",
+      "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."
+    },
+    "searchByAny": {
+      "type": "boolean",
+      "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."
+    },
+    "searchWildcardsEnabled": {
+      "type": "boolean",
+      "description": "If true, enables the use of '*' as a wildcard character. Default: false."
+    },
+    "sortorder": {
+      "oneOf": [
+        { "enum": ["ASC", "DESC"] },
+        { "type": "array", "items": { "enum": ["ASC", "DESC"] } }
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {
+      "type": "boolean",
+      "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."
+    }
+  },
+  "additionalProperties": false
+}

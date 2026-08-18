@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/task/task.get",
+  "title": "task.get",
+  "description": "Retrieve tasks according to the given parameters. Returns details only about 'Diagnostic information' tasks. Only available to the Super admin user type.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/task/get",
+  "type": "object",
+  "properties": {
+    "taskids": {
+      "description": "Return only tasks with the given IDs.",
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ]
+    },
+    "output": {
+      "description": "Object properties to be returned. Default: extend.",
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ]
+    },
+    "preservekeys": {
+      "type": "boolean",
+      "description": "Use IDs as keys in the resulting array."
+    }
+  },
+  "additionalProperties": false
+}

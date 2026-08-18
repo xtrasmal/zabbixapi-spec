@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/host/host.massremove",
+  "title": "host.massremove",
+  "description": "Remove related objects from multiple hosts.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/host/massremove",
+  "type": "object",
+  "properties": {
+    "hostids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "IDs of the hosts to be updated."},
+    "groupids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Host groups to remove the given hosts from."},
+    "interfaces": {
+      "type": "array",
+      "description": "Host interfaces to remove from the given hosts. The host interface object must have the ip, dns and port properties defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ip": {"type": "string", "description": "IP address used by the interface."},
+          "dns": {"type": "string", "description": "DNS name used by the interface."},
+          "port": {"type": "string", "description": "Port number used by the interface."}
+        },
+        "required": ["ip", "dns", "port"]
+      }
+    },
+    "macros": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "User macros to delete from the given hosts."},
+    "templateids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Templates to unlink from the given hosts."},
+    "templateids_clear": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Templates to unlink and clear from the given hosts."}
+  },
+  "required": ["hostids"],
+  "additionalProperties": false
+}

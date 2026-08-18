@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/history/history.get",
+  "title": "history.get",
+  "description": "Retrieve history data according to the given parameters. May return historical data of a deleted entity if this data has not been removed by the housekeeper yet.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/history/get",
+  "type": "object",
+  "properties": {
+    "history": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4],
+      "description": "History object types to return. Possible values: 0 - numeric float; 1 - character; 2 - log; 3 - (default) numeric unsigned; 4 - text."
+    },
+    "hostids": {
+      "oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}],
+      "description": "Return only history from the given hosts."
+    },
+    "itemids": {
+      "oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}],
+      "description": "Return only history from the given items."
+    },
+    "time_from": {
+      "type": "integer",
+      "description": "Return only values that have been received after or at the given time."
+    },
+    "time_till": {
+      "type": "integer",
+      "description": "Return only values that have been received before or at the given time."
+    },
+    "sortfield": {
+      "oneOf": [
+        {"enum": ["itemid", "clock"]},
+        {"type": "array", "items": {"enum": ["itemid", "clock"]}}
+      ],
+      "description": "Sort the result by the given properties. Possible values are: itemid and clock."
+    },
+    "countOutput": {"type": "boolean", "description": "Return the number of records in the result instead of the actual data."},
+    "editable": {"type": "boolean", "description": "If set to true, return only objects that the user has write permissions to. Default: false."},
+    "excludeSearch": {"type": "boolean", "description": "Return results that do not match the criteria given in the search parameter."},
+    "filter": {"type": "object", "description": "Return only those results that exactly match the given filter. Does not support text-type properties."},
+    "limit": {"type": "integer", "description": "Limit the number of records returned."},
+    "output": {
+      "oneOf": [{"type": "array", "items": {"type": "string"}}, {"enum": ["extend", "count"]}],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "search": {"type": "object", "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."},
+    "searchByAny": {"type": "boolean", "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."},
+    "searchWildcardsEnabled": {"type": "boolean", "description": "If true, enables the use of '*' as a wildcard character. Default: false."},
+    "sortorder": {
+      "oneOf": [{"enum": ["ASC", "DESC"]}, {"type": "array", "items": {"enum": ["ASC", "DESC"]}}],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {"type": "boolean", "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."}
+  },
+  "additionalProperties": false
+}

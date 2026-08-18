@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/template/template.massupdate",
+  "title": "template.massupdate",
+  "description": "Simultaneously replace or remove related objects and update properties on multiple templates.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/template/massupdate",
+  "type": "object",
+  "properties": {
+    "templates": {
+      "type": "array",
+      "description": "Templates to be updated. The templates must have the templateid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": {"type": "string", "description": "ID of the template."}
+        },
+        "required": ["templateid"]
+      }
+    },
+    "groups": {
+      "type": "array",
+      "description": "Host groups to replace the current host groups the templates belong to. The host groups must have the groupid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "groupid": {"type": "string", "description": "ID of the host group."}
+        },
+        "required": ["groupid"]
+      }
+    },
+    "macros": {
+      "type": "array",
+      "description": "User macros to replace the current user macros on the given templates.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hostmacroid": {"type": "string", "description": "(readonly) ID of the host macro."},
+          "macro": {"type": "string", "description": "Macro string."},
+          "value": {"type": "string", "description": "Value of the macro."},
+          "type": {"type": "integer", "enum": [0, 1, 2], "description": "Type of macro. Possible values: 0 - (default) Text macro; 1 - Secret macro; 2 - Vault secret."},
+          "description": {"type": "string", "description": "Description of the macro."}
+        },
+        "required": ["macro", "value"]
+      }
+    },
+    "templates_clear": {
+      "type": "array",
+      "description": "Templates to unlink and clear from the given templates. The templates must have the templateid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": {"type": "string", "description": "ID of the template."}
+        },
+        "required": ["templateid"]
+      }
+    },
+    "templates_link": {
+      "type": "array",
+      "description": "Templates to replace the currently linked templates. The templates must have the templateid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": {"type": "string", "description": "ID of the template."}
+        },
+        "required": ["templateid"]
+      }
+    }
+  },
+  "required": ["templates"],
+  "additionalProperties": false
+}

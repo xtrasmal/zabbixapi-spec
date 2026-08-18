@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/hostinterface/hostinterface.delete",
+  "title": "hostinterface.delete",
+  "description": "Delete host interfaces.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/hostinterface/delete",
+  "type": "array",
+  "items": {
+    "type": "string",
+    "description": "ID of the hostinterface to delete."
+  },
+  "minItems": 1
+}

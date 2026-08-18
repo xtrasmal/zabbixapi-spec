@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/iconmap/iconmap.update",
+  "title": "iconmap.update",
+  "description": "Update existing icon maps.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/iconmap/update",
+  "type": "object",
+  "properties": {
+    "iconmapid": {"type": "string", "description": "ID of the icon map."},
+    "name": {"type": "string", "description": "Name of the icon map."},
+    "default_iconid": {"type": "string", "description": "ID of the default icon."},
+    "mappings": {
+      "type": "array",
+      "description": "Icon mappings to replace the existing icon mappings.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "iconid": {"type": "string", "description": "ID of the icon used by the icon mapping."},
+          "expression": {"type": "string", "description": "Expression to match the inventory field against."},
+          "inventory_link": {"type": "integer", "description": "ID of the host inventory field. Refer to the host inventory object for a list of supported inventory fields."}
+        },
+        "required": ["iconid", "expression", "inventory_link"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["iconmapid"],
+  "additionalProperties": false
+}

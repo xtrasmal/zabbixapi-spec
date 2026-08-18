@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/token/token.update",
+  "title": "token.update",
+  "description": "Update existing tokens. The tokenid property must be defined for each token; all other properties are optional and only passed properties are updated.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/token/update",
+  "type": "object",
+  "properties": {
+    "tokenid": {"type": "string", "description": "ID of the token to update."},
+    "name": {"type": "string", "description": "Name of the token."},
+    "description": {"type": "string", "description": "Description of the token."},
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Token status. Possible values: 0 - (default) enabled token; 1 - disabled token."
+    },
+    "expires_at": {"type": "integer", "description": "Token expiration date and time. Zero for never-expiring tokens."}
+  },
+  "required": ["tokenid"],
+  "additionalProperties": false
+}

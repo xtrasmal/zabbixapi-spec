@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/dashboard/dashboard.get",
+  "title": "dashboard.get",
+  "description": "Retrieve dashboards according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/dashboard/get",
+  "type": "object",
+  "properties": {
+    "dashboardids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only dashboards with the given IDs."
+    },
+    "selectPages": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a pages property with dashboard pages, correctly ordered."
+    },
+    "selectUsers": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a users property with users that the dashboard is shared with."
+    },
+    "selectUserGroups": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a userGroups property with user groups that the dashboard is shared with."
+    },
+    "sortfield": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Sort the result by the given properties. Possible value is: dashboardid."
+    },
+    "countOutput": {"type": "boolean", "description": "Return the number of records in the result instead of the actual data."},
+    "editable": {"type": "boolean", "description": "If set to true, return only objects that the user has write permissions to. Default: false."},
+    "excludeSearch": {"type": "boolean", "description": "Return results that do not match the criteria given in the search parameter."},
+    "filter": {"type": "object", "description": "Return only those results that exactly match the given filter. Does not support text-type properties."},
+    "limit": {"type": "integer", "description": "Limit the number of records returned."},
+    "output": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "preservekeys": {"type": "boolean", "description": "Use IDs as keys in the resulting array."},
+    "search": {"type": "object", "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."},
+    "searchByAny": {"type": "boolean", "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."},
+    "searchWildcardsEnabled": {"type": "boolean", "description": "If true, enables the use of '*' as a wildcard character. Default: false."},
+    "sortorder": {
+      "oneOf": [
+        {"enum": ["ASC", "DESC"]},
+        {"type": "array", "items": {"enum": ["ASC", "DESC"]}}
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {"type": "boolean", "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."}
+  },
+  "additionalProperties": false
+}

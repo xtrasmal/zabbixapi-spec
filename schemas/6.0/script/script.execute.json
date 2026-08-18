@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/script/script.execute",
+  "title": "script.execute",
+  "description": "Run a script on a host or event.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/script/execute",
+  "type": "object",
+  "properties": {
+    "scriptid": {"type": "string", "description": "ID of the script to run."},
+    "hostid": {"type": "string", "description": "ID of the host to run the script on."},
+    "eventid": {"type": "string", "description": "ID of the event to run the script on."}
+  },
+  "required": ["scriptid"],
+  "additionalProperties": false
+}

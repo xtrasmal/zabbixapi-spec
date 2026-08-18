@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/authentication/authentication.update",
+  "title": "authentication.update",
+  "description": "Update existing authentication settings.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/authentication/update",
+  "type": "object",
+  "properties": {
+    "authentication_type": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Default authentication. Possible values: 0 - (default) Internal; 1 - LDAP."
+    },
+    "http_auth_enabled": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Enable HTTP authentication. Possible values: 0 - (default) Disable; 1 - Enable."
+    },
+    "http_login_form": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Default login form. Possible values: 0 - (default) Zabbix login form; 1 - HTTP login form."
+    },
+    "http_strip_domains": {
+      "type": "string",
+      "description": "Remove domain name."
+    },
+    "http_case_sensitive": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "HTTP case-sensitive login. Possible values: 0 - Off; 1 - (default) On."
+    },
+    "ldap_configured": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Enable LDAP authentication. Possible values: 0 - Disable; 1 - (default) Enable."
+    },
+    "ldap_host": {
+      "type": "string",
+      "description": "LDAP host."
+    },
+    "ldap_port": {
+      "type": "integer",
+      "description": "LDAP port."
+    },
+    "ldap_base_dn": {
+      "type": "string",
+      "description": "LDAP base DN."
+    },
+    "ldap_search_attribute": {
+      "type": "string",
+      "description": "LDAP search attribute."
+    },
+    "ldap_bind_dn": {
+      "type": "string",
+      "description": "LDAP bind DN."
+    },
+    "ldap_case_sensitive": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "LDAP case-sensitive login. Possible values: 0 - Off; 1 - (default) On."
+    },
+    "ldap_bind_password": {
+      "type": "string",
+      "description": "LDAP bind password."
+    },
+    "saml_auth_enabled": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Enable SAML authentication. Possible values: 0 - (default) Disable; 1 - Enable."
+    },
+    "saml_idp_entityid": {
+      "type": "string",
+      "description": "SAML IdP entity ID."
+    },
+    "saml_sso_url": {
+      "type": "string",
+      "description": "SAML SSO service URL."
+    },
+    "saml_slo_url": {
+      "type": "string",
+      "description": "SAML SLO service URL."
+    },
+    "saml_username_attribute": {
+      "type": "string",
+      "description": "SAML username attribute."
+    },
+    "saml_sp_entityid": {
+      "type": "string",
+      "description": "SAML SP entity ID."
+    },
+    "saml_nameid_format": {
+      "type": "string",
+      "description": "SAML SP name ID format."
+    },
+    "saml_sign_messages": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "SAML sign messages. Possible values: 0 - (default) Do not sign messages; 1 - Sign messages."
+    },
+    "saml_sign_assertions": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "SAML sign assertions. Possible values: 0 - (default) Do not sign assertions; 1 - Sign assertions."
+    },
+    "saml_sign_authn_requests": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "SAML sign AuthN requests. Possible values: 0 - (default) Do not sign AuthN requests; 1 - Sign AuthN requests."
+    },
+    "saml_sign_logout_requests": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "SAML sign logout requests. Possible values: 0 - (default) Do not sign logout requests; 1 - Sign logout requests."
+    },
+    "saml_sign_logout_responses": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "SAML sign logout responses. Possible values: 0 - (default) Do not sign logout responses; 1 - Sign logout responses."
+    },
+    "saml_encrypt_nameid": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "SAML encrypt name ID. Possible values: 0 - (default) Do not encrypt name ID; 1 - Encrypt name ID."
+    },
+    "saml_encrypt_assertions": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "SAML encrypt assertions. Possible values: 0 - (default) Do not encrypt assertions; 1 - Encrypt assertions."
+    },
+    "saml_case_sensitive": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "SAML case-sensitive login. Possible values: 0 - Off; 1 - (default) On."
+    },
+    "passwd_min_length": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 70,
+      "description": "Password minimal length requirement. Possible range of values: 1-70. Default: 8."
+    },
+    "passwd_check_rules": {
+      "type": "integer",
+      "description": "Password checking rules. Possible bitmap values are: 0 - Check password length; 1 - Check if password uses uppercase and lowercase Latin letters; 2 - Check if password uses digits; 4 - Check if password uses special characters; 8 - (default) Check if password is not in the list of commonly used passwords and does not contain derivations of word \"Zabbix\" or user's name, last name, or username. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 15 for checking all rules)."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/httptest/httptest.create",
+  "title": "httptest.create",
+  "description": "Create new web scenarios.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/httptest/create",
+  "type": "object",
+  "properties": {
+    "hostid": {
+      "type": "string",
+      "description": "ID of the host that the web scenario belongs to."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the web scenario."
+    },
+    "agent": {
+      "type": "string",
+      "description": "User agent string that will be used by the web scenario. Default: Zabbix."
+    },
+    "authentication": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "Authentication method that will be used by the web scenario. Possible values: 0 - (default) none; 1 - basic HTTP authentication; 2 - NTLM authentication."
+    },
+    "delay": {
+      "type": "string",
+      "description": "Execution interval of the web scenario. Accepts seconds, time unit with suffix and user macro. Default: 1m."
+    },
+    "headers": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/httpField" },
+      "description": "HTTP headers that will be sent when performing a request."
+    },
+    "http_password": {
+      "type": "string",
+      "description": "Password used for basic HTTP or NTLM authentication."
+    },
+    "http_proxy": {
+      "type": "string",
+      "description": "Proxy that will be used by the web scenario given as http://[username[:password]@]proxy.example.com[:port]."
+    },
+    "http_user": {
+      "type": "string",
+      "description": "User name used for basic HTTP or NTLM authentication."
+    },
+    "retries": {
+      "type": "integer",
+      "description": "Number of times a web scenario will try to execute each step before failing. Default: 1."
+    },
+    "ssl_cert_file": {
+      "type": "string",
+      "description": "Name of the SSL certificate file used for client authentication (must be in PEM format)."
+    },
+    "ssl_key_file": {
+      "type": "string",
+      "description": "Name of the SSL private key file used for client authentication (must be in PEM format)."
+    },
+    "ssl_key_password": {
+      "type": "string",
+      "description": "SSL private key password."
+    },
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether the web scenario is enabled. Possible values are: 0 - (default) enabled; 1 - disabled."
+    },
+    "variables": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/httpField" },
+      "description": "Web scenario variables."
+    },
+    "verify_host": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to validate that the host name for the connection matches the one in the host's certificate. Possible values are: 0 - (default) skip host verification; 1 - verify host."
+    },
+    "verify_peer": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether to validate that the host's certificate is authentic. Possible values are: 0 - (default) skip peer verification; 1 - verify peer."
+    },
+    "uuid": {
+      "type": "string",
+      "description": "Global unique identifier, used for linking imported web scenarios to already existing ones. Used only for web scenarios on templates."
+    },
+    "steps": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/scenarioStep" },
+      "description": "Web scenario steps."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/webScenarioTag" },
+      "description": "Web scenario tags."
+    }
+  },
+  "required": ["hostid", "name", "steps"],
+  "additionalProperties": false,
+  "$defs": {
+    "httpField": {
+      "type": "object",
+      "description": "The HTTP field object defines a name and value that is used to specify variable, HTTP header, POST form field data of query field data.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of header / variable / POST or GET field."
+        },
+        "value": {
+          "type": "string",
+          "description": "Value of header / variable / POST or GET field."
+        }
+      },
+      "required": ["name", "value"],
+      "additionalProperties": false
+    },
+    "scenarioStep": {
+      "type": "object",
+      "description": "The scenario step object defines a specific web scenario check.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the scenario step."
+        },
+        "no": {
+          "type": "integer",
+          "description": "Sequence number of the step in a web scenario."
+        },
+        "url": {
+          "type": "string",
+          "description": "URL to be checked."
+        },
+        "follow_redirects": {
+          "type": "integer",
+          "enum": [0, 1],
+          "description": "Whether to follow HTTP redirects. Possible values are: 0 - don't follow redirects; 1 - (default) follow redirects."
+        },
+        "headers": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/httpField" },
+          "description": "HTTP headers that will be sent when performing a request. Scenario step headers will overwrite headers specified for the web scenario."
+        },
+        "posts": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "$ref": "#/$defs/httpField" } }
+          ],
+          "description": "HTTP POST variables as a string (raw post data) or as an array of HTTP fields (form field data)."
+        },
+        "required": {
+          "type": "string",
+          "description": "Text that must be present in the response."
+        },
+        "retrieve_mode": {
+          "type": "integer",
+          "enum": [0, 1, 2],
+          "description": "Part of the HTTP response that the scenario step must retrieve. Possible values are: 0 - (default) only body; 1 - only headers; 2 - headers and body."
+        },
+        "status_codes": {
+          "type": "string",
+          "description": "Ranges of required HTTP status codes separated by commas."
+        },
+        "timeout": {
+          "type": "string",
+          "description": "Request timeout in seconds. Accepts seconds, time unit with suffix and user macro. Default: 15s. Maximum: 1h. Minimum: 1s."
+        },
+        "variables": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/httpField" },
+          "description": "Scenario step variables."
+        },
+        "query_fields": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/httpField" },
+          "description": "Query fields - array of HTTP fields that will be added to URL when performing a request."
+        }
+      },
+      "required": ["name", "no", "url"],
+      "additionalProperties": false
+    },
+    "webScenarioTag": {
+      "type": "object",
+      "description": "The web scenario tag object.",
+      "properties": {
+        "tag": {
+          "type": "string",
+          "description": "Web scenario tag name."
+        },
+        "value": {
+          "type": "string",
+          "description": "Web scenario tag value."
+        }
+      },
+      "required": ["tag"],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/templatedashboard/templatedashboard.delete",
+  "title": "templatedashboard.delete",
+  "description": "Delete template dashboards.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/templatedashboard/delete",
+  "type": "array",
+  "items": {"type": "string", "description": "ID of the templatedashboard to delete."},
+  "minItems": 1
+}

@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/triggerprototype/triggerprototype.get",
+  "title": "triggerprototype.get",
+  "description": "Retrieve trigger prototypes according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/triggerprototype/get",
+  "type": "object",
+  "properties": {
+    "active": {
+      "type": "boolean",
+      "description": "Return only enabled trigger prototypes that belong to monitored hosts."
+    },
+    "discoveryids": {
+      "oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}],
+      "description": "Return only trigger prototypes that belong to the given LLD rules."
+    },
+    "functions": {
+      "oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}],
+      "description": "Return only triggers that use the given functions. Refer to the Supported functions page for a list of supported functions."
+    },
+    "group": {
+      "type": "string",
+      "description": "Return only trigger prototypes that belong to hosts from the host groups with the given name."
+    },
+    "groupids": {
+      "oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}],
+      "description": "Return only trigger prototypes that belong to hosts from the given host groups."
+    },
+    "host": {
+      "type": "string",
+      "description": "Return only trigger prototypes that belong to hosts with the given name."
+    },
+    "hostids": {
+      "oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}],
+      "description": "Return only trigger prototypes that belong to the given hosts."
+    },
+    "inherited": {
+      "type": "boolean",
+      "description": "If set to true return only trigger prototypes inherited from a template."
+    },
+    "maintenance": {
+      "type": "boolean",
+      "description": "If set to true return only enabled trigger prototypes that belong to hosts in maintenance."
+    },
+    "min_severity": {
+      "type": "integer",
+      "description": "Return only trigger prototypes with severity greater or equal than the given severity."
+    },
+    "monitored": {
+      "type": "boolean",
+      "description": "Return only enabled trigger prototypes that belong to monitored hosts and contain only enabled items."
+    },
+    "templated": {
+      "type": "boolean",
+      "description": "If set to true return only trigger prototypes that belong to templates."
+    },
+    "templateids": {
+      "oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}],
+      "description": "Return only trigger prototypes that belong to the given templates."
+    },
+    "triggerids": {
+      "oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}],
+      "description": "Return only trigger prototypes with the given IDs."
+    },
+    "expandExpression": {
+      "type": "boolean",
+      "description": "Expand functions and macros in the trigger expression."
+    },
+    "selectDependencies": {
+      "oneOf": [{"type": "array", "items": {"type": "string"}}, {"enum": ["extend", "count"]}],
+      "description": "Return trigger prototypes and triggers that the trigger prototype depends on in the dependencies property."
+    },
+    "selectDiscoveryRule": {
+      "oneOf": [{"type": "array", "items": {"type": "string"}}, {"enum": ["extend", "count"]}],
+      "description": "Return the LLD rule that the trigger prototype belongs to."
+    },
+    "selectFunctions": {
+      "oneOf": [{"type": "array", "items": {"type": "string"}}, {"enum": ["extend", "count"]}],
+      "description": "Return functions used in the trigger prototype in the functions property. The function objects represent the functions used in the trigger expression and has the following properties: functionid - (string) ID of the function; itemid - (string) ID of the item used in the function; function - (string) name of the function; parameter - (string) parameter passed to the function. Query parameter is replaced by $ symbol in returned string."
+    },
+    "selectGroups": {
+      "oneOf": [{"type": "array", "items": {"type": "string"}}, {"enum": ["extend", "count"]}],
+      "description": "Return the host groups that the trigger prototype belongs to in the groups property."
+    },
+    "selectHosts": {
+      "oneOf": [{"type": "array", "items": {"type": "string"}}, {"enum": ["extend", "count"]}],
+      "description": "Return the hosts that the trigger prototype belongs to in the hosts property."
+    },
+    "selectItems": {
+      "oneOf": [{"type": "array", "items": {"type": "string"}}, {"enum": ["extend", "count"]}],
+      "description": "Return items and item prototypes used the trigger prototype in the items property."
+    },
+    "selectTags": {
+      "oneOf": [{"type": "array", "items": {"type": "string"}}, {"enum": ["extend", "count"]}],
+      "description": "Return the trigger prototype tags in the tags property."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Accepts an array, where the keys are property names, and the values are either a single value or an array of values to match against. Supports additional filters: host - technical name of the host that the trigger prototype belongs to; hostid - ID of the host that the trigger prototype belongs to."
+    },
+    "limitSelects": {
+      "type": "integer",
+      "description": "Limits the number of records returned by subselects. Applies to the following subselects: selectHosts - results will be sorted by host."
+    },
+    "sortfield": {
+      "oneOf": [{"enum": ["triggerid", "description", "status", "priority"]}, {"type": "array", "items": {"enum": ["triggerid", "description", "status", "priority"]}}],
+      "description": "Sort the result by the given properties. Possible values are: triggerid, description, status and priority."
+    },
+    "countOutput": {"type": "boolean", "description": "Return the number of records in the result instead of the actual data."},
+    "editable": {"type": "boolean", "description": "If set to true, return only objects that the user has write permissions to. Default: false."},
+    "excludeSearch": {"type": "boolean", "description": "Return results that do not match the criteria given in the search parameter."},
+    "limit": {"type": "integer", "description": "Limit the number of records returned."},
+    "output": {"oneOf": [{"type": "array", "items": {"type": "string"}}, {"enum": ["extend", "count"]}], "description": "Object properties to be returned. Default: extend."},
+    "preservekeys": {"type": "boolean", "description": "Use IDs as keys in the resulting array."},
+    "search": {"type": "object", "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."},
+    "searchByAny": {"type": "boolean", "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."},
+    "searchWildcardsEnabled": {"type": "boolean", "description": "If true, enables the use of '*' as a wildcard character. Default: false."},
+    "sortorder": {"oneOf": [{"enum": ["ASC", "DESC"]}, {"type": "array", "items": {"enum": ["ASC", "DESC"]}}], "description": "Order of sorting. ASC or DESC."},
+    "startSearch": {"type": "boolean", "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."}
+  },
+  "additionalProperties": false
+}

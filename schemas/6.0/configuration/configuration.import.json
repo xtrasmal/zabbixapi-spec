@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/configuration/configuration.import",
+  "title": "configuration.import",
+  "description": "Import configuration data from a serialized string.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/configuration/import",
+  "type": "object",
+  "properties": {
+    "format": {
+      "type": "string",
+      "enum": ["yaml", "xml", "json"],
+      "description": "Format of the serialized string. Possible values: yaml - YAML; xml - XML; json - JSON."
+    },
+    "source": {
+      "type": "string",
+      "description": "Serialized string containing the configuration data."
+    },
+    "rules": {
+      "type": "object",
+      "description": "Rules on how new and existing objects should be imported. Admin type users may import only those objects for which they have read-write permission, as well as maps. For example, a host and its entities (items, triggers, graphs, etc.) may be imported only if the user's user group has permission to the host group that the imported host will belong to. Images and media types cannot be imported by Admin type users. If no rules are given, the configuration will not be updated.",
+      "properties": {
+        "discoveryRules": {
+          "type": "object",
+          "description": "Rules on how to import LLD rules.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new LLD rules will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing LLD rules will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, LLD rules not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "graphs": {
+          "type": "object",
+          "description": "Rules on how to import graphs.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new graphs will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing graphs will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, graphs not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "groups": {
+          "type": "object",
+          "description": "Rules on how to import host groups.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new host groups will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing host groups will be updated. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "hosts": {
+          "type": "object",
+          "description": "Rules on how to import hosts.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new hosts will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing hosts will be updated. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "httptests": {
+          "type": "object",
+          "description": "Rules on how to import web scenarios.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new web scenarios will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing web scenarios will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, web scenarios not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "images": {
+          "type": "object",
+          "description": "Rules on how to import images.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new images will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing images will be updated. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "items": {
+          "type": "object",
+          "description": "Rules on how to import items.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new items will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing items will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, items not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "maps": {
+          "type": "object",
+          "description": "Rules on how to import maps.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new maps will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing maps will be updated. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "mediaTypes": {
+          "type": "object",
+          "description": "Rules on how to import media types.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new media types will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing media types will be updated. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "templateLinkage": {
+          "type": "object",
+          "description": "Rules on how to import template links.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, templates that are not linked to the host or template being imported, but are present in the imported data, will be linked. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, templates that are linked to the host or template being imported, but are not present in the imported data, will be unlinked without removing entities (items, triggers, etc.) inherited from the unlinked templates. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "templates": {
+          "type": "object",
+          "description": "Rules on how to import templates.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new templates will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing templates will be updated. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "templateDashboards": {
+          "type": "object",
+          "description": "Rules on how to import template dashboards.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new template dashboards will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing template dashboards will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, template dashboards not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "triggers": {
+          "type": "object",
+          "description": "Rules on how to import triggers.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new triggers will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing triggers will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, triggers not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false
+        },
+        "valueMaps": {
+          "type": "object",
+          "description": "Rules on how to import host or template value maps.",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new value maps will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing value maps will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, value maps not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["format", "source", "rules"],
+  "additionalProperties": false
+}

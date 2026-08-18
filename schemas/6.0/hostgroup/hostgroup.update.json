@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/hostgroup/hostgroup.update",
+  "title": "hostgroup.update",
+  "description": "Update existing host groups. The groupid property must be defined for each host group, all other properties are optional; only the given properties are updated.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/hostgroup/update",
+  "type": "object",
+  "properties": {
+    "groupid": {
+      "type": "string",
+      "description": "ID of the host group."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the host group."
+    },
+    "uuid": {
+      "type": "string",
+      "description": "Universal unique identifier, used for linking imported host groups to already existing ones. Auto-generated, if not given."
+    }
+  },
+  "required": ["groupid"],
+  "additionalProperties": false
+}

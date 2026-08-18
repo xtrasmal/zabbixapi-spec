@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/valuemap/valuemap.update",
+  "title": "valuemap.update",
+  "description": "Update existing value maps.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/valuemap/update",
+  "type": "object",
+  "properties": {
+    "valuemapid": {"type": "string", "description": "ID of the value map to update."},
+    "hostid": {"type": "string", "description": "Value map host or template ID."},
+    "name": {"type": "string", "description": "Name of the value map."},
+    "mappings": {
+      "type": "array",
+      "description": "Value mappings for current value map.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5],
+            "description": "Mapping match type. For type equal 0,1,2,3,4 value field cannot be empty, for type 5 value field should be empty. Possible values: 0 - (default) exact match; 1 - mapping will be applied if value is greater or equal (numeric unsigned/float items only); 2 - mapping will be applied if value is less or equal (numeric unsigned/float items only); 3 - mapping will be applied if value is in range (ranges are inclusive), allows defining multiple ranges separated by comma (numeric unsigned/float items only); 4 - mapping will be applied if value matches regular expression (character items only); 5 - default value, mapping will be applied if no other match were found."
+          },
+          "value": {"type": "string", "description": "Original value. Is not required for mapping of type \"default\"."},
+          "newvalue": {"type": "string", "description": "Value to which the original value is mapped to."}
+        },
+        "required": ["value", "newvalue"],
+        "additionalProperties": false
+      }
+    },
+    "uuid": {"type": "string", "description": "Universal unique identifier, used for linking imported value maps to already existing ones. Used only for value maps on templates. Auto-generated, if not given."}
+  },
+  "required": ["valuemapid"],
+  "additionalProperties": false
+}

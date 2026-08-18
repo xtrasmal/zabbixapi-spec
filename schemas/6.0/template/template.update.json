@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/template/template.update",
+  "title": "template.update",
+  "description": "Update existing templates. The templateid property must be defined for each template, all other properties are optional; only given properties are updated.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/template/update",
+  "type": "object",
+  "properties": {
+    "templateid": {"type": "string", "description": "ID of the template."},
+    "host": {"type": "string", "description": "Technical name of the template."},
+    "description": {"type": "string", "description": "Description of the template."},
+    "name": {"type": "string", "description": "Visible name of the template. Default: host property value."},
+    "uuid": {"type": "string", "description": "Universal unique identifier, used for linking imported templates to already existing ones. Auto-generated, if not given."},
+    "groups": {
+      "type": "array",
+      "description": "Host groups to replace the current host groups the templates belong to. The host groups must have the groupid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "groupid": {"type": "string", "description": "ID of the host group."}
+        },
+        "required": ["groupid"]
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Template tags to replace the current template tags.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {"type": "string", "description": "Template tag name."},
+          "value": {"type": "string", "description": "Template tag value."}
+        },
+        "required": ["tag"]
+      }
+    },
+    "macros": {
+      "type": "array",
+      "description": "User macros to replace the current user macros on the given templates.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hostmacroid": {"type": "string", "description": "(readonly) ID of the host macro. Include to update an existing macro in place."},
+          "macro": {"type": "string", "description": "Macro string."},
+          "value": {"type": "string", "description": "Value of the macro."},
+          "type": {"type": "integer", "enum": [0, 1, 2], "description": "Type of macro. Possible values: 0 - (default) Text macro; 1 - Secret macro; 2 - Vault secret."},
+          "description": {"type": "string", "description": "Description of the macro."}
+        },
+        "required": ["macro", "value"]
+      }
+    },
+    "templates": {
+      "type": "array",
+      "description": "Templates to replace the currently linked templates. Templates that are not passed are only unlinked. The templates must have the templateid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": {"type": "string", "description": "ID of the template."}
+        },
+        "required": ["templateid"]
+      }
+    },
+    "templates_clear": {
+      "type": "array",
+      "description": "Templates to unlink and clear from the given templates. The templates must have the templateid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": {"type": "string", "description": "ID of the template."}
+        },
+        "required": ["templateid"]
+      }
+    }
+  },
+  "required": ["templateid"],
+  "additionalProperties": false
+}

@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/itemprototype/itemprototype.get",
+  "title": "itemprototype.get",
+  "description": "Retrieve item prototypes according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/itemprototype/get",
+  "type": "object",
+  "properties": {
+    "discoveryids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only item prototypes that belong to the given LLD rules."
+    },
+    "graphids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only item prototypes that are used in the given graph prototypes."
+    },
+    "hostids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only item prototypes that belong to the given hosts."
+    },
+    "inherited": {
+      "type": "boolean",
+      "description": "If set to true return only item prototypes inherited from a template."
+    },
+    "itemids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only item prototypes with the given IDs."
+    },
+    "monitored": {
+      "type": "boolean",
+      "description": "If set to true return only enabled item prototypes that belong to monitored hosts."
+    },
+    "templated": {
+      "type": "boolean",
+      "description": "If set to true return only item prototypes that belong to templates."
+    },
+    "templateids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only item prototypes that belong to the given templates."
+    },
+    "triggerids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only item prototypes that are used in the given trigger prototypes."
+    },
+    "selectDiscoveryRule": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a discoveryRule property with the low-level discovery rule that the item prototype belongs to."
+    },
+    "selectGraphs": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a graphs property with graph prototypes that the item prototype is used in. Supports count."
+    },
+    "selectHosts": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a hosts property with an array of hosts that the item prototype belongs to."
+    },
+    "selectTags": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return the item prototype tags in the tags property."
+    },
+    "selectTriggers": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a triggers property with trigger prototypes that the item prototype is used in. Supports count."
+    },
+    "selectPreprocessing": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a preprocessing property with item preprocessing options. Each entry has: type (integer, the preprocessing option type: 1-Custom multiplier, 2-Right trim, 3-Left trim, 4-Trim, 5-Regular expression matching, 6-Boolean to decimal, 7-Octal to decimal, 8-Hexadecimal to decimal, 9-Simple change, 10-Change per second, 11-XML XPath, 12-JSONPath, 13-In range, 14-Matches regular expression, 15-Does not match regular expression, 16-Check for error in JSON, 17-Check for error in XML, 18-Check for error using regular expression, 19-Discard unchanged, 20-Discard unchanged with heartbeat, 21-JavaScript, 22-Prometheus pattern, 23-Prometheus to JSON, 24-CSV to JSON, 25-Replace, 26-Check for not supported value, 27-XML to JSON); params (string, additional parameters, LF-separated); error_handler (integer, action on preprocessing failure: 0-Error message set by Zabbix server, 1-Discard value, 2-Set custom value, 3-Set custom error message); error_handler_params (string)."
+    },
+    "selectValueMap": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a valuemap property with item prototype value map."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Accepts an array, where the keys are property names, and the values are either a single value or an array of values to match against. Supports additional filters: host - technical name of the host that the item prototype belongs to."
+    },
+    "limitSelects": {
+      "type": "integer",
+      "description": "Limits the number of records returned by subselects. Applies to selectGraphs (sorted by name) and selectTriggers (sorted by description)."
+    },
+    "sortfield": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Sort the result by the given properties. Possible values are: itemid, name, key_, delay, type and status."
+    },
+    "countOutput": {"type": "boolean", "description": "Return the number of records in the result instead of the actual data."},
+    "editable": {"type": "boolean", "description": "If set to true, return only objects that the user has write permissions to. Default: false."},
+    "excludeSearch": {"type": "boolean", "description": "Return results that do not match the criteria given in the search parameter."},
+    "limit": {"type": "integer", "description": "Limit the number of records returned."},
+    "output": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "preservekeys": {"type": "boolean", "description": "Use IDs as keys in the resulting array."},
+    "search": {"type": "object", "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."},
+    "searchByAny": {"type": "boolean", "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."},
+    "searchWildcardsEnabled": {"type": "boolean", "description": "If true, enables the use of '*' as a wildcard character. Default: false."},
+    "sortorder": {
+      "oneOf": [
+        {"enum": ["ASC", "DESC"]},
+        {"type": "array", "items": {"enum": ["ASC", "DESC"]}}
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {"type": "boolean", "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."}
+  },
+  "additionalProperties": false
+}

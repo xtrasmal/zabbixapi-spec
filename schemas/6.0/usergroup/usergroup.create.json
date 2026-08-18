@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/usergroup/usergroup.create",
+  "title": "usergroup.create",
+  "description": "Create new user groups.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/usergroup/create",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the user group."
+    },
+    "debug_mode": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether debug mode is enabled or disabled. Possible values are: 0 - (default) disabled; 1 - enabled."
+    },
+    "gui_access": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3],
+      "description": "Frontend authentication method of the users in the group. Possible values: 0 - (default) use the system default authentication method; 1 - use internal authentication; 2 - use LDAP authentication; 3 - disable access to the frontend."
+    },
+    "users_status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether the user group is enabled or disabled. Possible values are: 0 - (default) enabled; 1 - disabled."
+    },
+    "rights": {
+      "oneOf": [
+        {"$ref": "#/$defs/permission"},
+        {"type": "array", "items": {"$ref": "#/$defs/permission"}}
+      ],
+      "description": "Permissions to assign to the group."
+    },
+    "tag_filters": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/tagFilter"},
+      "description": "Tag based permissions to assign to the group."
+    },
+    "users": {
+      "oneOf": [
+        {"$ref": "#/$defs/userRef"},
+        {"type": "array", "items": {"$ref": "#/$defs/userRef"}}
+      ],
+      "description": "Users to add to the user group. The user must have the userid property defined."
+    }
+  },
+  "required": ["name"],
+  "additionalProperties": false,
+  "$defs": {
+    "permission": {
+      "type": "object",
+      "description": "Permission object.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID of the host group to add permission to."
+        },
+        "permission": {
+          "type": "integer",
+          "enum": [0, 2, 3],
+          "description": "Access level to the host group. Possible values: 0 - access denied; 2 - read-only access; 3 - read-write access."
+        }
+      },
+      "required": ["id", "permission"],
+      "additionalProperties": false
+    },
+    "tagFilter": {
+      "type": "object",
+      "description": "Tag based permission object.",
+      "properties": {
+        "groupid": {
+          "type": "string",
+          "description": "ID of the host group to add permission to."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Tag name."
+        },
+        "value": {
+          "type": "string",
+          "description": "Tag value."
+        }
+      },
+      "required": ["groupid"],
+      "additionalProperties": false
+    },
+    "userRef": {
+      "type": "object",
+      "description": "User reference; the userid property must be defined.",
+      "properties": {
+        "userid": {
+          "type": "string",
+          "description": "ID of the user."
+        }
+      },
+      "required": ["userid"],
+      "additionalProperties": true
+    }
+  }
+}

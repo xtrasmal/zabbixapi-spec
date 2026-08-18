@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/regexp/regexp.update",
+  "title": "regexp.update",
+  "description": "Update existing global regular expressions.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/regexp/update",
+  "type": "object",
+  "properties": {
+    "regexpid": {
+      "type": "string",
+      "description": "ID of the regular expression to update."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the regular expression."
+    },
+    "test_string": {
+      "type": "string",
+      "description": "Test string."
+    },
+    "expressions": {
+      "type": "array",
+      "description": "Expressions options.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "expression": {
+            "type": "string",
+            "description": "Regular expression."
+          },
+          "expression_type": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4],
+            "description": "Type of regular expression. Possible values: 0 - Character string included; 1 - Any character string included; 2 - Character string not included; 3 - Result is TRUE; 4 - Result is FALSE."
+          },
+          "exp_delimiter": {
+            "type": "string",
+            "enum": [",", ".", "/"],
+            "description": "Expression delimiter. Only when expression_type is \"Any character string included\". Default value: \",\"."
+          },
+          "case_sensitive": {
+            "type": "integer",
+            "enum": [0, 1],
+            "description": "Case sensitivity. Default value: 0. Possible values: 0 - Case insensitive; 1 - Case sensitive."
+          }
+        },
+        "required": ["expression", "expression_type"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["regexpid"],
+  "additionalProperties": false
+}

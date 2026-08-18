@@ -1,0 +1,565 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/action/action.update",
+  "title": "action.update",
+  "description": "Update existing actions.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/action/update",
+  "type": "object",
+  "properties": {
+    "actionid": {
+      "type": "string",
+      "description": "(readonly) ID of the action to update."
+    },
+    "esc_period": {
+      "type": "string",
+      "description": "Default operation step duration. Must be at least 60 seconds. Accepts seconds, time unit with suffix and user macro. Note that escalations are supported only for trigger, internal and service actions, and only in normal operations."
+    },
+    "eventsource": {
+      "type": "integer",
+      "description": "(constant) Type of events that the action will handle. Possible values: 0 - event created by a trigger; 1 - event created by a discovery rule; 2 - event created by active agent autoregistration; 3 - internal event; 4 - event created on service status update.",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the action."
+    },
+    "status": {
+      "type": "integer",
+      "description": "Whether the action is enabled or disabled. Possible values: 0 - (default) enabled; 1 - disabled.",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "pause_suppressed": {
+      "type": "integer",
+      "description": "Whether to pause escalation during maintenance periods or not. Possible values: 0 - don't pause escalation; 1 - (default) pause escalation. Note that this parameter is valid for trigger actions only.",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "notify_if_canceled": {
+      "type": "integer",
+      "description": "Whether to notify when escalation is canceled. Possible values: 0 - don't notify when escalation is canceled; 1 - (default) notify when escalation is canceled. Note that this parameter is valid for trigger actions only.",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "filter": {
+      "description": "Action filter object to replace the current filter.",
+      "$ref": "#/$defs/filter"
+    },
+    "operations": {
+      "type": "array",
+      "description": "Action operations to replace existing operations.",
+      "items": {
+        "$ref": "#/$defs/operation"
+      }
+    },
+    "recovery_operations": {
+      "type": "array",
+      "description": "Action recovery operations to replace existing recovery operations.",
+      "items": {
+        "$ref": "#/$defs/recoveryOperation"
+      }
+    },
+    "update_operations": {
+      "type": "array",
+      "description": "Action update operations to replace existing update operations.",
+      "items": {
+        "$ref": "#/$defs/updateOperation"
+      }
+    }
+  },
+  "required": [
+    "actionid"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "hostGroupRef": {
+      "type": "object",
+      "description": "Reference to a host group by groupid.",
+      "properties": {
+        "groupid": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "groupid"
+      ],
+      "additionalProperties": false
+    },
+    "hostRef": {
+      "type": "object",
+      "description": "Reference to a host by hostid. If hostid is set to 0 the command will be run on the current host.",
+      "properties": {
+        "hostid": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "hostid"
+      ],
+      "additionalProperties": false
+    },
+    "templateRef": {
+      "type": "object",
+      "description": "Reference to a template by templateid.",
+      "properties": {
+        "templateid": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "templateid"
+      ],
+      "additionalProperties": false
+    },
+    "userRef": {
+      "type": "object",
+      "description": "Reference to a user by userid.",
+      "properties": {
+        "userid": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "userid"
+      ],
+      "additionalProperties": false
+    },
+    "userGroupRef": {
+      "type": "object",
+      "description": "Reference to a user group by usrgrpid.",
+      "properties": {
+        "usrgrpid": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "usrgrpid"
+      ],
+      "additionalProperties": false
+    },
+    "scriptRef": {
+      "type": "object",
+      "description": "Reference to a global script by scriptid.",
+      "properties": {
+        "scriptid": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "scriptid"
+      ],
+      "additionalProperties": false
+    },
+    "inventoryRef": {
+      "type": "object",
+      "description": "Inventory mode to set host to. Required for \"Set host inventory mode\" operations.",
+      "properties": {
+        "inventory_mode": {
+          "type": "integer",
+          "description": "Host inventory population mode (see the host object's inventory_mode property). Possible values: -1 - (default) disabled; 0 - manual; 1 - automatic.",
+          "enum": [
+            -1,
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "inventory_mode"
+      ],
+      "additionalProperties": false
+    },
+    "operationMessage": {
+      "type": "object",
+      "description": "Object containing the data about the message sent by the operation. Required for message operations.",
+      "properties": {
+        "default_msg": {
+          "type": "integer",
+          "description": "Whether to use the default action message text and subject. Possible values: 0 - use the data from the operation; 1 - (default) use the data from the media type.",
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "mediatypeid": {
+          "type": "string",
+          "description": "ID of the media type that will be used to send the message."
+        },
+        "message": {
+          "type": "string",
+          "description": "Operation message text."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Operation message subject."
+        }
+      },
+      "additionalProperties": false
+    },
+    "operationCondition": {
+      "type": "object",
+      "description": "The action operation condition object defines a condition that must be met to perform the current operation.",
+      "properties": {
+        "conditiontype": {
+          "type": "integer",
+          "description": "Type of condition. Possible values: 14 - event acknowledged.",
+          "enum": [
+            14
+          ]
+        },
+        "value": {
+          "type": "string",
+          "description": "Value to compare with. For conditiontype 14 (event acknowledged): 0 - not acknowledged; 1 - acknowledged."
+        },
+        "operator": {
+          "type": "integer",
+          "description": "Condition operator. Possible values: 0 - (default) =.",
+          "enum": [
+            0
+          ]
+        }
+      },
+      "required": [
+        "conditiontype",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "operation": {
+      "type": "object",
+      "description": "The action operation object defines an operation that will be performed when an action is executed.",
+      "properties": {
+        "operationtype": {
+          "type": "integer",
+          "description": "Type of operation. Possible values: 0 - send message; 1 - global script; 2 - add host; 3 - remove host; 4 - add to host group; 5 - remove from host group; 6 - link to template; 7 - unlink from template; 8 - enable host; 9 - disable host; 10 - set host inventory mode. Note that only types '0' and '1' are supported for trigger and service actions, only '0' is supported for internal actions. All types are supported for discovery and autoregistration actions.",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        "esc_period": {
+          "type": "string",
+          "description": "Duration of an escalation step in seconds. Must be greater than 60 seconds. Accepts seconds, time unit with suffix and user macro. If set to 0 or 0s, the default action escalation period will be used. Default: 0s. Note that escalations are supported only for trigger, internal and service actions, and only in normal operations."
+        },
+        "esc_step_from": {
+          "type": "integer",
+          "description": "Step to start escalation from. Default: 1. Note that escalations are supported only for trigger, internal and service actions, and only in normal operations."
+        },
+        "esc_step_to": {
+          "type": "integer",
+          "description": "Step to end escalation at. Default: 1. Note that escalations are supported only for trigger, internal and service actions, and only in normal operations."
+        },
+        "evaltype": {
+          "type": "integer",
+          "description": "Operation condition evaluation method. Possible values: 0 - (default) AND / OR; 1 - AND; 2 - OR.",
+          "enum": [
+            0,
+            1,
+            2
+          ]
+        },
+        "opcommand": {
+          "description": "Object containing data on global script run by the operation. Required for global script operations.",
+          "$ref": "#/$defs/scriptRef"
+        },
+        "opcommand_grp": {
+          "type": "array",
+          "description": "Host groups to run global scripts on. Required for global script operations if opcommand_hst is not set.",
+          "items": {
+            "$ref": "#/$defs/hostGroupRef"
+          }
+        },
+        "opcommand_hst": {
+          "type": "array",
+          "description": "Host to run global scripts on. Required for global script operations if opcommand_grp is not set.",
+          "items": {
+            "$ref": "#/$defs/hostRef"
+          }
+        },
+        "opconditions": {
+          "type": "array",
+          "description": "Operation conditions used for trigger actions.",
+          "items": {
+            "$ref": "#/$defs/operationCondition"
+          }
+        },
+        "opgroup": {
+          "type": "array",
+          "description": "Host groups to add hosts to. Required for \"add to host group\" and \"remove from host group\" operations.",
+          "items": {
+            "$ref": "#/$defs/hostGroupRef"
+          }
+        },
+        "opmessage": {
+          "description": "Object containing the data about the message sent by the operation. Required for message operations.",
+          "$ref": "#/$defs/operationMessage"
+        },
+        "opmessage_grp": {
+          "type": "array",
+          "description": "User groups to send messages to. Required for message operations if opmessage_usr is not set.",
+          "items": {
+            "$ref": "#/$defs/userGroupRef"
+          }
+        },
+        "opmessage_usr": {
+          "type": "array",
+          "description": "Users to send messages to. Required for message operations if opmessage_grp is not set.",
+          "items": {
+            "$ref": "#/$defs/userRef"
+          }
+        },
+        "optemplate": {
+          "type": "array",
+          "description": "Templates to link the hosts to. Required for \"link to template\" and \"unlink from template\" operations.",
+          "items": {
+            "$ref": "#/$defs/templateRef"
+          }
+        },
+        "opinventory": {
+          "description": "Inventory mode set host to. Required for \"Set host inventory mode\" operations.",
+          "$ref": "#/$defs/inventoryRef"
+        }
+      },
+      "required": [
+        "operationtype"
+      ],
+      "additionalProperties": false
+    },
+    "recoveryOperation": {
+      "type": "object",
+      "description": "The action recovery operation object defines an operation that will be performed when a problem is resolved. Recovery operations are possible for trigger, internal and service actions.",
+      "properties": {
+        "operationtype": {
+          "type": "integer",
+          "description": "Type of operation. Possible values for trigger and service actions: 0 - send message; 1 - global script; 11 - notify all involved. Possible values for internal actions: 0 - send message; 11 - notify all involved.",
+          "enum": [
+            0,
+            1,
+            11
+          ]
+        },
+        "opcommand": {
+          "description": "Object containing data on global action type script run by the operation. Required for global script operations.",
+          "$ref": "#/$defs/scriptRef"
+        },
+        "opcommand_grp": {
+          "type": "array",
+          "description": "Host groups to run global scripts on. Required for global script operations if opcommand_hst is not set.",
+          "items": {
+            "$ref": "#/$defs/hostGroupRef"
+          }
+        },
+        "opcommand_hst": {
+          "type": "array",
+          "description": "Host to run global scripts on. Required for global script operations if opcommand_grp is not set.",
+          "items": {
+            "$ref": "#/$defs/hostRef"
+          }
+        },
+        "opmessage": {
+          "description": "Object containing the data about the message sent by the recovery operation. Required for message operations.",
+          "$ref": "#/$defs/operationMessage"
+        },
+        "opmessage_grp": {
+          "type": "array",
+          "description": "User groups to send messages to. Required for message operations if opmessage_usr is not set.",
+          "items": {
+            "$ref": "#/$defs/userGroupRef"
+          }
+        },
+        "opmessage_usr": {
+          "type": "array",
+          "description": "Users to send messages to. Required for message operations if opmessage_grp is not set.",
+          "items": {
+            "$ref": "#/$defs/userRef"
+          }
+        }
+      },
+      "required": [
+        "operationtype"
+      ],
+      "additionalProperties": false
+    },
+    "updateOperation": {
+      "type": "object",
+      "description": "The action update operation object defines an operation that will be performed when a problem is updated (commented upon, acknowledged, severity changed, or manually closed). Update operations are possible for trigger and service actions.",
+      "properties": {
+        "operationtype": {
+          "type": "integer",
+          "description": "Type of operation. Possible values for trigger and service actions: 0 - send message; 1 - global script; 12 - notify all involved.",
+          "enum": [
+            0,
+            1,
+            12
+          ]
+        },
+        "opcommand": {
+          "description": "Object containing data on global action type script run by the operation. Required for global script operations.",
+          "$ref": "#/$defs/scriptRef"
+        },
+        "opcommand_grp": {
+          "type": "array",
+          "description": "Host groups to run global scripts on. Required for global script operations if opcommand_hst is not set.",
+          "items": {
+            "$ref": "#/$defs/hostGroupRef"
+          }
+        },
+        "opcommand_hst": {
+          "type": "array",
+          "description": "Host to run global scripts on. Required for global script operations if opcommand_grp is not set.",
+          "items": {
+            "$ref": "#/$defs/hostRef"
+          }
+        },
+        "opmessage": {
+          "description": "Object containing the data about the message sent by the update operation.",
+          "$ref": "#/$defs/operationMessage"
+        },
+        "opmessage_grp": {
+          "type": "array",
+          "description": "User groups to send messages to. Required only for \"send message\" operations if opmessage_usr is not set. Is ignored for \"send update message\" operations.",
+          "items": {
+            "$ref": "#/$defs/userGroupRef"
+          }
+        },
+        "opmessage_usr": {
+          "type": "array",
+          "description": "Users to send messages to. Required only for \"send message\" operations if opmessage_grp is not set. Is ignored for \"send update message\" operations.",
+          "items": {
+            "$ref": "#/$defs/userRef"
+          }
+        }
+      },
+      "required": [
+        "operationtype"
+      ],
+      "additionalProperties": false
+    },
+    "filterCondition": {
+      "type": "object",
+      "description": "The action filter condition object defines a specific condition that must be checked before running the action operations.",
+      "properties": {
+        "conditiontype": {
+          "type": "integer",
+          "description": "Type of condition. Possible values for trigger actions: 0 - host group; 1 - host; 2 - trigger; 3 - event name; 4 - trigger severity; 6 - time period; 13 - host template; 16 - problem is suppressed; 25 - event tag; 26 - event tag value. Possible values for discovery actions: 7 - host IP; 8 - discovered service type; 9 - discovered service port; 10 - discovery status; 11 - uptime or downtime duration; 12 - received value; 18 - discovery rule; 19 - discovery check; 20 - proxy; 21 - discovery object. Possible values for autoregistration actions: 20 - proxy; 22 - host name; 24 - host metadata. Possible values for internal actions: 0 - host group; 1 - host; 13 - host template; 23 - event type; 25 - event tag; 26 - event tag value. Possible values for service actions: 25 - event tag; 26 - event tag value; 27 - service; 28 - service name. Full condition reference (id - name - supported operators): 0 Host group (equals, does not equal); 1 Host (equals, does not equal); 2 Trigger (equals, does not equal); 3 Event name (contains, does not contain); 4 Trigger severity (equals, does not equal, is greater than or equals, is less than or equals); 5 Trigger value (equals); 6 Time period (in, not in); 7 Host IP (equals, does not equal); 8 Discovered service type (equals, does not equal); 9 Discovered service port (equals, does not equal); 10 Discovery status (equals); 11 Uptime or downtime duration (is greater than or equals, is less than or equals); 12 Received values (equals, does not equal, is greater than or equals, is less than or equals, contains, does not contain); 13 Host template (equals, does not equal); 16 Problem is suppressed (Yes, No); 18 Discovery rule (equals, does not equal); 19 Discovery check (equals, does not equal); 20 Proxy (equals, does not equal); 21 Discovery object (equals); 22 Host name (contains, does not contain, matches, does not match); 23 Event type (equals); 24 Host metadata (contains, does not contain, matches, does not match); 25 Tag (equals, does not equal, contains, does not contain); 26 Tag value (equals, does not equal, contains, does not contain); 27 Service (equals, does not equal); 28 Service name (equals, does not equal).",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            16,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28
+          ]
+        },
+        "value": {
+          "type": "string",
+          "description": "Value to compare with. Expected value depends on conditiontype, e.g. host group ID (0), host ID (1), trigger ID (2), event name (3), trigger severity (4), trigger value (5), time period (6), IP range(s) (7), discovery check type (8), port range(s) (9), discovery status 0-3 (10), duration in seconds (11), discovery check received value (12), template ID (13), no value required - only operator (16), discovery rule ID (18), discovery check ID (19), proxy ID (20), discovery object type 1-2 (21), host name (22), internal event type 0-5 (23), host metadata (24), event tag (25), event tag value (26), service ID (27), service name (28)."
+        },
+        "value2": {
+          "type": "string",
+          "description": "Secondary value to compare with. Required for trigger, internal and service actions when condition type is 26."
+        },
+        "formulaid": {
+          "type": "string",
+          "description": "Arbitrary unique ID that is used to reference the condition from a custom expression. Can only contain capital-case letters. The ID must be defined by the user when modifying filter conditions, but will be generated anew when requesting them afterward."
+        },
+        "operator": {
+          "type": "integer",
+          "description": "Condition operator. Possible values: 0 - (default) equals; 1 - does not equal; 2 - contains; 3 - does not contain; 4 - in; 5 - is greater than or equals; 6 - is less than or equals; 7 - not in; 8 - matches; 9 - does not match; 10 - Yes; 11 - No.",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        }
+      },
+      "required": [
+        "conditiontype",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "filter": {
+      "type": "object",
+      "description": "The action filter object defines a set of conditions that must be met to perform the configured action operations.",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "description": "Set of filter conditions to use for filtering results.",
+          "items": {
+            "$ref": "#/$defs/filterCondition"
+          }
+        },
+        "evaltype": {
+          "type": "integer",
+          "description": "Filter condition evaluation method. Possible values: 0 - and/or; 1 - and; 2 - or; 3 - custom expression.",
+          "enum": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        "formula": {
+          "type": "string",
+          "description": "User-defined expression to be used for evaluating conditions of filters with a custom expression. The expression must contain IDs that reference specific filter conditions by its formulaid. The IDs used in the expression must exactly match the ones defined in the filter conditions: no condition can remain unused or omitted. Required for custom expression filters."
+        }
+      },
+      "required": [
+        "conditions",
+        "evaltype"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

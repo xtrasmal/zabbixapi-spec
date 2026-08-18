@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/service/service.get",
+  "title": "service.get",
+  "description": "Retrieve services according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/service/get",
+  "type": "object",
+  "properties": {
+    "serviceids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Return only services with the given IDs."},
+    "parentids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Return only services that are linked to the given parent services."},
+    "deep_parentids": {"type": "boolean", "description": "Return all direct and indirect child services. Used together with parentids."},
+    "childids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Return only services that are linked to the given child services."},
+    "evaltype": {"type": "integer", "enum": [0, 2], "description": "Rules for tag searching. Possible values: 0 - (default) And/Or; 2 - Or."},
+    "tags": {
+      "type": "array",
+      "description": "Return only services with given tags. Exact match by tag and case-sensitive or case-insensitive search by tag value depending on operator value. Format: [{\"tag\": \"\", \"value\": \"\", \"operator\": \"\"}, ...]. An empty array returns all services.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {"type": "string", "description": "Tag name."},
+          "value": {"type": "string", "description": "Tag value."},
+          "operator": {"type": "integer", "enum": [0, 1, 2, 3, 4, 5], "description": "Possible operator values: 0 - (default) Contains; 1 - Equals; 2 - Does not contain; 3 - Does not equal; 4 - Exists; 5 - Does not exist."}
+        }
+      }
+    },
+    "problem_tags": {
+      "type": "array",
+      "description": "Return only services with given problem tags. Exact match by tag and case-sensitive or case-insensitive search by tag value depending on operator value. Format: [{\"tag\": \"\", \"value\": \"\", \"operator\": \"\"}, ...]. An empty array returns all services.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {"type": "string", "description": "Tag name."},
+          "value": {"type": "string", "description": "Tag value."},
+          "operator": {"type": "integer", "enum": [0, 1, 2, 3, 4, 5], "description": "Possible operator values: 0 - (default) Contains; 1 - Equals; 2 - Does not contain; 3 - Does not equal; 4 - Exists; 5 - Does not exist."}
+        }
+      }
+    },
+    "without_problem_tags": {"type": "boolean", "description": "Return only services without problem tags."},
+    "slaids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Return only services that are linked to the specific SLA(s)."},
+    "selectChildren": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return a children property with the child services. Supports count."},
+    "selectParents": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return a parents property with the parent services. Supports count."},
+    "selectTags": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return a tags property with service tags. Supports count."},
+    "selectProblemEvents": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return a problem_events property with an array of problem event objects. The problem event object has the following properties: eventid - (string) Event ID; severity - (string) Current event severity; name - (string) Resolved event name. Supports count."},
+    "selectProblemTags": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return a problem_tags property with problem tags. Supports count."},
+    "selectStatusRules": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return a status_rules property with status rules. Supports count."},
+    "selectStatusTimeline": {
+      "type": "array",
+      "description": "Return a status_timeline property containing service state changes for given periods. Format: [{\"period_from\": \"\", \"period_to\": \"\"}, ...] - period_from being a starting date (inclusive; integer timestamp) and period_to being an ending date (exclusive; integer timestamp) for the period you're interested in. Returns an array of entries containing a start_value property and an alarms array for the state changes within specified periods.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "period_from": {"type": "integer", "description": "Starting date of the period (inclusive; integer timestamp)."},
+          "period_to": {"type": "integer", "description": "Ending date of the period (exclusive; integer timestamp)."}
+        }
+      }
+    },
+    "sortfield": {"oneOf":[{"enum":["serviceid","name","status","sortorder","created_at"]},{"type":"array","items":{"enum":["serviceid","name","status","sortorder","created_at"]}}], "description": "Sort the result by the given properties. Possible values are: serviceid, name, status, sortorder and created_at."},
+    "countOutput": {"type": "boolean", "description": "Return the number of records in the result instead of the actual data."},
+    "editable": {"type": "boolean", "description": "If set to true, return only objects that the user has write permissions to. Default: false."},
+    "excludeSearch": {"type": "boolean", "description": "Return results that do not match the criteria given in the search parameter."},
+    "filter": {"type": "object", "description": "Return only those results that exactly match the given filter. Does not support text-type properties."},
+    "limit": {"type": "integer", "description": "Limit the number of records returned."},
+    "output": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Object properties to be returned. Default: extend."},
+    "preservekeys": {"type": "boolean", "description": "Use IDs as keys in the resulting array."},
+    "search": {"type": "object", "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."},
+    "searchByAny": {"type": "boolean", "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."},
+    "searchWildcardsEnabled": {"type": "boolean", "description": "If true, enables the use of '*' as a wildcard character. Default: false."},
+    "sortorder": {"oneOf":[{"enum":["ASC","DESC"]},{"type":"array","items":{"enum":["ASC","DESC"]}}], "description": "Order of sorting. ASC or DESC."},
+    "startSearch": {"type": "boolean", "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."}
+  },
+  "additionalProperties": false
+}

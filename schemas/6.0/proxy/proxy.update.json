@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/proxy/proxy.update",
+  "title": "proxy.update",
+  "description": "Update existing proxies. The proxyid property must be defined for each proxy, all other properties are optional; only given properties are updated.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/proxy/update",
+  "type": "object",
+  "properties": {
+    "proxyid": {"type": "string", "description": "ID of the proxy."},
+    "host": {"type": "string", "description": "Name of the proxy."},
+    "status": {"type": "integer", "enum": [5, 6], "description": "Type of proxy. Possible values: 5 - active proxy; 6 - passive proxy."},
+    "description": {"type": "string", "description": "Description of the proxy."},
+    "tls_connect": {"type": "integer", "enum": [1, 2, 4], "description": "Connections to proxy. Possible values: 1 - (default) No encryption; 2 - PSK; 4 - certificate."},
+    "tls_accept": {"type": "integer", "description": "Connections from proxy. Possible bitmap values: 1 - (default) No encryption; 2 - PSK; 4 - certificate. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 6 for PSK and certificate)."},
+    "tls_issuer": {"type": "string", "description": "Certificate issuer."},
+    "tls_subject": {"type": "string", "description": "Certificate subject."},
+    "tls_psk_identity": {"type": "string", "description": "(write-only) PSK identity; must be paired with only one PSK (across autoregistration, hosts, and proxies). Required if either tls_connect or tls_accept has PSK enabled. Do not include sensitive information in the PSK identity, as it is sent unencrypted over the network to inform the receiver which PSK to use."},
+    "tls_psk": {"type": "string", "description": "(write-only) Pre-shared key (PSK); must be at least 32 hex digits. Required if either tls_connect or tls_accept has PSK enabled."},
+    "proxy_address": {"type": "string", "description": "Comma-delimited IP addresses or DNS names of active Zabbix proxy."},
+    "hosts": {
+      "type": "array",
+      "description": "Hosts to be monitored by the proxy. If a host is already monitored by a different proxy, it will be reassigned to the current proxy. The hosts must have the hostid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hostid": {"type": "string", "description": "ID of the host."}
+        },
+        "required": ["hostid"]
+      }
+    },
+    "interface": {
+      "type": "object",
+      "description": "Host interface to replace the existing interface for the passive proxy.",
+      "properties": {
+        "dns": {"type": "string", "description": "DNS name to connect to. Can be empty if connections are made via IP address."},
+        "ip": {"type": "string", "description": "IP address to connect to. Can be empty if connections are made via DNS names."},
+        "port": {"type": "string", "description": "Port number to connect to."},
+        "useip": {"type": "integer", "enum": [0, 1], "description": "Whether the connection should be made via IP address. Possible values: 0 - connect using DNS name; 1 - connect using IP address."}
+      },
+      "required": ["dns", "ip", "port", "useip"]
+    }
+  },
+  "required": ["proxyid"],
+  "additionalProperties": false
+}

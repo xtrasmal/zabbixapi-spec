@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/drule/drule.create",
+  "title": "drule.create",
+  "description": "Create new discovery rules.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/drule/create",
+  "type": "object",
+  "properties": {
+    "iprange": {
+      "type": "string",
+      "description": "One or several IP ranges to check separated by commas. Refer to the network discovery configuration section for more information on supported formats of IP ranges."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the discovery rule."
+    },
+    "delay": {
+      "type": "string",
+      "description": "Execution interval of the discovery rule. Accepts seconds, time unit with suffix and user macro. Default: 1h."
+    },
+    "proxy_hostid": {
+      "type": "string",
+      "description": "ID of the proxy used for discovery."
+    },
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether the discovery rule is enabled. Possible values: 0 - (default) enabled; 1 - disabled."
+    },
+    "dchecks": {
+      "type": "array",
+      "description": "Discovery checks to create for the discovery rule.",
+      "items": {
+        "type": "object",
+        "description": "Discovery check object. See https://www.zabbix.com/documentation/6.0/en/manual/api/reference/dcheck/object",
+        "properties": {
+          "type": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            "description": "Type of check. Possible values: 0 - SSH; 1 - LDAP; 2 - SMTP; 3 - FTP; 4 - HTTP; 5 - POP; 6 - NNTP; 7 - IMAP; 8 - TCP; 9 - Zabbix agent; 10 - SNMPv1 agent; 11 - SNMPv2 agent; 12 - ICMP ping; 13 - SNMPv3 agent; 14 - HTTPS; 15 - Telnet."
+          },
+          "key_": {
+            "type": "string",
+            "description": "The value of this property differs depending on the type of the check: key to query for Zabbix agent checks, required; SNMP OID for SNMPv1, SNMPv2 and SNMPv3 checks, required."
+          },
+          "ports": {
+            "type": "string",
+            "description": "One or several port ranges to check separated by commas. Used for all checks except for ICMP. Default: 0."
+          },
+          "snmp_community": {
+            "type": "string",
+            "description": "SNMP community. Required for SNMPv1 and SNMPv2 agent checks."
+          },
+          "snmpv3_authpassphrase": {
+            "type": "string",
+            "description": "Authentication passphrase used for SNMPv3 agent checks with security level set to authNoPriv or authPriv."
+          },
+          "snmpv3_authprotocol": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5],
+            "description": "Authentication protocol used for SNMPv3 agent checks with security level set to authNoPriv or authPriv. Possible values: 0 - (default) MD5; 1 - SHA1; 2 - SHA224; 3 - SHA256; 4 - SHA384; 5 - SHA512."
+          },
+          "snmpv3_contextname": {
+            "type": "string",
+            "description": "SNMPv3 context name. Used only by SNMPv3 checks."
+          },
+          "snmpv3_privpassphrase": {
+            "type": "string",
+            "description": "Privacy passphrase used for SNMPv3 agent checks with security level set to authPriv."
+          },
+          "snmpv3_privprotocol": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5],
+            "description": "Privacy protocol used for SNMPv3 agent checks with security level set to authPriv. Possible values: 0 - (default) DES; 1 - AES128; 2 - AES192; 3 - AES256; 4 - AES192C; 5 - AES256C."
+          },
+          "snmpv3_securitylevel": {
+            "type": "string",
+            "enum": ["0", "1", "2"],
+            "description": "Security level used for SNMPv3 agent checks. Possible values: 0 - noAuthNoPriv; 1 - authNoPriv; 2 - authPriv."
+          },
+          "snmpv3_securityname": {
+            "type": "string",
+            "description": "Security name used for SNMPv3 agent checks."
+          },
+          "uniq": {
+            "type": "integer",
+            "enum": [0, 1],
+            "description": "Whether to use this check as a device uniqueness criteria. Only a single unique check can be configured for a discovery rule. Used for Zabbix agent, SNMPv1, SNMPv2 and SNMPv3 agent checks. Possible values: 0 - (default) do not use this check as a uniqueness criteria; 1 - use this check as a uniqueness criteria."
+          },
+          "host_source": {
+            "type": "integer",
+            "enum": [1, 2, 3],
+            "description": "Source for host name. Possible values: 1 - (default) DNS; 2 - IP; 3 - discovery value of this check."
+          },
+          "name_source": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3],
+            "description": "Source for visible name. Possible values: 0 - (default) not specified; 1 - DNS; 2 - IP; 3 - discovery value of this check."
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": ["iprange", "name", "dchecks"],
+  "additionalProperties": false
+}

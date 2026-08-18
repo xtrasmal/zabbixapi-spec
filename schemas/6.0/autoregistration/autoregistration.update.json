@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/autoregistration/autoregistration.update",
+  "title": "autoregistration.update",
+  "description": "Update the autoregistration object.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/autoregistration/update",
+  "type": "object",
+  "properties": {
+    "tls_accept": {
+      "type": "integer",
+      "enum": [1, 2, 3],
+      "description": "Type of allowed incoming connections for autoregistration. Possible values: 1 - allow unencrypted connections; 2 - allow TLS with PSK; 3 - allow both unencrypted and TLS with PSK connections."
+    },
+    "tls_psk_identity": {
+      "type": "string",
+      "description": "(write-only) PSK identity; must be paired with only one PSK (across autoregistration, hosts, and proxies). Do not include sensitive information in the PSK identity, as it is sent unencrypted over the network to inform the receiver which PSK to use."
+    },
+    "tls_psk": {
+      "type": "string",
+      "description": "(write-only) Pre-shared key (PSK); must be at least 32 hex digits."
+    }
+  },
+  "additionalProperties": false
+}

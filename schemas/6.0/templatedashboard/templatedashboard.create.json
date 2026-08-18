@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/templatedashboard/templatedashboard.create",
+  "title": "templatedashboard.create",
+  "description": "Create new template dashboards.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/templatedashboard/create",
+  "type": "object",
+  "properties": {
+    "name": {"type": "string", "description": "Name of the template dashboard."},
+    "templateid": {"type": "string", "description": "ID of the template the dashboard belongs to."},
+    "display_period": {
+      "type": "integer",
+      "enum": [10, 30, 60, 120, 600, 1800, 3600],
+      "description": "Default page display period (in seconds). Possible values: 10, 30, 60, 120, 600, 1800, 3600. Default: 30."
+    },
+    "auto_start": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Auto start slideshow. Possible values: 0 - do not auto start slideshow; 1 - (default) auto start slideshow."
+    },
+    "uuid": {"type": "string", "description": "Universal unique identifier, used for linking imported template dashboards to already existing ones. Auto-generated, if not given."},
+    "pages": {
+      "type": "array",
+      "description": "Template dashboard pages to be created for the dashboard. Dashboard pages will be ordered in the same order as specified. At least one dashboard page object is required for pages property.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "description": "Template dashboard page object.",
+        "properties": {
+          "name": {"type": "string", "description": "Dashboard page name. Default: empty string."},
+          "display_period": {
+            "type": "integer",
+            "enum": [0, 10, 30, 60, 120, 600, 1800, 3600],
+            "description": "Dashboard page display period (in seconds). Possible values: 0, 10, 30, 60, 120, 600, 1800, 3600. Default: 0 (will use the default page display period)."
+          },
+          "widgets": {
+            "type": "array",
+            "description": "Array of the template dashboard widget objects.",
+            "items": {
+              "type": "object",
+              "description": "Template dashboard widget object.",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["clock", "graph", "graphprototype", "item", "plaintext", "url"],
+                  "description": "Type of the dashboard widget. Possible values: clock - Clock; graph - Graph (classic); graphprototype - Graph prototype; item - Item value; plaintext - Plain text; url - URL."
+                },
+                "name": {"type": "string", "description": "Custom widget name."},
+                "x": {"type": "integer", "minimum": 0, "maximum": 23, "description": "A horizontal position from the left side of the dashboard. Valid values range from 0 to 23."},
+                "y": {"type": "integer", "minimum": 0, "maximum": 62, "description": "A vertical position from the top of the dashboard. Valid values range from 0 to 62."},
+                "width": {"type": "integer", "minimum": 1, "maximum": 24, "description": "The widget width. Valid values range from 1 to 24."},
+                "height": {"type": "integer", "minimum": 2, "maximum": 32, "description": "The widget height. Valid values range from 2 to 32."},
+                "view_mode": {
+                  "type": "integer",
+                  "enum": [0, 1],
+                  "description": "The widget view mode. Possible values: 0 - (default) default widget view; 1 - with hidden header."
+                },
+                "fields": {
+                  "type": "array",
+                  "description": "Array of the template dashboard widget field objects.",
+                  "items": {
+                    "type": "object",
+                    "description": "Template dashboard widget field object.",
+                    "properties": {
+                      "type": {
+                        "type": "integer",
+                        "enum": [0, 1, 4, 5, 6, 7],
+                        "description": "Type of the widget field. Possible values: 0 - Integer; 1 - String; 4 - Item; 5 - Item prototype; 6 - Graph; 7 - Graph prototype."
+                      },
+                      "name": {"type": "string", "description": "Widget field name."},
+                      "value": {"description": "Widget field value depending on type."}
+                    },
+                    "required": ["type", "value"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": ["type"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["name", "templateid", "pages"],
+  "additionalProperties": false
+}

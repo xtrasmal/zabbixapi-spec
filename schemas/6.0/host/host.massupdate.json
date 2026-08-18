@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/host/host.massupdate",
+  "title": "host.massupdate",
+  "description": "Simultaneously replace or remove related objects and update properties on multiple hosts.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/host/massupdate",
+  "type": "object",
+  "properties": {
+    "hosts": {
+      "type": "array",
+      "description": "Hosts to be updated. The hosts must have the hostid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hostid": {"type": "string", "description": "ID of the host."}
+        },
+        "required": ["hostid"]
+      }
+    },
+    "host": {"type": "string", "description": "Technical name of the host."},
+    "description": {"type": "string", "description": "Description of the host."},
+    "inventory_mode": {"type": "integer", "enum": [-1, 0, 1], "description": "Host inventory population mode. Possible values: -1 - (default) disabled; 0 - manual; 1 - automatic."},
+    "ipmi_authtype": {"type": "integer", "enum": [-1, 0, 1, 2, 4, 5, 6], "description": "IPMI authentication algorithm. Possible values: -1 - (default) default; 0 - none; 1 - MD2; 2 - MD5; 4 - straight; 5 - OEM; 6 - RMCP+."},
+    "ipmi_password": {"type": "string", "description": "IPMI password."},
+    "ipmi_privilege": {"type": "integer", "enum": [1, 2, 3, 4, 5], "description": "IPMI privilege level. Possible values: 1 - callback; 2 - (default) user; 3 - operator; 4 - admin; 5 - OEM."},
+    "ipmi_username": {"type": "string", "description": "IPMI username."},
+    "name": {"type": "string", "description": "Visible name of the host. Default: host property value."},
+    "proxy_hostid": {"type": "string", "description": "ID of the proxy that is used to monitor the host."},
+    "status": {"type": "integer", "enum": [0, 1], "description": "Status and function of the host. Possible values: 0 - (default) monitored host; 1 - unmonitored host."},
+    "tls_connect": {"type": "integer", "enum": [1, 2, 4], "description": "Connections to host. Possible values: 1 - (default) No encryption; 2 - PSK; 4 - certificate."},
+    "tls_accept": {"type": "integer", "description": "Connections from host. Possible bitmap values: 1 - (default) No encryption; 2 - PSK; 4 - certificate. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 6 for PSK and certificate)."},
+    "tls_issuer": {"type": "string", "description": "Certificate issuer."},
+    "tls_subject": {"type": "string", "description": "Certificate subject."},
+    "tls_psk_identity": {"type": "string", "description": "(write-only) PSK identity; must be paired with only one PSK (across autoregistration, hosts, and proxies). Required if either tls_connect or tls_accept has PSK enabled. Do not include sensitive information in the PSK identity, as it is sent unencrypted over the network to inform the receiver which PSK to use."},
+    "tls_psk": {"type": "string", "description": "(write-only) Pre-shared key (PSK); must be at least 32 hex digits. Required if either tls_connect or tls_accept has PSK enabled."},
+    "groups": {
+      "type": "array",
+      "description": "Host groups to replace the current host groups the hosts belong to. The host groups must have the groupid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "groupid": {"type": "string", "description": "ID of the host group."}
+        },
+        "required": ["groupid"]
+      }
+    },
+    "interfaces": {
+      "type": "array",
+      "description": "Host interfaces to replace the current host interfaces on the given hosts.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "details": {
+            "type": "object",
+            "description": "Additional object for interface. Required if interface type is SNMP.",
+            "properties": {
+              "version": {"type": "integer", "enum": [1, 2, 3], "description": "SNMP interface version. Possible values: 1 - SNMPv1; 2 - SNMPv2c; 3 - SNMPv3."},
+              "bulk": {"type": "integer", "enum": [0, 1], "description": "Whether to use bulk SNMP requests. Possible values: 0 - don't use bulk requests; 1 - (default) use bulk requests."},
+              "community": {"type": "string", "description": "SNMP community (required). Used only by SNMPv1 and SNMPv2 interfaces."},
+              "securityname": {"type": "string", "description": "SNMPv3 security name. Used only by SNMPv3 interfaces."},
+              "securitylevel": {"type": "integer", "enum": [0, 1, 2], "description": "SNMPv3 security level. Used only by SNMPv3 interfaces. Possible values: 0 - (default) noAuthNoPriv; 1 - authNoPriv; 2 - authPriv."},
+              "authpassphrase": {"type": "string", "description": "SNMPv3 authentication passphrase. Used only by SNMPv3 interfaces."},
+              "privpassphrase": {"type": "string", "description": "SNMPv3 privacy passphrase. Used only by SNMPv3 interfaces."},
+              "authprotocol": {"type": "integer", "enum": [0, 1, 2, 3, 4, 5], "description": "SNMPv3 authentication protocol. Used only by SNMPv3 interfaces. Possible values: 0 - (default) MD5; 1 - SHA1; 2 - SHA224; 3 - SHA256; 4 - SHA384; 5 - SHA512."},
+              "privprotocol": {"type": "integer", "enum": [0, 1, 2, 3, 4, 5], "description": "SNMPv3 privacy protocol. Used only by SNMPv3 interfaces. Possible values: 0 - (default) DES; 1 - AES128; 2 - AES192; 3 - AES256; 4 - AES192C; 5 - AES256C."},
+              "contextname": {"type": "string", "description": "SNMPv3 context name. Used only by SNMPv3 interfaces."}
+            },
+            "required": ["version"]
+          },
+          "dns": {"type": "string", "description": "DNS name used by the interface. Can be empty if the connection is made via IP."},
+          "ip": {"type": "string", "description": "IP address used by the interface. Can be empty if the connection is made via DNS."},
+          "main": {"type": "integer", "enum": [0, 1], "description": "Whether the interface is used as default on the host. Only one interface of some type can be set as default on a host. Possible values: 0 - not default; 1 - default."},
+          "port": {"type": "string", "description": "Port number used by the interface. Can contain user macros."},
+          "type": {"type": "integer", "enum": [1, 2, 3, 4], "description": "Interface type. Possible values: 1 - agent; 2 - SNMP; 3 - IPMI; 4 - JMX."},
+          "useip": {"type": "integer", "enum": [0, 1], "description": "Whether the connection should be made via IP. Possible values: 0 - connect using host DNS name; 1 - connect using host IP address for this host interface."}
+        },
+        "required": ["dns", "ip", "main", "port", "type", "useip"]
+      }
+    },
+    "inventory": {"type": "object", "description": "Host inventory properties. Host inventory mode cannot be updated using the inventory parameter, use inventory_mode instead. Keyed by host inventory field names (see host/object#host_inventory)."},
+    "macros": {
+      "type": "array",
+      "description": "User macros to replace the current user macros on the given hosts.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hostmacroid": {"type": "string", "description": "(readonly) ID of the host macro."},
+          "macro": {"type": "string", "description": "Macro string."},
+          "value": {"type": "string", "description": "Value of the macro."},
+          "type": {"type": "integer", "enum": [0, 1, 2], "description": "Type of macro. Possible values: 0 - (default) Text macro; 1 - Secret macro; 2 - Vault secret."},
+          "description": {"type": "string", "description": "Description of the macro."}
+        },
+        "required": ["macro", "value"]
+      }
+    },
+    "templates": {
+      "type": "array",
+      "description": "Templates to replace the currently linked templates on the given hosts. The templates must have the templateid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": {"type": "string", "description": "ID of the template."}
+        },
+        "required": ["templateid"]
+      }
+    },
+    "templates_clear": {
+      "type": "array",
+      "description": "Templates to unlink and clear from the given hosts. The templates must have the templateid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": {"type": "string", "description": "ID of the template."}
+        },
+        "required": ["templateid"]
+      }
+    }
+  },
+  "required": ["hosts"],
+  "additionalProperties": false
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/trigger/trigger.adddependencies",
+  "title": "trigger.adddependencies",
+  "description": "Create new trigger dependencies.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/trigger/adddependencies",
+  "type": "object",
+  "properties": {
+    "triggerid": {"type":"string","description":"ID of the dependent trigger."},
+    "dependsOnTriggerid": {"type":"string","description":"ID of the trigger that the trigger depends on."}
+  },
+  "required": ["triggerid","dependsOnTriggerid"],
+  "additionalProperties": false
+}

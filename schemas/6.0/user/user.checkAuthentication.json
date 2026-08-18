@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/user/user.checkAuthentication",
+  "title": "user.checkAuthentication",
+  "description": "Check and prolong a user session.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/user/checkauthentication",
+  "type": "object",
+  "properties": {
+    "sessionid": {"type": "string", "description": "User session ID. Required if token is not set."},
+    "token": {"type": "string", "description": "User API token. Required if sessionid is not set."},
+    "extend": {"type": "boolean", "description": "Whether to prolong the user session. Default value: true. Setting the value to false allows to check the user session without prolonging it. Used if sessionid is set."}
+  },
+  "anyOf": [
+    {"required": ["sessionid"]},
+    {"required": ["token"]}
+  ],
+  "additionalProperties": false
+}

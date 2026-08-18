@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/trigger/trigger.deletedependencies",
+  "title": "trigger.deletedependencies",
+  "description": "Delete all trigger dependencies from the given triggers. The documented parameter type is (string/array) of trigger IDs, but the official example sends an array of trigger objects with the triggerid property; both forms are modeled here.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/trigger/deletedependencies",
+  "oneOf": [
+    {"type":"string","description":"ID of the trigger to delete the trigger dependencies from."},
+    {"type":"array","items":{"type":"string"},"description":"IDs of the triggers to delete the trigger dependencies from.","minItems":1},
+    {
+      "type":"array",
+      "description":"Trigger objects to delete the trigger dependencies from, as used in the official example.",
+      "items": {
+        "type":"object",
+        "properties": {
+          "triggerid": {"type":"string","description":"ID of the trigger to delete the trigger dependencies from."}
+        },
+        "required": ["triggerid"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  ]
+}

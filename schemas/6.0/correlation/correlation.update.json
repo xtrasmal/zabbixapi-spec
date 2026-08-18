@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/correlation/correlation.update",
+  "title": "correlation.update",
+  "description": "Update existing correlations.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/correlation/update",
+  "type": "object",
+  "properties": {
+    "correlationid": {
+      "type": "string",
+      "description": "ID of the correlation to update."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the correlation."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the correlation."
+    },
+    "status": {
+      "type": "integer",
+      "description": "Whether the correlation is enabled or disabled. Possible values are: 0 - (default) enabled; 1 - disabled.",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "filter": {
+      "description": "Correlation filter object to replace the current filter.",
+      "$ref": "#/$defs/filter"
+    },
+    "operations": {
+      "type": "array",
+      "description": "Correlation operations to replace existing operations.",
+      "items": {
+        "$ref": "#/$defs/operation"
+      }
+    }
+  },
+  "required": [
+    "correlationid"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "operation": {
+      "type": "object",
+      "description": "The correlation operation object defines an operation that will be performed when a correlation is executed.",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "description": "Type of operation. Possible values: 0 - close old events; 1 - close new event.",
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "filterCondition": {
+      "type": "object",
+      "description": "The correlation filter condition object defines a specific condition that must be checked before running the correlation operations.",
+      "properties": {
+        "type": {
+          "type": "integer",
+          "description": "Type of condition. Possible values: 0 - old event tag; 1 - new event tag; 2 - new event host group; 3 - event tag pair; 4 - old event tag value; 5 - new event tag value.",
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "tag": {
+          "type": "string",
+          "description": "Event tag (old or new). Required when type of condition is: 0, 1, 4, 5."
+        },
+        "groupid": {
+          "type": "string",
+          "description": "Host group ID. Required when type of condition is: 2."
+        },
+        "oldtag": {
+          "type": "string",
+          "description": "Old event tag. Required when type of condition is: 3."
+        },
+        "newtag": {
+          "type": "string",
+          "description": "New event tag. Required when type of condition is: 3."
+        },
+        "value": {
+          "type": "string",
+          "description": "Event tag (old or new) value. Required when type of condition is: 4, 5."
+        },
+        "formulaid": {
+          "type": "string",
+          "description": "Arbitrary unique ID that is used to reference the condition from a custom expression. Can only contain capital-case letters. The ID must be defined by the user when modifying filter conditions, but will be generated anew when requesting them afterward."
+        },
+        "operator": {
+          "type": "integer",
+          "description": "Condition operator. Required when type of condition is: 2, 4, 5. Possible values: 0 - equals (=); 1 - does not equal (<>); 2 - contains (like); 3 - does not contain (not like). Supported operators per condition type: 2 Host group (equals, does not equal); 4 Old event tag value (equals, does not equal, contains, does not contain); 5 New event tag value (equals, does not equal, contains, does not contain).",
+          "enum": [
+            0,
+            1,
+            2,
+            3
+          ]
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "filter": {
+      "type": "object",
+      "description": "The correlation filter object defines a set of conditions that must be met to perform the configured correlation operations.",
+      "properties": {
+        "evaltype": {
+          "type": "integer",
+          "description": "Filter condition evaluation method. Possible values: 0 - and/or; 1 - and; 2 - or; 3 - custom expression.",
+          "enum": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        "conditions": {
+          "type": "array",
+          "description": "Set of filter conditions to use for filtering results.",
+          "items": {
+            "$ref": "#/$defs/filterCondition"
+          }
+        },
+        "formula": {
+          "type": "string",
+          "description": "User-defined expression to be used for evaluating conditions of filters with a custom expression. The expression must contain IDs that reference specific filter conditions by its formulaid. The IDs used in the expression must exactly match the ones defined in the filter conditions: no condition can remain unused or omitted. Required for custom expression filters."
+        }
+      },
+      "required": [
+        "evaltype",
+        "conditions"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

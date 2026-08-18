@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/discoveryrule/discoveryrule.copy",
+  "title": "discoveryrule.copy",
+  "description": "Copy LLD rules with all of the prototypes to the given hosts.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/discoveryrule/copy",
+  "type": "object",
+  "properties": {
+    "discoveryids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "IDs of the LLD rules to be copied."
+    },
+    "hostids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "IDs of the hosts to copy the LLD rules to."
+    }
+  },
+  "required": ["discoveryids", "hostids"],
+  "additionalProperties": false
+}

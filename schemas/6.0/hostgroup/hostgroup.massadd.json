@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/hostgroup/hostgroup.massadd",
+  "title": "hostgroup.massadd",
+  "description": "Simultaneously add multiple related objects to all the given host groups.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/hostgroup/massadd",
+  "type": "object",
+  "properties": {
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "groupid": { "type": "string" }
+        },
+        "required": ["groupid"]
+      },
+      "description": "Host groups to be updated. The host groups must have the groupid property defined."
+    },
+    "hosts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hostid": { "type": "string" }
+        },
+        "required": ["hostid"]
+      },
+      "description": "Hosts to add to all host groups. The hosts must have the hostid property defined."
+    },
+    "templates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": { "type": "string" }
+        },
+        "required": ["templateid"]
+      },
+      "description": "Templates to add to all host groups. The templates must have the templateid property defined."
+    }
+  },
+  "required": ["groups"],
+  "additionalProperties": false
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/image/image.create",
+  "title": "image.create",
+  "description": "Create new images.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/image/create",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the image."
+    },
+    "imagetype": {
+      "type": "integer",
+      "enum": [1, 2],
+      "description": "Type of image. Possible values: 1 - (default) icon; 2 - background image."
+    },
+    "image": {
+      "type": "string",
+      "description": "Base64 encoded image. The maximum size of the encoded image is 1 MB. Maximum size can be adjusted by changing ZBX_MAX_IMAGE_SIZE constant value. Supported image formats are: PNG, JPEG, GIF."
+    }
+  },
+  "required": ["name", "imagetype", "image"],
+  "additionalProperties": false
+}

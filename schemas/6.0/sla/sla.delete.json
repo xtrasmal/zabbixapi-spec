@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/sla/sla.delete",
+  "title": "sla.delete",
+  "description": "Delete SLA objects.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/sla/delete",
+  "type": "array",
+  "items": {"type": "string", "description": "ID of the SLA to delete."},
+  "minItems": 1
+}

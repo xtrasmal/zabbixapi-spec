@@ -1,0 +1,1080 @@
+{
+  "$comment": "Index of Zabbix 6.0 API JSON Schemas. object -> method -> {path,title,description}.",
+  "source": "https://www.zabbix.com/documentation/6.0/en/manual/api/reference",
+  "schema_dialect": "https://json-schema.org/draft/2020-12/schema",
+  "object_count": 53,
+  "method_count": 193,
+  "objects": {
+    "action": {
+      "action.create": {
+        "path": "schemas/6.0/action/action.create.json",
+        "title": "action.create",
+        "description": "Create new actions."
+      },
+      "action.delete": {
+        "path": "schemas/6.0/action/action.delete.json",
+        "title": "action.delete",
+        "description": "Delete actions."
+      },
+      "action.get": {
+        "path": "schemas/6.0/action/action.get.json",
+        "title": "action.get",
+        "description": "Retrieve actions according to the given parameters."
+      },
+      "action.update": {
+        "path": "schemas/6.0/action/action.update.json",
+        "title": "action.update",
+        "description": "Update existing actions."
+      }
+    },
+    "alert": {
+      "alert.get": {
+        "path": "schemas/6.0/alert/alert.get.json",
+        "title": "alert.get",
+        "description": "Retrieve alerts according to the given parameters."
+      }
+    },
+    "apiinfo": {
+      "apiinfo.version": {
+        "path": "schemas/6.0/apiinfo/apiinfo.version.json",
+        "title": "apiinfo.version",
+        "description": "Retrieve the version of the Zabbix API. Only available to unauthenticated users; must be called without the auth parameter."
+      }
+    },
+    "auditlog": {
+      "auditlog.get": {
+        "path": "schemas/6.0/auditlog/auditlog.get.json",
+        "title": "auditlog.get",
+        "description": "Retrieve audit log records according to the given parameters."
+      }
+    },
+    "authentication": {
+      "authentication.get": {
+        "path": "schemas/6.0/authentication/authentication.get.json",
+        "title": "authentication.get",
+        "description": "Retrieve authentication settings."
+      },
+      "authentication.update": {
+        "path": "schemas/6.0/authentication/authentication.update.json",
+        "title": "authentication.update",
+        "description": "Update existing authentication settings."
+      }
+    },
+    "autoregistration": {
+      "autoregistration.get": {
+        "path": "schemas/6.0/autoregistration/autoregistration.get.json",
+        "title": "autoregistration.get",
+        "description": "Retrieve the autoregistration object according to the given parameters."
+      },
+      "autoregistration.update": {
+        "path": "schemas/6.0/autoregistration/autoregistration.update.json",
+        "title": "autoregistration.update",
+        "description": "Update the autoregistration object."
+      }
+    },
+    "configuration": {
+      "configuration.export": {
+        "path": "schemas/6.0/configuration/configuration.export.json",
+        "title": "configuration.export",
+        "description": "Export configuration data as a serialized string."
+      },
+      "configuration.import": {
+        "path": "schemas/6.0/configuration/configuration.import.json",
+        "title": "configuration.import",
+        "description": "Import configuration data from a serialized string."
+      },
+      "configuration.importcompare": {
+        "path": "schemas/6.0/configuration/configuration.importcompare.json",
+        "title": "configuration.importcompare",
+        "description": "Compare an import file with current system elements and show what will be changed if the file is imported."
+      }
+    },
+    "correlation": {
+      "correlation.create": {
+        "path": "schemas/6.0/correlation/correlation.create.json",
+        "title": "correlation.create",
+        "description": "Create new correlations."
+      },
+      "correlation.delete": {
+        "path": "schemas/6.0/correlation/correlation.delete.json",
+        "title": "correlation.delete",
+        "description": "Delete correlations."
+      },
+      "correlation.get": {
+        "path": "schemas/6.0/correlation/correlation.get.json",
+        "title": "correlation.get",
+        "description": "Retrieve correlations according to the given parameters."
+      },
+      "correlation.update": {
+        "path": "schemas/6.0/correlation/correlation.update.json",
+        "title": "correlation.update",
+        "description": "Update existing correlations."
+      }
+    },
+    "dashboard": {
+      "dashboard.create": {
+        "path": "schemas/6.0/dashboard/dashboard.create.json",
+        "title": "dashboard.create",
+        "description": "Create new dashboards."
+      },
+      "dashboard.delete": {
+        "path": "schemas/6.0/dashboard/dashboard.delete.json",
+        "title": "dashboard.delete",
+        "description": "Delete dashboards."
+      },
+      "dashboard.get": {
+        "path": "schemas/6.0/dashboard/dashboard.get.json",
+        "title": "dashboard.get",
+        "description": "Retrieve dashboards according to the given parameters."
+      },
+      "dashboard.update": {
+        "path": "schemas/6.0/dashboard/dashboard.update.json",
+        "title": "dashboard.update",
+        "description": "Update existing dashboards. The dashboardid property must be specified for each dashboard, all other properties are optional; only the specified properties will be updated."
+      }
+    },
+    "dcheck": {
+      "dcheck.get": {
+        "path": "schemas/6.0/dcheck/dcheck.get.json",
+        "title": "dcheck.get",
+        "description": "Retrieve discovery checks according to the given parameters."
+      }
+    },
+    "dhost": {
+      "dhost.get": {
+        "path": "schemas/6.0/dhost/dhost.get.json",
+        "title": "dhost.get",
+        "description": "Retrieve discovered hosts according to the given parameters."
+      }
+    },
+    "discoveryrule": {
+      "discoveryrule.copy": {
+        "path": "schemas/6.0/discoveryrule/discoveryrule.copy.json",
+        "title": "discoveryrule.copy",
+        "description": "Copy LLD rules with all of the prototypes to the given hosts."
+      },
+      "discoveryrule.create": {
+        "path": "schemas/6.0/discoveryrule/discoveryrule.create.json",
+        "title": "discoveryrule.create",
+        "description": "Create new LLD rules."
+      },
+      "discoveryrule.delete": {
+        "path": "schemas/6.0/discoveryrule/discoveryrule.delete.json",
+        "title": "discoveryrule.delete",
+        "description": "Delete LLD rules."
+      },
+      "discoveryrule.get": {
+        "path": "schemas/6.0/discoveryrule/discoveryrule.get.json",
+        "title": "discoveryrule.get",
+        "description": "Retrieve LLD rules according to the given parameters."
+      },
+      "discoveryrule.update": {
+        "path": "schemas/6.0/discoveryrule/discoveryrule.update.json",
+        "title": "discoveryrule.update",
+        "description": "Update existing LLD rules."
+      }
+    },
+    "drule": {
+      "drule.create": {
+        "path": "schemas/6.0/drule/drule.create.json",
+        "title": "drule.create",
+        "description": "Create new discovery rules."
+      },
+      "drule.delete": {
+        "path": "schemas/6.0/drule/drule.delete.json",
+        "title": "drule.delete",
+        "description": "Delete discovery rules."
+      },
+      "drule.get": {
+        "path": "schemas/6.0/drule/drule.get.json",
+        "title": "drule.get",
+        "description": "Retrieve discovery rules according to the given parameters."
+      },
+      "drule.update": {
+        "path": "schemas/6.0/drule/drule.update.json",
+        "title": "drule.update",
+        "description": "Update existing discovery rules."
+      }
+    },
+    "dservice": {
+      "dservice.get": {
+        "path": "schemas/6.0/dservice/dservice.get.json",
+        "title": "dservice.get",
+        "description": "Retrieve discovered services according to the given parameters."
+      }
+    },
+    "event": {
+      "event.acknowledge": {
+        "path": "schemas/6.0/event/event.acknowledge.json",
+        "title": "event.acknowledge",
+        "description": "Update events: close, acknowledge/unacknowledge, add a message, or change severity. Only trigger events (problem events) can be updated."
+      },
+      "event.get": {
+        "path": "schemas/6.0/event/event.get.json",
+        "title": "event.get",
+        "description": "Retrieve events according to the given parameters."
+      }
+    },
+    "graph": {
+      "graph.create": {
+        "path": "schemas/6.0/graph/graph.create.json",
+        "title": "graph.create",
+        "description": "Create new graphs."
+      },
+      "graph.delete": {
+        "path": "schemas/6.0/graph/graph.delete.json",
+        "title": "graph.delete",
+        "description": "Delete graphs."
+      },
+      "graph.get": {
+        "path": "schemas/6.0/graph/graph.get.json",
+        "title": "graph.get",
+        "description": "Retrieve graphs according to the given parameters."
+      },
+      "graph.update": {
+        "path": "schemas/6.0/graph/graph.update.json",
+        "title": "graph.update",
+        "description": "Update existing graphs."
+      }
+    },
+    "graphitem": {
+      "graphitem.get": {
+        "path": "schemas/6.0/graphitem/graphitem.get.json",
+        "title": "graphitem.get",
+        "description": "Retrieve graph items according to the given parameters."
+      }
+    },
+    "graphprototype": {
+      "graphprototype.create": {
+        "path": "schemas/6.0/graphprototype/graphprototype.create.json",
+        "title": "graphprototype.create",
+        "description": "Create new graph prototypes."
+      },
+      "graphprototype.delete": {
+        "path": "schemas/6.0/graphprototype/graphprototype.delete.json",
+        "title": "graphprototype.delete",
+        "description": "Delete graph prototypes."
+      },
+      "graphprototype.get": {
+        "path": "schemas/6.0/graphprototype/graphprototype.get.json",
+        "title": "graphprototype.get",
+        "description": "Retrieve graph prototypes according to the given parameters."
+      },
+      "graphprototype.update": {
+        "path": "schemas/6.0/graphprototype/graphprototype.update.json",
+        "title": "graphprototype.update",
+        "description": "Update existing graph prototypes. The graphid property must be defined for each graph prototype, all other properties are optional; only the passed properties will be updated."
+      }
+    },
+    "hanode": {
+      "hanode.get": {
+        "path": "schemas/6.0/hanode/hanode.get.json",
+        "title": "hanode.get",
+        "description": "Retrieve a list of High availability cluster nodes according to the given parameters. Only available to Super admin user types."
+      }
+    },
+    "history": {
+      "history.clear": {
+        "path": "schemas/6.0/history/history.clear.json",
+        "title": "history.clear",
+        "description": "Clear item history. Available only to Admin and Super admin user types (revocable via user role settings)."
+      },
+      "history.get": {
+        "path": "schemas/6.0/history/history.get.json",
+        "title": "history.get",
+        "description": "Retrieve history data according to the given parameters. May return historical data of a deleted entity if this data has not been removed by the housekeeper yet."
+      }
+    },
+    "host": {
+      "host.create": {
+        "path": "schemas/6.0/host/host.create.json",
+        "title": "host.create",
+        "description": "Create new hosts."
+      },
+      "host.delete": {
+        "path": "schemas/6.0/host/host.delete.json",
+        "title": "host.delete",
+        "description": "Delete hosts."
+      },
+      "host.get": {
+        "path": "schemas/6.0/host/host.get.json",
+        "title": "host.get",
+        "description": "Retrieve hosts according to the given parameters."
+      },
+      "host.massadd": {
+        "path": "schemas/6.0/host/host.massadd.json",
+        "title": "host.massadd",
+        "description": "Simultaneously add multiple related objects to all the given hosts."
+      },
+      "host.massremove": {
+        "path": "schemas/6.0/host/host.massremove.json",
+        "title": "host.massremove",
+        "description": "Remove related objects from multiple hosts."
+      },
+      "host.massupdate": {
+        "path": "schemas/6.0/host/host.massupdate.json",
+        "title": "host.massupdate",
+        "description": "Simultaneously replace or remove related objects and update properties on multiple hosts."
+      },
+      "host.update": {
+        "path": "schemas/6.0/host/host.update.json",
+        "title": "host.update",
+        "description": "Update existing hosts. The hostid property must be defined for each host, all other properties are optional; only given properties are updated. Updating the host technical name also updates the visible name if not given separately."
+      }
+    },
+    "hostgroup": {
+      "hostgroup.create": {
+        "path": "schemas/6.0/hostgroup/hostgroup.create.json",
+        "title": "hostgroup.create",
+        "description": "Create new host groups."
+      },
+      "hostgroup.delete": {
+        "path": "schemas/6.0/hostgroup/hostgroup.delete.json",
+        "title": "hostgroup.delete",
+        "description": "Delete host groups."
+      },
+      "hostgroup.get": {
+        "path": "schemas/6.0/hostgroup/hostgroup.get.json",
+        "title": "hostgroup.get",
+        "description": "Retrieve host groups according to the given parameters."
+      },
+      "hostgroup.massadd": {
+        "path": "schemas/6.0/hostgroup/hostgroup.massadd.json",
+        "title": "hostgroup.massadd",
+        "description": "Simultaneously add multiple related objects to all the given host groups."
+      },
+      "hostgroup.massremove": {
+        "path": "schemas/6.0/hostgroup/hostgroup.massremove.json",
+        "title": "hostgroup.massremove",
+        "description": "Remove related objects from multiple host groups."
+      },
+      "hostgroup.massupdate": {
+        "path": "schemas/6.0/hostgroup/hostgroup.massupdate.json",
+        "title": "hostgroup.massupdate",
+        "description": "Replace hosts and templates with the specified ones in multiple host groups."
+      },
+      "hostgroup.update": {
+        "path": "schemas/6.0/hostgroup/hostgroup.update.json",
+        "title": "hostgroup.update",
+        "description": "Update existing host groups. The groupid property must be defined for each host group, all other properties are optional; only the given properties are updated."
+      }
+    },
+    "hostinterface": {
+      "hostinterface.create": {
+        "path": "schemas/6.0/hostinterface/hostinterface.create.json",
+        "title": "hostinterface.create",
+        "description": "Create new host interfaces."
+      },
+      "hostinterface.delete": {
+        "path": "schemas/6.0/hostinterface/hostinterface.delete.json",
+        "title": "hostinterface.delete",
+        "description": "Delete host interfaces."
+      },
+      "hostinterface.get": {
+        "path": "schemas/6.0/hostinterface/hostinterface.get.json",
+        "title": "hostinterface.get",
+        "description": "Retrieve host interfaces according to the given parameters."
+      },
+      "hostinterface.massadd": {
+        "path": "schemas/6.0/hostinterface/hostinterface.massadd.json",
+        "title": "hostinterface.massadd",
+        "description": "Simultaneously add host interfaces to multiple hosts."
+      },
+      "hostinterface.massremove": {
+        "path": "schemas/6.0/hostinterface/hostinterface.massremove.json",
+        "title": "hostinterface.massremove",
+        "description": "Remove host interfaces from the given hosts."
+      },
+      "hostinterface.replacehostinterfaces": {
+        "path": "schemas/6.0/hostinterface/hostinterface.replacehostinterfaces.json",
+        "title": "hostinterface.replacehostinterfaces",
+        "description": "Replace all host interfaces on a given host."
+      },
+      "hostinterface.update": {
+        "path": "schemas/6.0/hostinterface/hostinterface.update.json",
+        "title": "hostinterface.update",
+        "description": "Update existing host interfaces. The interfaceid property must be defined for each host interface; all other properties are optional and only the given properties will be updated."
+      }
+    },
+    "hostprototype": {
+      "hostprototype.create": {
+        "path": "schemas/6.0/hostprototype/hostprototype.create.json",
+        "title": "hostprototype.create",
+        "description": "Create new host prototypes."
+      },
+      "hostprototype.delete": {
+        "path": "schemas/6.0/hostprototype/hostprototype.delete.json",
+        "title": "hostprototype.delete",
+        "description": "Delete host prototypes."
+      },
+      "hostprototype.get": {
+        "path": "schemas/6.0/hostprototype/hostprototype.get.json",
+        "title": "hostprototype.get",
+        "description": "Retrieve host prototypes according to the given parameters."
+      },
+      "hostprototype.update": {
+        "path": "schemas/6.0/hostprototype/hostprototype.update.json",
+        "title": "hostprototype.update",
+        "description": "Update existing host prototypes."
+      }
+    },
+    "housekeeping": {
+      "housekeeping.get": {
+        "path": "schemas/6.0/housekeeping/housekeeping.get.json",
+        "title": "housekeeping.get",
+        "description": "Retrieve the housekeeping object according to the given parameters."
+      },
+      "housekeeping.update": {
+        "path": "schemas/6.0/housekeeping/housekeeping.update.json",
+        "title": "housekeeping.update",
+        "description": "Update existing housekeeping settings."
+      }
+    },
+    "httptest": {
+      "httptest.create": {
+        "path": "schemas/6.0/httptest/httptest.create.json",
+        "title": "httptest.create",
+        "description": "Create new web scenarios."
+      },
+      "httptest.delete": {
+        "path": "schemas/6.0/httptest/httptest.delete.json",
+        "title": "httptest.delete",
+        "description": "Delete web scenarios."
+      },
+      "httptest.get": {
+        "path": "schemas/6.0/httptest/httptest.get.json",
+        "title": "httptest.get",
+        "description": "Retrieve web scenarios according to the given parameters."
+      },
+      "httptest.update": {
+        "path": "schemas/6.0/httptest/httptest.update.json",
+        "title": "httptest.update",
+        "description": "Update existing web scenarios."
+      }
+    },
+    "iconmap": {
+      "iconmap.create": {
+        "path": "schemas/6.0/iconmap/iconmap.create.json",
+        "title": "iconmap.create",
+        "description": "Create new icon maps."
+      },
+      "iconmap.delete": {
+        "path": "schemas/6.0/iconmap/iconmap.delete.json",
+        "title": "iconmap.delete",
+        "description": "Delete icon maps."
+      },
+      "iconmap.get": {
+        "path": "schemas/6.0/iconmap/iconmap.get.json",
+        "title": "iconmap.get",
+        "description": "Retrieve icon maps according to the given parameters."
+      },
+      "iconmap.update": {
+        "path": "schemas/6.0/iconmap/iconmap.update.json",
+        "title": "iconmap.update",
+        "description": "Update existing icon maps."
+      }
+    },
+    "image": {
+      "image.create": {
+        "path": "schemas/6.0/image/image.create.json",
+        "title": "image.create",
+        "description": "Create new images."
+      },
+      "image.delete": {
+        "path": "schemas/6.0/image/image.delete.json",
+        "title": "image.delete",
+        "description": "Delete images."
+      },
+      "image.get": {
+        "path": "schemas/6.0/image/image.get.json",
+        "title": "image.get",
+        "description": "Retrieve images according to the given parameters."
+      },
+      "image.update": {
+        "path": "schemas/6.0/image/image.update.json",
+        "title": "image.update",
+        "description": "Update existing images."
+      }
+    },
+    "item": {
+      "item.create": {
+        "path": "schemas/6.0/item/item.create.json",
+        "title": "item.create",
+        "description": "Create new items. Web items cannot be created via the Zabbix API."
+      },
+      "item.delete": {
+        "path": "schemas/6.0/item/item.delete.json",
+        "title": "item.delete",
+        "description": "Delete items. Web items cannot be deleted via the Zabbix API."
+      },
+      "item.get": {
+        "path": "schemas/6.0/item/item.get.json",
+        "title": "item.get",
+        "description": "Retrieve items according to the given parameters."
+      },
+      "item.update": {
+        "path": "schemas/6.0/item/item.update.json",
+        "title": "item.update",
+        "description": "Update existing items. Web items cannot be updated via the Zabbix API."
+      }
+    },
+    "itemprototype": {
+      "itemprototype.create": {
+        "path": "schemas/6.0/itemprototype/itemprototype.create.json",
+        "title": "itemprototype.create",
+        "description": "Create new item prototypes."
+      },
+      "itemprototype.delete": {
+        "path": "schemas/6.0/itemprototype/itemprototype.delete.json",
+        "title": "itemprototype.delete",
+        "description": "Delete item prototypes."
+      },
+      "itemprototype.get": {
+        "path": "schemas/6.0/itemprototype/itemprototype.get.json",
+        "title": "itemprototype.get",
+        "description": "Retrieve item prototypes according to the given parameters."
+      },
+      "itemprototype.update": {
+        "path": "schemas/6.0/itemprototype/itemprototype.update.json",
+        "title": "itemprototype.update",
+        "description": "Update existing item prototypes."
+      }
+    },
+    "maintenance": {
+      "maintenance.create": {
+        "path": "schemas/6.0/maintenance/maintenance.create.json",
+        "title": "maintenance.create",
+        "description": "Create new maintenances."
+      },
+      "maintenance.delete": {
+        "path": "schemas/6.0/maintenance/maintenance.delete.json",
+        "title": "maintenance.delete",
+        "description": "Delete maintenance periods."
+      },
+      "maintenance.get": {
+        "path": "schemas/6.0/maintenance/maintenance.get.json",
+        "title": "maintenance.get",
+        "description": "Retrieve maintenances according to the given parameters."
+      },
+      "maintenance.update": {
+        "path": "schemas/6.0/maintenance/maintenance.update.json",
+        "title": "maintenance.update",
+        "description": "Update existing maintenances."
+      }
+    },
+    "map": {
+      "map.create": {
+        "path": "schemas/6.0/map/map.create.json",
+        "title": "map.create",
+        "description": "Create new maps."
+      },
+      "map.delete": {
+        "path": "schemas/6.0/map/map.delete.json",
+        "title": "map.delete",
+        "description": "Delete maps."
+      },
+      "map.get": {
+        "path": "schemas/6.0/map/map.get.json",
+        "title": "map.get",
+        "description": "Retrieve maps according to the given parameters."
+      },
+      "map.update": {
+        "path": "schemas/6.0/map/map.update.json",
+        "title": "map.update",
+        "description": "Update existing maps."
+      }
+    },
+    "mediatype": {
+      "mediatype.create": {
+        "path": "schemas/6.0/mediatype/mediatype.create.json",
+        "title": "mediatype.create",
+        "description": "Create new media types."
+      },
+      "mediatype.delete": {
+        "path": "schemas/6.0/mediatype/mediatype.delete.json",
+        "title": "mediatype.delete",
+        "description": "Delete media types."
+      },
+      "mediatype.get": {
+        "path": "schemas/6.0/mediatype/mediatype.get.json",
+        "title": "mediatype.get",
+        "description": "Retrieve media types according to the given parameters."
+      },
+      "mediatype.update": {
+        "path": "schemas/6.0/mediatype/mediatype.update.json",
+        "title": "mediatype.update",
+        "description": "Update existing media types."
+      }
+    },
+    "problem": {
+      "problem.get": {
+        "path": "schemas/6.0/problem/problem.get.json",
+        "title": "problem.get",
+        "description": "Retrieve problems according to the given parameters."
+      }
+    },
+    "proxy": {
+      "proxy.create": {
+        "path": "schemas/6.0/proxy/proxy.create.json",
+        "title": "proxy.create",
+        "description": "Create new proxies."
+      },
+      "proxy.delete": {
+        "path": "schemas/6.0/proxy/proxy.delete.json",
+        "title": "proxy.delete",
+        "description": "Delete proxies."
+      },
+      "proxy.get": {
+        "path": "schemas/6.0/proxy/proxy.get.json",
+        "title": "proxy.get",
+        "description": "Retrieve proxies according to the given parameters."
+      },
+      "proxy.update": {
+        "path": "schemas/6.0/proxy/proxy.update.json",
+        "title": "proxy.update",
+        "description": "Update existing proxies. The proxyid property must be defined for each proxy, all other properties are optional; only given properties are updated."
+      }
+    },
+    "regexp": {
+      "regexp.create": {
+        "path": "schemas/6.0/regexp/regexp.create.json",
+        "title": "regexp.create",
+        "description": "Create new global regular expressions."
+      },
+      "regexp.delete": {
+        "path": "schemas/6.0/regexp/regexp.delete.json",
+        "title": "regexp.delete",
+        "description": "Delete global regular expressions."
+      },
+      "regexp.get": {
+        "path": "schemas/6.0/regexp/regexp.get.json",
+        "title": "regexp.get",
+        "description": "Retrieve global regular expressions according to the given parameters."
+      },
+      "regexp.update": {
+        "path": "schemas/6.0/regexp/regexp.update.json",
+        "title": "regexp.update",
+        "description": "Update existing global regular expressions."
+      }
+    },
+    "report": {
+      "report.create": {
+        "path": "schemas/6.0/report/report.create.json",
+        "title": "report.create",
+        "description": "Create new scheduled reports."
+      },
+      "report.delete": {
+        "path": "schemas/6.0/report/report.delete.json",
+        "title": "report.delete",
+        "description": "Delete scheduled reports."
+      },
+      "report.get": {
+        "path": "schemas/6.0/report/report.get.json",
+        "title": "report.get",
+        "description": "Retrieve scheduled reports according to the given parameters."
+      },
+      "report.update": {
+        "path": "schemas/6.0/report/report.update.json",
+        "title": "report.update",
+        "description": "Update existing scheduled reports."
+      }
+    },
+    "role": {
+      "role.create": {
+        "path": "schemas/6.0/role/role.create.json",
+        "title": "role.create",
+        "description": "Create new user roles."
+      },
+      "role.delete": {
+        "path": "schemas/6.0/role/role.delete.json",
+        "title": "role.delete",
+        "description": "Delete user roles."
+      },
+      "role.get": {
+        "path": "schemas/6.0/role/role.get.json",
+        "title": "role.get",
+        "description": "Retrieve user roles according to the given parameters."
+      },
+      "role.update": {
+        "path": "schemas/6.0/role/role.update.json",
+        "title": "role.update",
+        "description": "Update existing user roles."
+      }
+    },
+    "script": {
+      "script.create": {
+        "path": "schemas/6.0/script/script.create.json",
+        "title": "script.create",
+        "description": "Create new scripts."
+      },
+      "script.delete": {
+        "path": "schemas/6.0/script/script.delete.json",
+        "title": "script.delete",
+        "description": "Delete scripts."
+      },
+      "script.execute": {
+        "path": "schemas/6.0/script/script.execute.json",
+        "title": "script.execute",
+        "description": "Run a script on a host or event."
+      },
+      "script.get": {
+        "path": "schemas/6.0/script/script.get.json",
+        "title": "script.get",
+        "description": "Retrieve scripts according to the given parameters."
+      },
+      "script.getscriptsbyhosts": {
+        "path": "schemas/6.0/script/script.getscriptsbyhosts.json",
+        "title": "script.getscriptsbyhosts",
+        "description": "Retrieve scripts available on the given hosts."
+      },
+      "script.update": {
+        "path": "schemas/6.0/script/script.update.json",
+        "title": "script.update",
+        "description": "Update existing scripts. The scriptid property must be defined for each script, all other properties are optional. Only the passed properties will be updated, all others will remain unchanged. An exception is the type property change from 5 (Webhook) to other: the parameters property will be cleaned."
+      }
+    },
+    "service": {
+      "service.create": {
+        "path": "schemas/6.0/service/service.create.json",
+        "title": "service.create",
+        "description": "Create new services."
+      },
+      "service.delete": {
+        "path": "schemas/6.0/service/service.delete.json",
+        "title": "service.delete",
+        "description": "Delete services."
+      },
+      "service.get": {
+        "path": "schemas/6.0/service/service.get.json",
+        "title": "service.get",
+        "description": "Retrieve services according to the given parameters."
+      },
+      "service.update": {
+        "path": "schemas/6.0/service/service.update.json",
+        "title": "service.update",
+        "description": "Update existing services. The serviceid property must be defined for each service, all other properties are optional; only the passed properties are updated."
+      }
+    },
+    "settings": {
+      "settings.get": {
+        "path": "schemas/6.0/settings/settings.get.json",
+        "title": "settings.get",
+        "description": "Retrieve the common administration settings object."
+      },
+      "settings.update": {
+        "path": "schemas/6.0/settings/settings.update.json",
+        "title": "settings.update",
+        "description": "Update the common administration settings. Available only to the Super admin user type."
+      }
+    },
+    "sla": {
+      "sla.create": {
+        "path": "schemas/6.0/sla/sla.create.json",
+        "title": "sla.create",
+        "description": "Create new SLA objects."
+      },
+      "sla.delete": {
+        "path": "schemas/6.0/sla/sla.delete.json",
+        "title": "sla.delete",
+        "description": "Delete SLA objects."
+      },
+      "sla.get": {
+        "path": "schemas/6.0/sla/sla.get.json",
+        "title": "sla.get",
+        "description": "Retrieve SLA objects according to the given parameters."
+      },
+      "sla.getsli": {
+        "path": "schemas/6.0/sla/sla.getsli.json",
+        "title": "sla.getsli",
+        "description": "Calculate the Service Level Indicator (SLI) data for a Service Level Agreement (SLA)."
+      },
+      "sla.update": {
+        "path": "schemas/6.0/sla/sla.update.json",
+        "title": "sla.update",
+        "description": "Update existing SLA objects."
+      }
+    },
+    "task": {
+      "task.create": {
+        "path": "schemas/6.0/task/task.create.json",
+        "title": "task.create",
+        "description": "Create a new task, such as collecting diagnostic data or checking items/low-level discovery rules without a config reload. Only available to the Super admin user type."
+      },
+      "task.get": {
+        "path": "schemas/6.0/task/task.get.json",
+        "title": "task.get",
+        "description": "Retrieve tasks according to the given parameters. Returns details only about 'Diagnostic information' tasks. Only available to the Super admin user type."
+      }
+    },
+    "template": {
+      "template.create": {
+        "path": "schemas/6.0/template/template.create.json",
+        "title": "template.create",
+        "description": "Create new templates."
+      },
+      "template.delete": {
+        "path": "schemas/6.0/template/template.delete.json",
+        "title": "template.delete",
+        "description": "Delete templates. Deleting a template will cause deletion of all template entities (items, triggers, graphs, etc.)."
+      },
+      "template.get": {
+        "path": "schemas/6.0/template/template.get.json",
+        "title": "template.get",
+        "description": "Retrieve templates according to the given parameters."
+      },
+      "template.massadd": {
+        "path": "schemas/6.0/template/template.massadd.json",
+        "title": "template.massadd",
+        "description": "Simultaneously add multiple related objects to the given templates."
+      },
+      "template.massremove": {
+        "path": "schemas/6.0/template/template.massremove.json",
+        "title": "template.massremove",
+        "description": "Remove related objects from multiple templates."
+      },
+      "template.massupdate": {
+        "path": "schemas/6.0/template/template.massupdate.json",
+        "title": "template.massupdate",
+        "description": "Simultaneously replace or remove related objects and update properties on multiple templates."
+      },
+      "template.update": {
+        "path": "schemas/6.0/template/template.update.json",
+        "title": "template.update",
+        "description": "Update existing templates. The templateid property must be defined for each template, all other properties are optional; only given properties are updated."
+      }
+    },
+    "templatedashboard": {
+      "templatedashboard.create": {
+        "path": "schemas/6.0/templatedashboard/templatedashboard.create.json",
+        "title": "templatedashboard.create",
+        "description": "Create new template dashboards."
+      },
+      "templatedashboard.delete": {
+        "path": "schemas/6.0/templatedashboard/templatedashboard.delete.json",
+        "title": "templatedashboard.delete",
+        "description": "Delete template dashboards."
+      },
+      "templatedashboard.get": {
+        "path": "schemas/6.0/templatedashboard/templatedashboard.get.json",
+        "title": "templatedashboard.get",
+        "description": "Retrieve template dashboards according to the given parameters."
+      },
+      "templatedashboard.update": {
+        "path": "schemas/6.0/templatedashboard/templatedashboard.update.json",
+        "title": "templatedashboard.update",
+        "description": "Update existing template dashboards. The dashboardid property must be specified for each dashboard, all other properties are optional; only the specified properties will be updated."
+      }
+    },
+    "token": {
+      "token.create": {
+        "path": "schemas/6.0/token/token.create.json",
+        "title": "token.create",
+        "description": "Create new tokens. A token created by this method also has to be generated (token.generate) before it is usable."
+      },
+      "token.delete": {
+        "path": "schemas/6.0/token/token.delete.json",
+        "title": "token.delete",
+        "description": "Delete tokens."
+      },
+      "token.generate": {
+        "path": "schemas/6.0/token/token.generate.json",
+        "title": "token.generate",
+        "description": "Generate tokens. A token can be generated by this method only if it has already been created (token.create)."
+      },
+      "token.get": {
+        "path": "schemas/6.0/token/token.get.json",
+        "title": "token.get",
+        "description": "Retrieve tokens according to the given parameters."
+      },
+      "token.update": {
+        "path": "schemas/6.0/token/token.update.json",
+        "title": "token.update",
+        "description": "Update existing tokens. The tokenid property must be defined for each token; all other properties are optional and only passed properties are updated."
+      }
+    },
+    "trend": {
+      "trend.get": {
+        "path": "schemas/6.0/trend/trend.get.json",
+        "title": "trend.get",
+        "description": "Retrieve trend data according to the given parameters."
+      }
+    },
+    "trigger": {
+      "trigger.adddependencies": {
+        "path": "schemas/6.0/trigger/trigger.adddependencies.json",
+        "title": "trigger.adddependencies",
+        "description": "Create new trigger dependencies."
+      },
+      "trigger.create": {
+        "path": "schemas/6.0/trigger/trigger.create.json",
+        "title": "trigger.create",
+        "description": "Create new triggers. The trigger expression has to be given in its expanded form."
+      },
+      "trigger.delete": {
+        "path": "schemas/6.0/trigger/trigger.delete.json",
+        "title": "trigger.delete",
+        "description": "Delete triggers."
+      },
+      "trigger.deletedependencies": {
+        "path": "schemas/6.0/trigger/trigger.deletedependencies.json",
+        "title": "trigger.deletedependencies",
+        "description": "Delete all trigger dependencies from the given triggers. The documented parameter type is (string/array) of trigger IDs, but the official example sends an array of trigger objects with the triggerid property; both forms are modeled here."
+      },
+      "trigger.get": {
+        "path": "schemas/6.0/trigger/trigger.get.json",
+        "title": "trigger.get",
+        "description": "Retrieve triggers according to the given parameters."
+      },
+      "trigger.update": {
+        "path": "schemas/6.0/trigger/trigger.update.json",
+        "title": "trigger.update",
+        "description": "Update existing triggers. The triggerid property must be defined for each trigger, all other properties are optional; only given properties are updated. The trigger expression has to be given in its expanded form."
+      }
+    },
+    "triggerprototype": {
+      "triggerprototype.create": {
+        "path": "schemas/6.0/triggerprototype/triggerprototype.create.json",
+        "title": "triggerprototype.create",
+        "description": "Create new trigger prototypes."
+      },
+      "triggerprototype.delete": {
+        "path": "schemas/6.0/triggerprototype/triggerprototype.delete.json",
+        "title": "triggerprototype.delete",
+        "description": "Delete trigger prototypes."
+      },
+      "triggerprototype.get": {
+        "path": "schemas/6.0/triggerprototype/triggerprototype.get.json",
+        "title": "triggerprototype.get",
+        "description": "Retrieve trigger prototypes according to the given parameters."
+      },
+      "triggerprototype.update": {
+        "path": "schemas/6.0/triggerprototype/triggerprototype.update.json",
+        "title": "triggerprototype.update",
+        "description": "Update existing trigger prototypes."
+      }
+    },
+    "user": {
+      "user.checkAuthentication": {
+        "path": "schemas/6.0/user/user.checkAuthentication.json",
+        "title": "user.checkAuthentication",
+        "description": "Check and prolong a user session."
+      },
+      "user.create": {
+        "path": "schemas/6.0/user/user.create.json",
+        "title": "user.create",
+        "description": "Create new users."
+      },
+      "user.delete": {
+        "path": "schemas/6.0/user/user.delete.json",
+        "title": "user.delete",
+        "description": "Delete users."
+      },
+      "user.get": {
+        "path": "schemas/6.0/user/user.get.json",
+        "title": "user.get",
+        "description": "Retrieve users according to the given parameters."
+      },
+      "user.login": {
+        "path": "schemas/6.0/user/user.login.json",
+        "title": "user.login",
+        "description": "Log in to the API and generate an authentication token."
+      },
+      "user.logout": {
+        "path": "schemas/6.0/user/user.logout.json",
+        "title": "user.logout",
+        "description": "Log out of the API and invalidate the current authentication token."
+      },
+      "user.unblock": {
+        "path": "schemas/6.0/user/user.unblock.json",
+        "title": "user.unblock",
+        "description": "Unblock users."
+      },
+      "user.update": {
+        "path": "schemas/6.0/user/user.update.json",
+        "title": "user.update",
+        "description": "Update existing users."
+      }
+    },
+    "usergroup": {
+      "usergroup.create": {
+        "path": "schemas/6.0/usergroup/usergroup.create.json",
+        "title": "usergroup.create",
+        "description": "Create new user groups."
+      },
+      "usergroup.delete": {
+        "path": "schemas/6.0/usergroup/usergroup.delete.json",
+        "title": "usergroup.delete",
+        "description": "Delete user groups."
+      },
+      "usergroup.get": {
+        "path": "schemas/6.0/usergroup/usergroup.get.json",
+        "title": "usergroup.get",
+        "description": "Retrieve user groups according to the given parameters."
+      },
+      "usergroup.update": {
+        "path": "schemas/6.0/usergroup/usergroup.update.json",
+        "title": "usergroup.update",
+        "description": "Update existing user groups."
+      }
+    },
+    "usermacro": {
+      "usermacro.create": {
+        "path": "schemas/6.0/usermacro/usermacro.create.json",
+        "title": "usermacro.create",
+        "description": "Create new host macros."
+      },
+      "usermacro.createglobal": {
+        "path": "schemas/6.0/usermacro/usermacro.createglobal.json",
+        "title": "usermacro.createglobal",
+        "description": "Create new global macros."
+      },
+      "usermacro.delete": {
+        "path": "schemas/6.0/usermacro/usermacro.delete.json",
+        "title": "usermacro.delete",
+        "description": "Delete host macros."
+      },
+      "usermacro.deleteglobal": {
+        "path": "schemas/6.0/usermacro/usermacro.deleteglobal.json",
+        "title": "usermacro.deleteglobal",
+        "description": "Delete global macros."
+      },
+      "usermacro.get": {
+        "path": "schemas/6.0/usermacro/usermacro.get.json",
+        "title": "usermacro.get",
+        "description": "Retrieve host and global macros according to the given parameters."
+      },
+      "usermacro.update": {
+        "path": "schemas/6.0/usermacro/usermacro.update.json",
+        "title": "usermacro.update",
+        "description": "Update existing host macros. The hostmacroid property must be defined for each host macro, all other properties are optional and only passed properties will be updated."
+      },
+      "usermacro.updateglobal": {
+        "path": "schemas/6.0/usermacro/usermacro.updateglobal.json",
+        "title": "usermacro.updateglobal",
+        "description": "Update existing global macros. The globalmacroid property must be defined for each global macro, all other properties are optional and only passed properties will be updated."
+      }
+    },
+    "valuemap": {
+      "valuemap.create": {
+        "path": "schemas/6.0/valuemap/valuemap.create.json",
+        "title": "valuemap.create",
+        "description": "Create new value maps."
+      },
+      "valuemap.delete": {
+        "path": "schemas/6.0/valuemap/valuemap.delete.json",
+        "title": "valuemap.delete",
+        "description": "Delete value maps."
+      },
+      "valuemap.get": {
+        "path": "schemas/6.0/valuemap/valuemap.get.json",
+        "title": "valuemap.get",
+        "description": "Retrieve value maps according to the given parameters."
+      },
+      "valuemap.update": {
+        "path": "schemas/6.0/valuemap/valuemap.update.json",
+        "title": "valuemap.update",
+        "description": "Update existing value maps."
+      }
+    }
+  }
+}

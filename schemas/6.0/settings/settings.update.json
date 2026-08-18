@@ -1,0 +1,256 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/settings/settings.update",
+  "title": "settings.update",
+  "description": "Update the common administration settings. Available only to the Super admin user type.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/settings/update",
+  "type": "object",
+  "properties": {
+    "default_lang": {
+      "type": "string",
+      "description": "System language by default. Default: en_US."
+    },
+    "default_timezone": {
+      "type": "string",
+      "description": "System time zone by default. Default: system - system default. For the full list of supported time zones please refer to PHP documentation."
+    },
+    "default_theme": {
+      "type": "string",
+      "enum": ["blue-theme", "dark-theme", "hc-light", "hc-dark"],
+      "description": "Default theme. Possible values: blue-theme - (default) Blue; dark-theme - Dark; hc-light - High-contrast light; hc-dark - High-contrast dark."
+    },
+    "search_limit": {
+      "type": "integer",
+      "description": "Limit for search and filter results. Default: 1000."
+    },
+    "max_overview_table_size": {
+      "type": "integer",
+      "description": "Max number of columns and rows in Data overview and Trigger overview dashboard widgets. Default: 50."
+    },
+    "max_in_table": {
+      "type": "integer",
+      "description": "Max count of elements to show inside table cell. Default: 50."
+    },
+    "server_check_interval": {
+      "type": "integer",
+      "enum": [0, 10],
+      "description": "Show warning if Zabbix server is down. Possible values: 0 - Do not show warning; 10 - (default) Show warning."
+    },
+    "work_period": {
+      "type": "string",
+      "description": "Working time. Default: 1-5,09:00-18:00."
+    },
+    "show_technical_errors": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Show technical errors (PHP/SQL) to non-Super admin users and to users that are not part of user groups with debug mode enabled. Possible values: 0 - (default) Do not show technical errors; 1 - Show technical errors."
+    },
+    "history_period": {
+      "type": "string",
+      "description": "Max period to display history data in Latest data, Web, and Data overview dashboard widgets. Accepts seconds and time unit with suffix. Default: 24h."
+    },
+    "period_default": {
+      "type": "string",
+      "description": "Time filter default period. Accepts seconds and time unit with suffix with month and year support (30s,1m,2h,1d,1M,1y). Default: 1h."
+    },
+    "max_period": {
+      "type": "string",
+      "description": "Max period for time filter. Accepts seconds and time unit with suffix with month and year support (30s,1m,2h,1d,1M,1y). Default: 2y."
+    },
+    "severity_color_0": {
+      "type": "string",
+      "description": "Color for \"Not classified\" severity as a hexadecimal color code. Default: 97AAB3."
+    },
+    "severity_color_1": {
+      "type": "string",
+      "description": "Color for \"Information\" severity as a hexadecimal color code. Default: 7499FF."
+    },
+    "severity_color_2": {
+      "type": "string",
+      "description": "Color for \"Warning\" severity as a hexadecimal color code. Default: FFC859."
+    },
+    "severity_color_3": {
+      "type": "string",
+      "description": "Color for \"Average\" severity as a hexadecimal color code. Default: FFA059."
+    },
+    "severity_color_4": {
+      "type": "string",
+      "description": "Color for \"High\" severity as a hexadecimal color code. Default: E97659."
+    },
+    "severity_color_5": {
+      "type": "string",
+      "description": "Color for \"Disaster\" severity as a hexadecimal color code. Default: E45959."
+    },
+    "severity_name_0": {
+      "type": "string",
+      "description": "Name for \"Not classified\" severity. Default: Not classified."
+    },
+    "severity_name_1": {
+      "type": "string",
+      "description": "Name for \"Information\" severity. Default: Information."
+    },
+    "severity_name_2": {
+      "type": "string",
+      "description": "Name for \"Warning\" severity. Default: Warning."
+    },
+    "severity_name_3": {
+      "type": "string",
+      "description": "Name for \"Average\" severity. Default: Average."
+    },
+    "severity_name_4": {
+      "type": "string",
+      "description": "Name for \"High\" severity. Default: High."
+    },
+    "severity_name_5": {
+      "type": "string",
+      "description": "Name for \"Disaster\" severity. Default: Disaster."
+    },
+    "custom_color": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Use custom event status colors. Possible values: 0 - (default) Do not use custom event status colors; 1 - Use custom event status colors."
+    },
+    "ok_period": {
+      "type": "string",
+      "description": "Display OK triggers period. Accepts seconds and time unit with suffix. Default: 5m."
+    },
+    "blink_period": {
+      "type": "string",
+      "description": "On status change triggers blink period. Accepts seconds and time unit with suffix. Default: 2m."
+    },
+    "problem_unack_color": {
+      "type": "string",
+      "description": "Color for unacknowledged PROBLEM events as a hexadecimal color code. Default: CC0000."
+    },
+    "problem_ack_color": {
+      "type": "string",
+      "description": "Color for acknowledged PROBLEM events as a hexadecimal color code. Default: CC0000."
+    },
+    "ok_unack_color": {
+      "type": "string",
+      "description": "Color for unacknowledged RESOLVED events as a hexadecimal color code. Default: 009900."
+    },
+    "ok_ack_color": {
+      "type": "string",
+      "description": "Color for acknowledged RESOLVED events as a hexadecimal color code. Default: 009900."
+    },
+    "problem_unack_style": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Blinking for unacknowledged PROBLEM events. Possible values: 0 - Do not show blinking; 1 - (default) Show blinking."
+    },
+    "problem_ack_style": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Blinking for acknowledged PROBLEM events. Possible values: 0 - Do not show blinking; 1 - (default) Show blinking."
+    },
+    "ok_unack_style": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Blinking for unacknowledged RESOLVED events. Possible values: 0 - Do not show blinking; 1 - (default) Show blinking."
+    },
+    "ok_ack_style": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Blinking for acknowledged RESOLVED events. Possible values: 0 - Do not show blinking; 1 - (default) Show blinking."
+    },
+    "url": {
+      "type": "string",
+      "description": "Frontend URL."
+    },
+    "discovery_groupid": {
+      "type": "integer",
+      "description": "ID of the host group to which will be automatically placed discovered hosts."
+    },
+    "default_inventory_mode": {
+      "type": "integer",
+      "enum": [-1, 0, 1],
+      "description": "Default host inventory mode. Possible values: -1 - (default) Disabled; 0 - Manual; 1 - Automatic."
+    },
+    "alert_usrgrpid": {
+      "type": "integer",
+      "description": "ID of the user group to which will be sending database down alarm message. If set to 0, the alarm message will not be sent."
+    },
+    "snmptrap_logging": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Log unmatched SNMP traps. Possible values: 0 - Do not log unmatched SNMP traps; 1 - (default) Log unmatched SNMP traps."
+    },
+    "login_attempts": {
+      "type": "integer",
+      "description": "Number of failed login attempts after which login form will be blocked. Default: 5."
+    },
+    "login_block": {
+      "type": "string",
+      "description": "Time interval during which login form will be blocked if number of failed login attempts exceeds defined in login_attempts field. Accepts seconds and time unit with suffix. Default: 30s."
+    },
+    "validate_uri_schemes": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Validate URI schemes. Possible values: 0 - Do not validate; 1 - (default) Validate."
+    },
+    "uri_valid_schemes": {
+      "type": "string",
+      "description": "Valid URI schemes. Default: http,https,ftp,file,mailto,tel,ssh."
+    },
+    "x_frame_options": {
+      "type": "string",
+      "description": "X-Frame-Options HTTP header. Default: SAMEORIGIN."
+    },
+    "iframe_sandboxing_enabled": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Use iframe sandboxing. Possible values: 0 - Do not use; 1 - (default) Use."
+    },
+    "iframe_sandboxing_exceptions": {
+      "type": "string",
+      "description": "Iframe sandboxing exceptions."
+    },
+    "connect_timeout": {
+      "type": "string",
+      "description": "Connection timeout with Zabbix server. Default: 3s."
+    },
+    "socket_timeout": {
+      "type": "string",
+      "description": "Network default timeout. Default: 3s."
+    },
+    "media_type_test_timeout": {
+      "type": "string",
+      "description": "Network timeout for media type test. Default: 65s."
+    },
+    "item_test_timeout": {
+      "type": "string",
+      "description": "Network timeout for item tests. Default: 60s."
+    },
+    "script_timeout": {
+      "type": "string",
+      "description": "Network timeout for script execution. Default: 60s."
+    },
+    "report_test_timeout": {
+      "type": "string",
+      "description": "Network timeout for scheduled report test. Default: 60s."
+    },
+    "auditlog_enabled": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Enable audit logging. Possible values: 0 - Disable; 1 - (default) Enable."
+    },
+    "geomaps_tile_provider": {
+      "type": "string",
+      "description": "Geomap tile provider. Possible values: OpenStreetMap.Mapnik - (default) OpenStreetMap Mapnik; OpenTopoMap - OpenTopoMap; Stamen.TonerLite - Stamen Toner Lite; Stamen.Terrain - Stamen Terrain; USGS.USTopo - USGS US Topo; USGS.USImagery - USGS US Imagery. Supports empty string to specify custom values of geomaps_tile_url, geomaps_max_zoom and geomaps_attribution."
+    },
+    "geomaps_tile_url": {
+      "type": "string",
+      "description": "Geomap tile URL if geomaps_tile_provider is set to empty string."
+    },
+    "geomaps_max_zoom": {
+      "type": "integer",
+      "description": "Geomap max zoom level if geomaps_tile_provider is set to empty string. Max zoom must be in the range between 0 and 30."
+    },
+    "geomaps_attribution": {
+      "type": "string",
+      "description": "Geomap attribution text if geomaps_tile_provider is set to empty string."
+    }
+  },
+  "additionalProperties": false
+}

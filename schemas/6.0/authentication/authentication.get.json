@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/authentication/authentication.get",
+  "title": "authentication.get",
+  "description": "Retrieve authentication settings.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/authentication/get",
+  "type": "object",
+  "properties": {
+    "output": {
+      "oneOf": [
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
+      ],
+      "description": "Object properties to be returned. Default: extend. The method supports only this one parameter."
+    }
+  },
+  "additionalProperties": false
+}

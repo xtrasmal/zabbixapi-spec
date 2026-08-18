@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/configuration/configuration.export",
+  "title": "configuration.export",
+  "description": "Export configuration data as a serialized string.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/configuration/export",
+  "type": "object",
+  "properties": {
+    "format": {
+      "type": "string",
+      "enum": ["yaml", "xml", "json", "raw"],
+      "description": "Format in which the data must be exported. Possible values: yaml - YAML; xml - XML; json - JSON; raw - unprocessed PHP array."
+    },
+    "prettyprint": {
+      "type": "boolean",
+      "description": "Make the output more human readable by adding indentation. Possible values: true - add indentation; false - (default) do not add indentation."
+    },
+    "options": {
+      "type": "object",
+      "description": "Objects to be exported. Admin and User type users may export only those objects for which they have read-only or read-write permission, as well as images, but not media types.",
+      "properties": {
+        "groups": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "IDs of host groups to export."
+        },
+        "hosts": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "IDs of hosts to export."
+        },
+        "images": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "IDs of images to export."
+        },
+        "maps": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "IDs of maps to export."
+        },
+        "mediaTypes": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "IDs of media types to export."
+        },
+        "templates": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "IDs of templates to export."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["format", "options"],
+  "additionalProperties": false
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/script/script.update",
+  "title": "script.update",
+  "description": "Update existing scripts. The scriptid property must be defined for each script, all other properties are optional. Only the passed properties will be updated, all others will remain unchanged. An exception is the type property change from 5 (Webhook) to other: the parameters property will be cleaned.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/script/update",
+  "type": "object",
+  "properties": {
+    "scriptid": {"type": "string", "description": "ID of the script."},
+    "name": {"type": "string", "description": "Name of the script."},
+    "type": {"type": "integer", "enum": [0, 1, 2, 3, 5], "description": "Script type. Possible values: 0 - Script; 1 - IPMI; 2 - SSH; 3 - Telnet; 5 - (default) Webhook."},
+    "command": {"type": "string", "description": "Command to run."},
+    "scope": {"type": "integer", "enum": [1, 2, 4], "description": "Script scope. Possible values: 1 - (default) action operation; 2 - manual host action; 4 - manual event action."},
+    "execute_on": {"type": "integer", "enum": [0, 1, 2], "description": "Where to run the script. Used if type is 0 (script). Possible values: 0 - run on Zabbix agent; 1 - run on Zabbix server; 2 - (default) run on Zabbix server (proxy)."},
+    "menu_path": {"type": "string", "description": "Folders separated by slash that form a menu like navigation in frontend when clicked on host or event. Used if scope is 2 or 4."},
+    "authtype": {"type": "integer", "enum": [0, 1], "description": "Authentication method used for SSH script type. Used if type is 2. Possible values: 0 - password; 1 - public key."},
+    "username": {"type": "string", "description": "User name used for authentication. Required if type is 2 or 3."},
+    "password": {"type": "string", "description": "Password used for SSH scripts with password authentication and Telnet scripts. Used if type is 2 and authtype is 0, or type is 3."},
+    "publickey": {"type": "string", "description": "Name of the public key file used for SSH scripts with public key authentication. Required if type is 2 and authtype is 1."},
+    "privatekey": {"type": "string", "description": "Name of the private key file used for SSH scripts with public key authentication. Required if type is 2 and authtype is 1."},
+    "port": {"type": "string", "description": "Port number used for SSH and Telnet scripts. Used if type is 2 or 3."},
+    "groupid": {"type": "string", "description": "ID of the host group that the script can be run on. If set to 0, the script will be available on all host groups. Default: 0."},
+    "usrgrpid": {"type": "string", "description": "ID of the user group that will be allowed to run the script. If set to 0, the script will be available for all user groups. Used if scope is 2 or 4. Default: 0."},
+    "host_access": {"type": "integer", "enum": [2, 3], "description": "Host permissions needed to run the script. Used if scope is 2 or 4. Possible values: 2 - (default) read; 3 - write."},
+    "confirmation": {"type": "string", "description": "Confirmation pop up text. The pop up will appear when trying to run the script from the Zabbix frontend. Used if scope is 2 or 4."},
+    "timeout": {"type": "string", "description": "Webhook script execution timeout in seconds. Time suffixes are supported, e.g. 30s, 1m. Required if type is 5. Possible values: 1-60s. Default value: 30s."},
+    "parameters": {
+      "type": "array",
+      "description": "Array of webhook input parameters. Used if type is 5.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string", "description": "Parameter name."},
+          "value": {"type": "string", "description": "Parameter value. Supports macros."}
+        },
+        "required": ["name"]
+      }
+    },
+    "description": {"type": "string", "description": "Description of the script."}
+  },
+  "required": ["scriptid"],
+  "additionalProperties": false
+}

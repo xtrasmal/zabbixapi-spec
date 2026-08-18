@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/service/service.create",
+  "title": "service.create",
+  "description": "Create new services.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/service/create",
+  "type": "object",
+  "properties": {
+    "algorithm": {"type": "integer", "enum": [0, 1, 2], "description": "Status calculation rule. Only applicable if child services exist. Possible values: 0 - set status to OK; 1 - most critical if all children have problems; 2 - most critical of child services."},
+    "name": {"type": "string", "description": "Name of the service."},
+    "sortorder": {"type": "integer", "description": "Position of the service used for sorting. Possible values: 0-999."},
+    "weight": {"type": "integer", "description": "Service weight. Possible values: 0-1000000. Default: 0."},
+    "propagation_rule": {"type": "integer", "enum": [0, 1, 2, 3, 4], "description": "Status propagation rule. Must be set together with propagation_value. Possible values: 0 - (default) propagate service status as is - without any changes; 1 - increase the propagated status by a given propagation_value (by 1 to 5 severities); 2 - decrease the propagated status by a given propagation_value (by 1 to 5 severities); 3 - ignore this service - the status is not propagated to the parent service at all; 4 - set fixed service status using a given propagation_value."},
+    "propagation_value": {"type": "integer", "description": "Status propagation value. Must be set together with propagation_rule. Possible values for propagation_rule with values 0 and 3: 0. Possible values for propagation_rule with values 1 and 2: 1-5. Possible values for propagation_rule with value 4: -1 - OK; 0 - Not classified; 1 - Information; 2 - Warning; 3 - Average; 4 - High; 5 - Disaster."},
+    "description": {"type": "string", "description": "Description of the service."},
+    "uuid": {"type": "string", "description": "Universal unique identifier."},
+    "created_at": {"type": "integer", "description": "Unix timestamp when service was created."},
+    "children": {
+      "type": "array",
+      "description": "Child services to be linked to the service. The children must have the serviceid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "serviceid": {"type": "string", "description": "ID of the child service."}
+        },
+        "required": ["serviceid"]
+      }
+    },
+    "parents": {
+      "type": "array",
+      "description": "Parent services to be linked to the service. The parents must have the serviceid property defined.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "serviceid": {"type": "string", "description": "ID of the parent service."}
+        },
+        "required": ["serviceid"]
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Service tags to be created for the service.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {"type": "string", "description": "Service tag name."},
+          "value": {"type": "string", "description": "Service tag value."}
+        },
+        "required": ["tag"]
+      }
+    },
+    "problem_tags": {
+      "type": "array",
+      "description": "Problem tags to be created for the service.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {"type": "string", "description": "Problem tag name."},
+          "operator": {"type": "integer", "enum": [0, 2], "description": "Mapping condition operator. Possible values: 0 - (default) equals; 2 - like."},
+          "value": {"type": "string", "description": "Problem tag value."}
+        },
+        "required": ["tag"]
+      }
+    },
+    "status_rules": {
+      "type": "array",
+      "description": "Status rules to be created for the service.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {"type": "integer", "enum": [0, 1, 2, 3, 4, 5, 6, 7], "description": "Condition for setting (New status) status. Possible values: 0 - if at least (N) child services have (Status) status or above; 1 - if at least (N%) of child services have (Status) status or above; 2 - if less than (N) child services have (Status) status or below; 3 - if less than (N%) of child services have (Status) status or below; 4 - if weight of child services with (Status) status or above is at least (W); 5 - if weight of child services with (Status) status or above is at least (N%); 6 - if weight of child services with (Status) status or below is less than (W); 7 - if weight of child services with (Status) status or below is less than (N%). Where: N (W) is limit_value; (Status) is limit_status; (New status) is new_status."},
+          "limit_value": {"type": "integer", "description": "Limit value. Possible values: for N and W: 1-100000; for N%: 1-100."},
+          "limit_status": {"type": "integer", "enum": [-1, 0, 1, 2, 3, 4, 5], "description": "Limit status. Possible values: -1 - OK; 0 - Not classified; 1 - Information; 2 - Warning; 3 - Average; 4 - High; 5 - Disaster."},
+          "new_status": {"type": "integer", "enum": [0, 1, 2, 3, 4, 5], "description": "New status value. Possible values: 0 - Not classified; 1 - Information; 2 - Warning; 3 - Average; 4 - High; 5 - Disaster."}
+        },
+        "required": ["type", "limit_value", "limit_status", "new_status"]
+      }
+    }
+  },
+  "required": ["algorithm", "name", "sortorder"],
+  "additionalProperties": false
+}

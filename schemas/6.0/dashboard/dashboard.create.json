@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/dashboard/dashboard.create",
+  "title": "dashboard.create",
+  "description": "Create new dashboards.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/dashboard/create",
+  "type": "object",
+  "properties": {
+    "name": {"type": "string", "description": "Name of the dashboard."},
+    "userid": {"type": "string", "description": "Dashboard owner user ID."},
+    "private": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Type of dashboard sharing. Possible values: 0 - public dashboard; 1 - (default) private dashboard."
+    },
+    "display_period": {
+      "type": "integer",
+      "enum": [10, 30, 60, 120, 600, 1800, 3600],
+      "description": "Default page display period (in seconds). Possible values: 10, 30, 60, 120, 600, 1800, 3600. Default: 30."
+    },
+    "auto_start": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Auto start slideshow. Possible values: 0 - do not auto start slideshow; 1 - (default) auto start slideshow."
+    },
+    "pages": {
+      "type": "array",
+      "description": "Dashboard pages to be created for the dashboard. Dashboard pages will be ordered in the same order as specified. At least one dashboard page object is required for pages property.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "description": "Dashboard page object.",
+        "properties": {
+          "name": {"type": "string", "description": "Dashboard page name. Default: empty string."},
+          "display_period": {
+            "type": "integer",
+            "enum": [0, 10, 30, 60, 120, 600, 1800, 3600],
+            "description": "Dashboard page display period (in seconds). Possible values: 0, 10, 30, 60, 120, 600, 1800, 3600. Default: 0 (will use the default page display period)."
+          },
+          "widgets": {
+            "type": "array",
+            "description": "Array of the dashboard widget objects.",
+            "items": {
+              "type": "object",
+              "description": "Dashboard widget object.",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "actionlog", "clock", "dataover", "discovery", "favgraphs", "favmaps",
+                    "geomap", "graph", "graphprototype", "hostavail", "item", "map", "navtree",
+                    "plaintext", "problemhosts", "problems", "problemsbysv", "slareport",
+                    "svggraph", "systeminfo", "tophosts", "trigover", "url", "web"
+                  ],
+                  "description": "Type of the dashboard widget. Possible values: actionlog - Action log; clock - Clock; (deprecated) dataover - Data overview; discovery - Discovery status; favgraphs - Favorite graphs; favmaps - Favorite maps; geomap - Geomap; graph - Graph (classic); graphprototype - Graph prototype; hostavail - Host availability; item - Item value; map - Map; navtree - Map Navigation Tree; plaintext - Plain text; problemhosts - Problem hosts; problems - Problems; problemsbysv - Problems by severity; slareport - SLA report; svggraph - Graph; systeminfo - System information; tophosts - Top hosts; trigover - Trigger overview; url - URL; web - Web monitoring."
+                },
+                "name": {"type": "string", "description": "Custom widget name."},
+                "x": {"type": "integer", "minimum": 0, "maximum": 23, "description": "A horizontal position from the left side of the dashboard. Valid values range from 0 to 23."},
+                "y": {"type": "integer", "minimum": 0, "maximum": 62, "description": "A vertical position from the top of the dashboard. Valid values range from 0 to 62."},
+                "width": {"type": "integer", "minimum": 1, "maximum": 24, "description": "The widget width. Valid values range from 1 to 24."},
+                "height": {"type": "integer", "minimum": 2, "maximum": 32, "description": "The widget height. Valid values range from 2 to 32."},
+                "view_mode": {
+                  "type": "integer",
+                  "enum": [0, 1],
+                  "description": "The widget view mode. Possible values: 0 - (default) default widget view; 1 - with hidden header;"
+                },
+                "fields": {
+                  "type": "array",
+                  "description": "Array of the dashboard widget field objects. Required for specific widgets; see individual widgets in Dashboard widget fields.",
+                  "items": {
+                    "type": "object",
+                    "description": "Dashboard widget field object.",
+                    "properties": {
+                      "type": {
+                        "type": "integer",
+                        "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                        "description": "Type of the widget field. Possible values: 0 - Integer; 1 - String; 2 - Host group; 3 - Host; 4 - Item; 5 - Item prototype; 6 - Graph; 7 - Graph prototype; 8 - Map; 9 - Service; 10 - SLA."
+                      },
+                      "name": {"type": "string", "description": "Widget field name. Possible values: see Dashboard widget fields."},
+                      "value": {"description": "Widget field value depending on the type. Possible values: see Dashboard widget fields."}
+                    },
+                    "required": ["type", "name", "value"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": ["type"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "users": {
+      "type": "array",
+      "description": "Dashboard user shares to be created on the dashboard.",
+      "items": {
+        "type": "object",
+        "description": "Dashboard user object. List of dashboard permissions based on users.",
+        "properties": {
+          "userid": {"type": "string", "description": "User ID."},
+          "permission": {
+            "type": "integer",
+            "enum": [2, 3],
+            "description": "Type of permission level. Possible values: 2 - read only; 3 - read-write."
+          }
+        },
+        "required": ["userid", "permission"],
+        "additionalProperties": false
+      }
+    },
+    "userGroups": {
+      "type": "array",
+      "description": "Dashboard user group shares to be created on the dashboard.",
+      "items": {
+        "type": "object",
+        "description": "Dashboard user group object. List of dashboard permissions based on user groups.",
+        "properties": {
+          "usrgrpid": {"type": "string", "description": "User group ID."},
+          "permission": {
+            "type": "integer",
+            "enum": [2, 3],
+            "description": "Type of permission level. Possible values: 2 - read only; 3 - read-write."
+          }
+        },
+        "required": ["usrgrpid", "permission"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["name", "pages"],
+  "additionalProperties": false
+}

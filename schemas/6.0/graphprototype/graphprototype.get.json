@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/graphprototype/graphprototype.get",
+  "title": "graphprototype.get",
+  "description": "Retrieve graph prototypes according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/graphprototype/get",
+  "type": "object",
+  "properties": {
+    "discoveryids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only graph prototypes that belong to the given discovery rules."
+    },
+    "graphids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only graph prototypes with the given IDs."
+    },
+    "groupids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only graph prototypes that belong to hosts in the given host groups."
+    },
+    "hostids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only graph prototypes that belong to the given hosts."
+    },
+    "inherited": {
+      "type": "boolean",
+      "description": "If set to true return only graph prototypes inherited from a template."
+    },
+    "itemids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only graph prototypes that contain the given item prototypes."
+    },
+    "templated": {
+      "type": "boolean",
+      "description": "If set to true return only graph prototypes that belong to templates."
+    },
+    "templateids": {
+      "oneOf": [
+        {"type": "string"},
+        {"type": "array", "items": {"type": "string"}}
+      ],
+      "description": "Return only graph prototypes that belong to the given templates."
+    },
+    "selectDiscoveryRule": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a discoveryRule property with the LLD rule that the graph prototype belongs to."
+    },
+    "selectGraphItems": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a gitems property with the graph items used in the graph prototype."
+    },
+    "selectGroups": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a groups property with the host groups that the graph prototype belongs to."
+    },
+    "selectHosts": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a hosts property with the hosts that the graph prototype belongs to."
+    },
+    "selectItems": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return an items property with the items and item prototypes used in the graph prototype."
+    },
+    "selectTemplates": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Return a templates property with the templates that the graph prototype belongs to."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only those results that exactly match the given filter. Accepts an array, where the keys are property names, and the values are either a single value or an array of values to match against. Supports additional filters: host - technical name of the host that the graph prototype belongs to; hostid - ID of the host that the graph prototype belongs to."
+    },
+    "sortfield": {
+      "oneOf": [
+        {"type": "string", "enum": ["graphid", "name", "graphtype"]},
+        {"type": "array", "items": {"enum": ["graphid", "name", "graphtype"]}}
+      ],
+      "description": "Sort the result by the given properties. Possible values are: graphid, name and graphtype."
+    },
+    "countOutput": {"type": "boolean", "description": "Return the number of records in the result instead of the actual data."},
+    "editable": {"type": "boolean", "description": "If set to true, return only objects that the user has write permissions to. Default: false."},
+    "excludeSearch": {"type": "boolean", "description": "Return results that do not match the criteria given in the search parameter."},
+    "limit": {"type": "integer", "description": "Limit the number of records returned."},
+    "output": {
+      "oneOf": [
+        {"type": "array", "items": {"type": "string"}},
+        {"enum": ["extend", "count"]}
+      ],
+      "description": "Object properties to be returned. Default: extend."
+    },
+    "preservekeys": {"type": "boolean", "description": "Use IDs as keys in the resulting array."},
+    "search": {"type": "object", "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."},
+    "searchByAny": {"type": "boolean", "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."},
+    "searchWildcardsEnabled": {"type": "boolean", "description": "If true, enables the use of '*' as a wildcard character. Default: false."},
+    "sortorder": {
+      "oneOf": [
+        {"enum": ["ASC", "DESC"]},
+        {"type": "array", "items": {"enum": ["ASC", "DESC"]}}
+      ],
+      "description": "Order of sorting. ASC or DESC."
+    },
+    "startSearch": {"type": "boolean", "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."}
+  },
+  "additionalProperties": false
+}

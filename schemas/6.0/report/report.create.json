@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/report/report.create",
+  "title": "report.create",
+  "description": "Create new scheduled reports.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/report/create",
+  "type": "object",
+  "properties": {
+    "userid": {"type": "string", "description": "ID of the user who created the report."},
+    "name": {"type": "string", "description": "Unique name of the report."},
+    "dashboardid": {"type": "string", "description": "ID of the dashboard that the report is based on."},
+    "period": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3],
+      "description": "Period for which the report will be prepared. Possible values: 0 - (default) previous day; 1 - previous week; 2 - previous month; 3 - previous year."
+    },
+    "cycle": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3],
+      "description": "Period repeating schedule. Possible values: 0 - (default) daily; 1 - weekly; 2 - monthly; 3 - yearly."
+    },
+    "start_time": {
+      "type": "integer",
+      "description": "Time of the day, in seconds, when the report will be prepared for sending. Default: 0."
+    },
+    "weekdays": {
+      "type": "integer",
+      "description": "Days of the week for sending the report. Required for weekly reports only. Possible bitmap values: 1 - Monday; 2 - Tuesday; 4 - Wednesday; 8 - Thursday; 16 - Friday; 32 - Saturday; 64 - Sunday. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 21 for Monday, Wednesday, and Friday). Default: 0."
+    },
+    "active_since": {
+      "type": "string",
+      "description": "On which date to start. Possible values: empty string - (default) not specified (stored as 0); specific date in YYYY-MM-DD format (stored as a timestamp of the beginning of a day (00:00:00))."
+    },
+    "active_till": {
+      "type": "string",
+      "description": "On which date to end. Possible values: empty string - (default) not specified (stored as 0); specific date in YYYY-MM-DD format (stored as a timestamp of the end of a day (23:59:59))."
+    },
+    "subject": {"type": "string", "description": "Report message subject."},
+    "message": {"type": "string", "description": "Report message text."},
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Whether the report is enabled or disabled. Possible values: 0 - Disabled; 1 - (default) Enabled."
+    },
+    "description": {"type": "string", "description": "Description of the report."},
+    "users": {
+      "type": "array",
+      "description": "Users to send the report to.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "userid": {"type": "string", "description": "ID of user to send the report to."},
+          "access_userid": {"type": "string", "description": "ID of user on whose behalf the report will be generated. 0 - (default) Generate report by recipient."},
+          "exclude": {
+            "type": "integer",
+            "enum": [0, 1],
+            "description": "Whether to exclude the user from mailing list. Possible values: 0 - (default) Include; 1 - Exclude."
+          }
+        },
+        "required": ["userid"],
+        "additionalProperties": false
+      }
+    },
+    "user_groups": {
+      "type": "array",
+      "description": "User groups to send the report to.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "usrgrpid": {"type": "string", "description": "ID of user group to send the report to."},
+          "access_userid": {"type": "string", "description": "ID of user on whose behalf the report will be generated. 0 - (default) Generate report by recipient."}
+        },
+        "required": ["usrgrpid"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["userid", "name", "dashboardid"],
+  "additionalProperties": false
+}

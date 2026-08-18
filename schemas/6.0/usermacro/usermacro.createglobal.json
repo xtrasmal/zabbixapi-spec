@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/usermacro/usermacro.createglobal",
+  "title": "usermacro.createglobal",
+  "description": "Create new global macros.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/usermacro/createglobal",
+  "type": "object",
+  "properties": {
+    "macro": {
+      "type": "string",
+      "description": "Macro string."
+    },
+    "value": {
+      "type": "string",
+      "description": "Value of the macro."
+    },
+    "type": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "Type of macro. Possible values: 0 - (default) Text macro; 1 - Secret macro; 2 - Vault secret."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the macro."
+    }
+  },
+  "required": ["macro", "value"],
+  "additionalProperties": false
+}

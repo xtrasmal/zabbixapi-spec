@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/graph/graph.delete",
+  "title": "graph.delete",
+  "description": "Delete graphs.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/graph/delete",
+  "type": "array",
+  "items": {
+    "type": "string",
+    "description": "ID of the graph to delete."
+  },
+  "minItems": 1
+}

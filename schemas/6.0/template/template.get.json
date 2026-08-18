@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zabbix.com/6.0/api/template/template.get",
+  "title": "template.get",
+  "description": "Retrieve templates according to the given parameters.",
+  "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/template/get",
+  "type": "object",
+  "properties": {
+    "templateids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Return only templates with the given template IDs."},
+    "groupids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Return only templates that belong to the given host groups."},
+    "parentTemplateids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Return only templates that are parent to the given templates."},
+    "hostids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Return only templates that are linked to the given hosts/templates."},
+    "graphids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Return only templates that contain the given graphs."},
+    "itemids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Return only templates that contain the given items."},
+    "triggerids": {"oneOf":[{"type":"string"},{"type":"array","items":{"type":"string"}}], "description": "Return only templates that contain the given triggers."},
+    "with_items": {"type": "boolean", "description": "Return only templates that have items."},
+    "with_triggers": {"type": "boolean", "description": "Return only templates that have triggers."},
+    "with_graphs": {"type": "boolean", "description": "Return only templates that have graphs."},
+    "with_httptests": {"type": "boolean", "description": "Return only templates that have web scenarios."},
+    "evaltype": {"type": "integer", "enum": [0, 2], "description": "Rules for tag searching. Possible values: 0 - (default) And/Or; 2 - Or."},
+    "tags": {
+      "type": "array",
+      "description": "Return only templates with given tags. Exact match by tag and case-sensitive or case-insensitive search by tag value depending on operator value. Format: [{\"tag\": \"\", \"value\": \"\", \"operator\": \"\"}, ...]. An empty array returns all templates.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {"type": "string", "description": "Tag name."},
+          "value": {"type": "string", "description": "Tag value."},
+          "operator": {"type": "integer", "enum": [0, 1, 2, 3, 4, 5], "description": "Possible operator values: 0 - (default) Contains; 1 - Equals; 2 - Not like; 3 - Not equal; 4 - Exists; 5 - Not exists."}
+        }
+      }
+    },
+    "selectGroups": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return the host groups that the template belongs to in the groups property."},
+    "selectTags": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return template tags in the tags property."},
+    "selectHosts": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return the hosts that are linked to the template in the hosts property. Supports count."},
+    "selectTemplates": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return templates to which the template is a child, in the templates property. Supports count."},
+    "selectParentTemplates": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return templates to which the template is a parent, in the parentTemplates property. Supports count."},
+    "selectHttpTests": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return the web scenarios from the template in the httpTests property. Supports count."},
+    "selectItems": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return items from the template in the items property. Supports count."},
+    "selectDiscoveries": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return low-level discoveries from the template in the discoveries property. Supports count."},
+    "selectTriggers": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return triggers from the template in the triggers property. Supports count."},
+    "selectGraphs": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return graphs from the template in the graphs property. Supports count."},
+    "selectMacros": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return the macros from the template in the macros property."},
+    "selectDashboards": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return dashboards from the template in the dashboards property. Supports count."},
+    "selectValueMaps": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Return a valuemaps property with template value maps."},
+    "limitSelects": {"type": "integer", "description": "Limits the number of records returned by subselects. Applies to selectTemplates (sorted by name), selectHosts (sorted by host), selectParentTemplates (sorted by host), selectItems (sorted by name), selectDiscoveries (sorted by name), selectTriggers (sorted by description), selectGraphs (sorted by name), selectDashboards (sorted by name)."},
+    "sortfield": {"oneOf":[{"type":"string","enum":["hostid","host","name","status"]},{"type":"array","items":{"type":"string","enum":["hostid","host","name","status"]}}], "description": "Sort the result by the given properties. Possible values are: hostid, host, name, status."},
+    "countOutput": {"type": "boolean", "description": "Return the number of records in the result instead of the actual data."},
+    "editable": {"type": "boolean", "description": "If set to true, return only objects that the user has write permissions to. Default: false."},
+    "excludeSearch": {"type": "boolean", "description": "Return results that do not match the criteria given in the search parameter."},
+    "filter": {"type": "object", "description": "Return only those results that exactly match the given filter. Does not support text-type properties."},
+    "limit": {"type": "integer", "description": "Limit the number of records returned."},
+    "output": {"oneOf":[{"type":"array","items":{"type":"string"}},{"enum":["extend","count"]}], "description": "Object properties to be returned. Default: extend."},
+    "preservekeys": {"type": "boolean", "description": "Use IDs as keys in the resulting array."},
+    "search": {"type": "object", "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."},
+    "searchByAny": {"type": "boolean", "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."},
+    "searchWildcardsEnabled": {"type": "boolean", "description": "If true, enables the use of '*' as a wildcard character. Default: false."},
+    "sortorder": {"oneOf":[{"enum":["ASC","DESC"]},{"type":"array","items":{"enum":["ASC","DESC"]}}], "description": "Order of sorting. ASC or DESC."},
+    "startSearch": {"type": "boolean", "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."}
+  },
+  "additionalProperties": false
+}
