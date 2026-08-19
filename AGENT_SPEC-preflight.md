@@ -1,6 +1,6 @@
-# Preflight Spec
+# Preflight Spec (phase 1)
 
-INPUT: version (e.g. `6.0`) SOURCE: crw the reference index; git raw markdown for commentary; one request per page. OUTPUT: this version's manifest + a scaffolded skeleton for every method. Built only from this version's own docs.
+INPUT: `<version>` (e.g. `6.0`). SOURCE: crw the reference index; git raw markdown for commentary; one request per page, paced. OUTPUT: this version's PURE-INDEX manifest `schemas/zabbix-<version>.json` (same shape as `zabbix-7.0.json`). Built only from this version's own docs. No scaffold, no `$defs`.
 
 STEPS:
 
@@ -11,7 +11,7 @@ STEPS:
      | grep -E '/<version>/en/manual/api/reference/' | sed -E 's#.*/api/reference/?##; s#/$##' | grep -vE '^$' | sort -u
    ```
 
-2. EXTRACT: objects = single-segment lines; methods = `<object>/<method>` lines where `<method>` is not `object`. `dashboard/widget_fields` and its sub-pages are field-spec pages, not methods — they stay out of the catalog.
+2. EXTRACT: objects = single-segment lines; methods = `<object>/<method>` lines where `<method>` is not `object`. `dashboard/widget_fields` and its sub-pages are field-spec pages, not methods — keep them out.
 
 3. RUN:
 
@@ -21,16 +21,12 @@ STEPS:
 
 4. EXTRACT: the `Data types` table and the `Common "get" method parameters` table.
 
-5. VERIFY: every data type appears in `AGENT_SPEC.md`'s type map. MISMATCH -> STOP, REPORT the drift.
+5. VERIFY against `AGENT_SPEC.md`: every data type appears in its Type map; every common-get param appears in its Common get params block. MISMATCH -> STOP, REPORT the drift (this version's own tables are the only source).
 
-6. BUILD `$defs.commonGetParams`: map each common-get param from step 4 to its schema via the type map. This version's own table is the only source.
-
-7. CREATE `schemas/zabbix-<version>.json`:
+6. CREATE `schemas/zabbix-<version>.json` — PURE INDEX, identical shape to `zabbix-7.0.json`:
 
    - `$comment`, `schema_dialect`, `source`, `object_count`, `method_count`.
-   - `objects`: `<object>` -> `<object>.<method>` -> `{ "path": "schemas/<version>/<object>/<object>.<method>.json" }` (title/description filled during scrape).
-   - `$defs.commonGetParams` from step 6.
+   - `objects`: `<object>` -> `<object>.<method>` -> `{ "path": "schemas/<version>/<object>/<object>.<method>.json", "title", "description" }` (title/description from the index/method pages).
+   - No `$defs`. No per-method files (scrape phase creates those).
 
-8. SCAFFOLD every method's skeleton (deterministic): `./bin/scaffold.sh <version>`. Each file gets `$schema`, `$id`, `title`, empty `description`, `$comment` Source URL, and a body by method tail — `get`: `type:object` with `commonGetParams` as `properties` and `additionalProperties:false`; `delete`: `type:array, items:{type:string}, minItems:1`; else: `type:object, properties:{}, additionalProperties:false`. Scrape fills the rest.
-
-9. OUTPUT: GO (index + commentary read, manifest + scaffolds written) or NO-GO + the drift.
+7. OUTPUT: GO (index + commentary verified, manifest written) or NO-GO + the drift.
