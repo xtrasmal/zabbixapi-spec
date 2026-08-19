@@ -12,17 +12,28 @@
     },
     "debug_mode": {
       "type": "integer",
-      "enum": [0, 1],
+      "enum": [
+        0,
+        1
+      ],
       "description": "Whether debug mode is enabled or disabled. Possible values are: 0 - (default) disabled; 1 - enabled."
     },
     "gui_access": {
       "type": "integer",
-      "enum": [0, 1, 2, 3],
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
       "description": "Frontend authentication method of the users in the group. Possible values: 0 - (default) use the system default authentication method; 1 - use internal authentication; 2 - use LDAP authentication; 3 - disable access to the frontend."
     },
     "users_status": {
       "type": "integer",
-      "enum": [0, 1],
+      "enum": [
+        0,
+        1
+      ],
       "description": "Whether the user group is enabled or disabled. Possible values are: 0 - (default) enabled; 1 - disabled."
     },
     "rights": {
@@ -36,11 +47,19 @@
             },
             "permission": {
               "type": "integer",
-              "enum": [0, 2, 3],
+              "enum": [
+                0,
+                2,
+                3
+              ],
               "description": "Access level to the host group. Possible values: 0 - access denied; 2 - read-only access; 3 - read-write access."
             }
           },
-          "required": ["id", "permission"]
+          "required": [
+            "id",
+            "permission"
+          ],
+          "additionalProperties": false
         },
         {
           "type": "array",
@@ -53,11 +72,19 @@
               },
               "permission": {
                 "type": "integer",
-                "enum": [0, 2, 3],
+                "enum": [
+                  0,
+                  2,
+                  3
+                ],
                 "description": "Access level to the host group. Possible values: 0 - access denied; 2 - read-only access; 3 - read-write access."
               }
             },
-            "required": ["id", "permission"]
+            "required": [
+              "id",
+              "permission"
+            ],
+            "additionalProperties": false
           }
         }
       ],
@@ -81,7 +108,10 @@
             "description": "Tag value."
           }
         },
-        "required": ["groupid"]
+        "required": [
+          "groupid"
+        ],
+        "additionalProperties": false
       },
       "description": "Tag based permissions to assign to the group."
     },
@@ -95,7 +125,10 @@
               "description": "ID of the user."
             }
           },
-          "required": ["userid"]
+          "required": [
+            "userid"
+          ],
+          "additionalProperties": false
         },
         {
           "type": "array",
@@ -107,13 +140,18 @@
                 "description": "ID of the user."
               }
             },
-            "required": ["userid"]
+            "required": [
+              "userid"
+            ],
+            "additionalProperties": false
           }
         }
       ],
       "description": "Users to add to the user group. The user must have the userid property defined."
     }
   },
-  "required": ["name"],
+  "required": [
+    "name"
+  ],
   "additionalProperties": false
 }

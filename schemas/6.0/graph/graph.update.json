@@ -24,7 +24,12 @@
     },
     "graphtype": {
       "type": "integer",
-      "enum": [0, 1, 2, 3],
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
       "description": "Graph's layout type. Possible values: 0 - (default) normal; 1 - stacked; 2 - pie; 3 - exploded."
     },
     "percent_left": {
@@ -37,22 +42,34 @@
     },
     "show_3d": {
       "type": "integer",
-      "enum": [0, 1],
+      "enum": [
+        0,
+        1
+      ],
       "description": "Whether to show pie and exploded graphs in 3D. Possible values: 0 - (default) show in 2D; 1 - show in 3D."
     },
     "show_legend": {
       "type": "integer",
-      "enum": [0, 1],
+      "enum": [
+        0,
+        1
+      ],
       "description": "Whether to show the legend on the graph. Possible values: 0 - hide; 1 - (default) show."
     },
     "show_work_period": {
       "type": "integer",
-      "enum": [0, 1],
+      "enum": [
+        0,
+        1
+      ],
       "description": "Whether to show the working time on the graph. Possible values: 0 - hide; 1 - (default) show."
     },
     "show_triggers": {
       "type": "integer",
-      "enum": [0, 1],
+      "enum": [
+        0,
+        1
+      ],
       "description": "Whether to show the trigger line on the graph. Possible values: 0 - hide; 1 - (default) show."
     },
     "yaxismax": {
@@ -69,7 +86,11 @@
     },
     "ymax_type": {
       "type": "integer",
-      "enum": [0, 1, 2],
+      "enum": [
+        0,
+        1,
+        2
+      ],
       "description": "Maximum value calculation method for the Y axis. Possible values: 0 - (default) calculated; 1 - fixed; 2 - item."
     },
     "ymin_itemid": {
@@ -78,7 +99,11 @@
     },
     "ymin_type": {
       "type": "integer",
-      "enum": [0, 1, 2],
+      "enum": [
+        0,
+        1,
+        2
+      ],
       "description": "Minimum value calculation method for the Y axis. Possible values: 0 - (default) calculated; 1 - fixed; 2 - item."
     },
     "uuid": {
@@ -104,12 +129,25 @@
           },
           "calc_fnc": {
             "type": "integer",
-            "enum": [1, 2, 4, 7, 9],
+            "enum": [
+              1,
+              2,
+              4,
+              7,
+              9
+            ],
             "description": "Value of the item that will be displayed. Possible values: 1 - minimum value; 2 - (default) average value; 4 - maximum value; 7 - all values; 9 - last value, used only by pie and exploded graphs."
           },
           "drawtype": {
             "type": "integer",
-            "enum": [0, 1, 2, 3, 4, 5],
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
             "description": "Draw style of the graph item. Possible values: 0 - (default) line; 1 - filled region; 2 - bold line; 3 - dot; 4 - dashed line; 5 - gradient line."
           },
           "graphid": {
@@ -122,20 +160,32 @@
           },
           "type": {
             "type": "integer",
-            "enum": [0, 2],
+            "enum": [
+              0,
+              2
+            ],
             "description": "Type of graph item. Possible values: 0 - (default) simple; 2 - graph sum, used only by pie and exploded graphs."
           },
           "yaxisside": {
             "type": "integer",
-            "enum": [0, 1],
+            "enum": [
+              0,
+              1
+            ],
             "description": "Side of the graph where the graph item's Y scale will be drawn. Possible values: 0 - (default) left side; 1 - right side."
           }
         },
-        "required": ["color", "itemid"]
+        "required": [
+          "color",
+          "itemid"
+        ],
+        "additionalProperties": false
       },
       "description": "Graph items to replace existing graph items. If a graph item has the gitemid property defined it will be updated, otherwise a new graph item will be created."
     }
   },
-  "required": ["graphid"],
+  "required": [
+    "graphid"
+  ],
   "additionalProperties": false
 }

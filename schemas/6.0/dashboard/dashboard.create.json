@@ -16,17 +16,31 @@
     },
     "private": {
       "type": "integer",
-      "enum": [0, 1],
+      "enum": [
+        0,
+        1
+      ],
       "description": "Type of dashboard sharing. Possible values: 0 - public dashboard; 1 - (default) private dashboard."
     },
     "display_period": {
       "type": "integer",
-      "enum": [10, 30, 60, 120, 600, 1800, 3600],
+      "enum": [
+        10,
+        30,
+        60,
+        120,
+        600,
+        1800,
+        3600
+      ],
       "description": "Default page display period (in seconds). Possible values: 10, 30, 60, 120, 600, 1800, 3600. Default: 30."
     },
     "auto_start": {
       "type": "integer",
-      "enum": [0, 1],
+      "enum": [
+        0,
+        1
+      ],
       "description": "Auto start slideshow. Possible values: 0 - do not auto start slideshow; 1 - (default) auto start slideshow."
     },
     "pages": {
@@ -40,7 +54,16 @@
           },
           "display_period": {
             "type": "integer",
-            "enum": [0, 10, 30, 60, 120, 600, 1800, 3600],
+            "enum": [
+              0,
+              10,
+              30,
+              60,
+              120,
+              600,
+              1800,
+              3600
+            ],
             "description": "Dashboard page display period (in seconds). Possible values: 0, 10, 30, 60, 120, 600, 1800, 3600. Default: 0 (will use the default page display period)."
           },
           "widgets": {
@@ -50,7 +73,32 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "enum": ["actionlog", "clock", "dataover", "discovery", "favgraphs", "favmaps", "geomap", "graph", "graphprototype", "hostavail", "item", "map", "navtree", "plaintext", "problemhosts", "problems", "problemsbysv", "slareport", "svggraph", "systeminfo", "tophosts", "trigover", "url", "web"],
+                  "enum": [
+                    "actionlog",
+                    "clock",
+                    "dataover",
+                    "discovery",
+                    "favgraphs",
+                    "favmaps",
+                    "geomap",
+                    "graph",
+                    "graphprototype",
+                    "hostavail",
+                    "item",
+                    "map",
+                    "navtree",
+                    "plaintext",
+                    "problemhosts",
+                    "problems",
+                    "problemsbysv",
+                    "slareport",
+                    "svggraph",
+                    "systeminfo",
+                    "tophosts",
+                    "trigover",
+                    "url",
+                    "web"
+                  ],
                   "description": "Type of the dashboard widget. Possible values: actionlog - Action log; clock - Clock; dataover - (deprecated) Data overview; discovery - Discovery status; favgraphs - Favorite graphs; favmaps - Favorite maps; geomap - Geomap; graph - Graph (classic); graphprototype - Graph prototype; hostavail - Host availability; item - Item value; map - Map; navtree - Map Navigation Tree; plaintext - Plain text; problemhosts - Problem hosts; problems - Problems; problemsbysv - Problems by severity; slareport - SLA report; svggraph - Graph; systeminfo - System information; tophosts - Top hosts; trigover - Trigger overview; url - URL; web - Web monitoring."
                 },
                 "name": {
@@ -75,7 +123,10 @@
                 },
                 "view_mode": {
                   "type": "integer",
-                  "enum": [0, 1],
+                  "enum": [
+                    0,
+                    1
+                  ],
                   "description": "The widget view mode. Possible values: 0 - (default) default widget view; 1 - with hidden header."
                 },
                 "fields": {
@@ -85,7 +136,19 @@
                     "properties": {
                       "type": {
                         "type": "integer",
-                        "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                        "enum": [
+                          0,
+                          1,
+                          2,
+                          3,
+                          4,
+                          5,
+                          6,
+                          7,
+                          8,
+                          9,
+                          10
+                        ],
                         "description": "Type of the widget field. Possible values: 0 - Integer; 1 - String; 2 - Host group; 3 - Host; 4 - Item; 5 - Item prototype; 6 - Graph; 7 - Graph prototype; 8 - Map; 9 - Service; 10 - SLA."
                       },
                       "name": {
@@ -96,16 +159,25 @@
                         "description": "Widget field value depending on the type. Possible values: see Dashboard widget fields."
                       }
                     },
-                    "required": ["type", "name", "value"]
+                    "required": [
+                      "type",
+                      "name",
+                      "value"
+                    ],
+                    "additionalProperties": false
                   },
                   "description": "Array of the dashboard widget field objects. Required for specific widgets; see individual widgets in Dashboard widget fields."
                 }
               },
-              "required": ["type"]
+              "required": [
+                "type"
+              ],
+              "additionalProperties": false
             },
             "description": "Array of the dashboard widget objects."
           }
-        }
+        },
+        "additionalProperties": false
       },
       "description": "Dashboard pages to be created for the dashboard. Dashboard pages will be ordered in the same order as specified. At least one dashboard page object is required for pages property."
     },
@@ -120,11 +192,18 @@
           },
           "permission": {
             "type": "integer",
-            "enum": [2, 3],
+            "enum": [
+              2,
+              3
+            ],
             "description": "Type of permission level. Possible values: 2 - read only; 3 - read-write."
           }
         },
-        "required": ["userid", "permission"]
+        "required": [
+          "userid",
+          "permission"
+        ],
+        "additionalProperties": false
       },
       "description": "Dashboard user shares to be created on the dashboard."
     },
@@ -139,15 +218,25 @@
           },
           "permission": {
             "type": "integer",
-            "enum": [2, 3],
+            "enum": [
+              2,
+              3
+            ],
             "description": "Type of permission level. Possible values: 2 - read only; 3 - read-write."
           }
         },
-        "required": ["usrgrpid", "permission"]
+        "required": [
+          "usrgrpid",
+          "permission"
+        ],
+        "additionalProperties": false
       },
       "description": "Dashboard user group shares to be created on the dashboard."
     }
   },
-  "required": ["name", "pages"],
+  "required": [
+    "name",
+    "pages"
+  ],
   "additionalProperties": false
 }

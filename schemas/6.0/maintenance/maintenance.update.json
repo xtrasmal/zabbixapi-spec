@@ -28,12 +28,18 @@
     },
     "maintenance_type": {
       "type": "integer",
-      "enum": [0, 1],
+      "enum": [
+        0,
+        1
+      ],
       "description": "Type of maintenance. Possible values: 0 - (default) with data collection; 1 - without data collection."
     },
     "tags_evaltype": {
       "type": "integer",
-      "enum": [0, 2],
+      "enum": [
+        0,
+        2
+      ],
       "description": "Problem tag evaluation method. Possible values: 0 - (default) And/Or; 2 - Or."
     },
     "groups": {
@@ -46,7 +52,10 @@
               "description": "ID of the host group."
             }
           },
-          "required": ["groupid"]
+          "required": [
+            "groupid"
+          ],
+          "additionalProperties": false
         },
         {
           "type": "array",
@@ -58,7 +67,10 @@
                 "description": "ID of the host group."
               }
             },
-            "required": ["groupid"]
+            "required": [
+              "groupid"
+            ],
+            "additionalProperties": false
           }
         }
       ],
@@ -74,7 +86,10 @@
               "description": "ID of the host."
             }
           },
-          "required": ["hostid"]
+          "required": [
+            "hostid"
+          ],
+          "additionalProperties": false
         },
         {
           "type": "array",
@@ -86,7 +101,10 @@
                 "description": "ID of the host."
               }
             },
-            "required": ["hostid"]
+            "required": [
+              "hostid"
+            ],
+            "additionalProperties": false
           }
         }
       ],
@@ -103,7 +121,12 @@
             },
             "timeperiod_type": {
               "type": "integer",
-              "enum": [0, 2, 3, 4],
+              "enum": [
+                0,
+                2,
+                3,
+                4
+              ],
               "description": "Type of time period. Possible values: 0 - (default) one time only; 2 - daily; 3 - weekly; 4 - monthly."
             },
             "start_date": {
@@ -130,7 +153,8 @@
               "type": "integer",
               "description": "Months when the maintenance must come into effect. Possible bitmap values are: 1 - January; 2 - February; 4 - March; 8 - April; 16 - May; 32 - June; 64 - July; 128 - August; 256 - September; 512 - October; 1024 - November; 2048 - December. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 585 for January, April, July, and October). Required only for monthly time periods."
             }
-          }
+          },
+          "additionalProperties": false
         },
         {
           "type": "array",
@@ -143,7 +167,12 @@
               },
               "timeperiod_type": {
                 "type": "integer",
-                "enum": [0, 2, 3, 4],
+                "enum": [
+                  0,
+                  2,
+                  3,
+                  4
+                ],
                 "description": "Type of time period. Possible values: 0 - (default) one time only; 2 - daily; 3 - weekly; 4 - monthly."
               },
               "start_date": {
@@ -170,7 +199,8 @@
                 "type": "integer",
                 "description": "Day of the month when the maintenance must come into effect. Used only for monthly time periods. At least one dayofweek or day must be specified for monthly time periods."
               }
-            }
+            },
+            "additionalProperties": false
           }
         }
       ],
@@ -187,7 +217,10 @@
             },
             "operator": {
               "type": "integer",
-              "enum": [0, 2],
+              "enum": [
+                0,
+                2
+              ],
               "description": "Condition operator. Possible values: 0 - Equals; 2 - (default) Contains."
             },
             "value": {
@@ -195,7 +228,10 @@
               "description": "Problem tag value."
             }
           },
-          "required": ["tag"]
+          "required": [
+            "tag"
+          ],
+          "additionalProperties": false
         },
         {
           "type": "array",
@@ -208,7 +244,10 @@
               },
               "operator": {
                 "type": "integer",
-                "enum": [0, 2],
+                "enum": [
+                  0,
+                  2
+                ],
                 "description": "Condition operator. Possible values: 0 - Equals; 2 - (default) Contains."
               },
               "value": {
@@ -216,7 +255,10 @@
                 "description": "Problem tag value."
               }
             },
-            "required": ["tag"]
+            "required": [
+              "tag"
+            ],
+            "additionalProperties": false
           }
         }
       ],
@@ -237,6 +279,8 @@
       "description": "Deprecated, please use hosts instead. IDs of the hosts that will undergo maintenance."
     }
   },
-  "required": ["maintenanceid"],
+  "required": [
+    "maintenanceid"
+  ],
   "additionalProperties": false
 }

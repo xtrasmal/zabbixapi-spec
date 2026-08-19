@@ -38,7 +38,12 @@
               "description": "Port number used by the interface."
             }
           },
-          "required": ["ip", "dns", "port"]
+          "required": [
+            "ip",
+            "dns",
+            "port"
+          ],
+          "additionalProperties": false
         },
         {
           "type": "array",
@@ -58,13 +63,21 @@
                 "description": "Port number used by the interface."
               }
             },
-            "required": ["ip", "dns", "port"]
+            "required": [
+              "ip",
+              "dns",
+              "port"
+            ],
+            "additionalProperties": false
           }
         }
       ],
       "description": "Host interfaces to remove from the given hosts. The host interface object must have the ip, dns and port properties defined."
     }
   },
-  "required": ["hostids", "interfaces"],
+  "required": [
+    "hostids",
+    "interfaces"
+  ],
   "additionalProperties": false
 }

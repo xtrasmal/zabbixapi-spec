@@ -36,11 +36,18 @@
             "description": "ID of the host inventory field."
           }
         },
-        "required": ["iconid", "expression", "inventory_link"]
+        "required": [
+          "iconid",
+          "expression",
+          "inventory_link"
+        ],
+        "additionalProperties": false
       },
       "description": "Icon mappings to replace the existing icon mappings."
     }
   },
-  "required": ["iconmapid"],
+  "required": [
+    "iconmapid"
+  ],
   "additionalProperties": false
 }

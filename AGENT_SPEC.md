@@ -69,6 +69,8 @@ Enumerated integers get `"enum":[...]`, each value described in `description`.
 }
 ```
 
+**Nested objects — close them too.** `additionalProperties:false` goes on EVERY object the docs give a complete property table for, at every depth — an interface's `details`, a dashboard `page`/`widget`/`field`, a maintenance `timeperiod`/`tag`, a graph `gitem`, a usergroup `right` — not only the root. The server rejects unknown fields inside these structured objects, so closing them mirrors it. Leave `additionalProperties` OFF only for genuinely freeform maps the docs do NOT tabulate — `filter`, `search`, a widget field's mixed `value` (these carry a `description` but no property table). Rule: tabulated object -> closed; freeform map -> open. Never stricter than the server, never looser.
+
 `delete` top level is `{"type":"array","items":{"type":"string"},"minItems":1}` (keep `$schema`/`$id`/`title`/`description`/`$comment`).
 
 ## Common get params

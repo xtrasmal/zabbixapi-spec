@@ -20,12 +20,23 @@
     },
     "display_period": {
       "type": "integer",
-      "enum": [10, 30, 60, 120, 600, 1800, 3600],
+      "enum": [
+        10,
+        30,
+        60,
+        120,
+        600,
+        1800,
+        3600
+      ],
       "description": "Default page display period (in seconds). Possible values: 10, 30, 60, 120, 600, 1800, 3600. Default: 30."
     },
     "auto_start": {
       "type": "integer",
-      "enum": [0, 1],
+      "enum": [
+        0,
+        1
+      ],
       "description": "Auto start slideshow. Possible values: 0 - do not auto start slideshow; 1 - (default) auto start slideshow."
     },
     "uuid": {
@@ -47,7 +58,16 @@
           },
           "display_period": {
             "type": "integer",
-            "enum": [0, 10, 30, 60, 120, 600, 1800, 3600],
+            "enum": [
+              0,
+              10,
+              30,
+              60,
+              120,
+              600,
+              1800,
+              3600
+            ],
             "description": "Dashboard page display period (in seconds). Possible values: 0, 10, 30, 60, 120, 600, 1800, 3600. Default: 0 (will use the default page display period)."
           },
           "widgets": {
@@ -57,7 +77,14 @@
               "properties": {
                 "type": {
                   "type": "string",
-                  "enum": ["clock", "graph", "graphprototype", "item", "plaintext", "url"],
+                  "enum": [
+                    "clock",
+                    "graph",
+                    "graphprototype",
+                    "item",
+                    "plaintext",
+                    "url"
+                  ],
                   "description": "Type of the dashboard widget. Possible values: clock - Clock; graph - Graph (classic); graphprototype - Graph prototype; item - Item value; plaintext - Plain text; url - URL."
                 },
                 "name": {
@@ -82,7 +109,10 @@
                 },
                 "view_mode": {
                   "type": "integer",
-                  "enum": [0, 1],
+                  "enum": [
+                    0,
+                    1
+                  ],
                   "description": "The widget view mode. Possible values: 0 - (default) default widget view; 1 - with hidden header."
                 },
                 "fields": {
@@ -92,7 +122,14 @@
                     "properties": {
                       "type": {
                         "type": "integer",
-                        "enum": [0, 1, 4, 5, 6, 7],
+                        "enum": [
+                          0,
+                          1,
+                          4,
+                          5,
+                          6,
+                          7
+                        ],
                         "description": "Type of the widget field. Possible values: 0 - Integer; 1 - String; 4 - Item; 5 - Item prototype; 6 - Graph; 7 - Graph prototype."
                       },
                       "name": {
@@ -103,20 +140,30 @@
                         "description": "Widget field value depending on type."
                       }
                     },
-                    "required": ["type", "value"]
+                    "required": [
+                      "type",
+                      "value"
+                    ],
+                    "additionalProperties": false
                   },
                   "description": "Array of the template dashboard widget field objects."
                 }
               },
-              "required": ["type"]
+              "required": [
+                "type"
+              ],
+              "additionalProperties": false
             },
             "description": "Array of the template dashboard widget objects."
           }
-        }
+        },
+        "additionalProperties": false
       },
       "description": "Template dashboard pages to replace the existing dashboard pages. Dashboard pages are updated by the dashboard_pageid property. New dashboard pages will be created for objects without dashboard_pageid property and the existing dashboard pages will be deleted if not reused. Dashboard pages will be ordered in the same order as specified. Only the specified properties of the dashboard pages will be updated. At least one dashboard page object is required for pages property."
     }
   },
-  "required": ["dashboardid"],
+  "required": [
+    "dashboardid"
+  ],
   "additionalProperties": false
 }
