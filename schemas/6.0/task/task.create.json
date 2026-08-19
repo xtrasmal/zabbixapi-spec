@@ -2,9 +2,168 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/task/task.create",
   "title": "task.create",
-  "description": "",
+  "description": "This method allows to create a new task (such as collect diagnostic data or check items or low-level discovery rules without config reload).",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/task/create",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "type": {
+      "type": "integer",
+      "enum": [1, 6],
+      "description": "Task type. Possible values: 1 - Diagnostic information; 6 - Check now."
+    },
+    "request": {
+      "description": "Task request object according to the task type. Correct format of request object is described in the Task object section.",
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "'Diagnostic information' task request object.",
+          "properties": {
+            "historycache": {
+              "type": "object",
+              "description": "History cache statistic request. Available on server and proxy.",
+              "properties": {
+                "stats": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "enum": ["extend", "count"]
+                    }
+                  ],
+                  "description": "Statistic object properties to be returned. Default: extend will return all available statistic fields. Available fields for historycache: items - number of cached items; values - number of cached values; memory - shared memory statistics (free space, number of used chunks, number of free chunks, max size of free chunk); memory.data - history data cache shared memory statistics; memory.index - history index cache shared memory statistics."
+                },
+                "top": {
+                  "type": "object",
+                  "description": "Object to sort and limit returned statistic values, e.g. { \"values\": 10 }. Available sorting field for historycache: values (integer)."
+                }
+              },
+              "additionalProperties": false
+            },
+            "valuecache": {
+              "type": "object",
+              "description": "Items cache statistic request. Available on server.",
+              "properties": {
+                "stats": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "enum": ["extend", "count"]
+                    }
+                  ],
+                  "description": "Statistic object properties to be returned. Default: extend will return all available statistic fields. Available fields for valuecache: items - number of cached items; values - number of cached values; memory - shared memory statistics (free space, number of used chunks, number of free chunks, max size of free chunk); mode - value cache mode."
+                },
+                "top": {
+                  "type": "object",
+                  "description": "Object to sort and limit returned statistic values, e.g. { \"values\": 10 }. Available sorting fields for valuecache: values, request.values (integer)."
+                }
+              },
+              "additionalProperties": false
+            },
+            "preprocessing": {
+              "type": "object",
+              "description": "Preprocessing manager statistic request. Available on server and proxy.",
+              "properties": {
+                "stats": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "enum": ["extend", "count"]
+                    }
+                  ],
+                  "description": "Statistic object properties to be returned. Default: extend will return all available statistic fields. Available fields for preprocessing: values - number of queued values; preproc.values - number of queued values with preprocessing steps."
+                },
+                "top": {
+                  "type": "object",
+                  "description": "Object to sort and limit returned statistic values, e.g. { \"values\": 10 }. Available sorting field for preprocessing: values (integer)."
+                }
+              },
+              "additionalProperties": false
+            },
+            "alerting": {
+              "type": "object",
+              "description": "Alert manager statistic request. Available on server.",
+              "properties": {
+                "stats": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "enum": ["extend", "count"]
+                    }
+                  ],
+                  "description": "Statistic object properties to be returned. Default: extend will return all available statistic fields. Available field for alerting: alerts - number of queued alerts."
+                },
+                "top": {
+                  "type": "object",
+                  "description": "Object to sort and limit returned statistic values, e.g. { \"media.alerts\": 10 }. Available sorting fields for alerting: media.alerts, source.alerts (integer)."
+                }
+              },
+              "additionalProperties": false
+            },
+            "lld": {
+              "type": "object",
+              "description": "LLD manager statistic request. Available on server.",
+              "properties": {
+                "stats": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    {
+                      "enum": ["extend", "count"]
+                    }
+                  ],
+                  "description": "Statistic object properties to be returned. Default: extend will return all available statistic fields. Available fields for lld: rules - number of queued rules; values - number of queued values."
+                },
+                "top": {
+                  "type": "object",
+                  "description": "Object to sort and limit returned statistic values, e.g. { \"values\": 5 }. Available sorting field for lld: values (integer)."
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "description": "'Check now' task request object.",
+          "properties": {
+            "itemid": {
+              "type": "string",
+              "description": "ID of item and low-level discovery rules."
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "proxy_hostid": {
+      "type": "integer",
+      "description": "Proxy about which Diagnostic information task will collect data. Ignored for 'Check now' tasks."
+    }
+  },
+  "required": ["type", "request"],
   "additionalProperties": false
 }

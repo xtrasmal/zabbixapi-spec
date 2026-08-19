@@ -2,11 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/user/user.delete",
   "title": "user.delete",
-  "description": "",
+  "description": "This method allows to delete users.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/user/delete",
   "type": "array",
-  "items": {
-    "type": "string"
-  },
+  "items": {"type": "string"},
   "minItems": 1
 }

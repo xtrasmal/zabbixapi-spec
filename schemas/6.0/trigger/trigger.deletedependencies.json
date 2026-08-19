@@ -2,9 +2,15 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/trigger/trigger.deletedependencies",
   "title": "trigger.deletedependencies",
-  "description": "",
+  "description": "This method allows to delete all trigger dependencies from the given triggers.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/trigger/deletedependencies",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "triggerid": {
+      "type": "string",
+      "description": "ID of the trigger to delete the trigger dependencies from."
+    }
+  },
+  "required": ["triggerid"],
   "additionalProperties": false
 }

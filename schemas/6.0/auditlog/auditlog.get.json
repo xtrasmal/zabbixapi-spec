@@ -2,10 +2,70 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/auditlog/auditlog.get",
   "title": "auditlog.get",
-  "description": "",
+  "description": "The method allows to retrieve audit log records according to the given parameters.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/auditlog/get",
   "type": "object",
   "properties": {
+    "auditids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only audit log with the given IDs."
+    },
+    "userids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only audit log that were created by the given users."
+    },
+    "time_from": {
+      "type": "integer",
+      "description": "Returns only audit log entries that have been created after or at the given time."
+    },
+    "time_till": {
+      "type": "integer",
+      "description": "Returns only audit log entries that have been created before or at the given time."
+    },
+    "sortfield": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": ["auditid", "userid", "clock"]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["auditid", "userid", "clock"]
+          }
+        }
+      ],
+      "description": "Sort the result by the given properties. Possible values are: auditid, userid, clock."
+    },
+    "filter": {
+      "type": "object",
+      "description": "Return only results that exactly match the given filter. Accepts an array, where the keys are property names, and the values are either a single value or an array of values to match against."
+    },
+    "search": {
+      "type": "object",
+      "description": "Case insensitive sub-string search in content of fields: username, ip, resourcename, details."
+    },
     "countOutput": {
       "type": "boolean",
       "description": "Return the number of records in the result instead of the actual data."
@@ -17,10 +77,6 @@
     "excludeSearch": {
       "type": "boolean",
       "description": "Return results that do not match the criteria given in the search parameter."
-    },
-    "filter": {
-      "type": "object",
-      "description": "Return only those results that exactly match the given filter. Does not support text-type properties."
     },
     "limit": {
       "type": "integer",
@@ -35,10 +91,7 @@
           }
         },
         {
-          "enum": [
-            "extend",
-            "count"
-          ]
+          "enum": ["extend", "count"]
         }
       ],
       "description": "Object properties to be returned. Default: extend."
@@ -46,10 +99,6 @@
     "preservekeys": {
       "type": "boolean",
       "description": "Use IDs as keys in the resulting array."
-    },
-    "search": {
-      "type": "object",
-      "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."
     },
     "searchByAny": {
       "type": "boolean",
@@ -59,35 +108,15 @@
       "type": "boolean",
       "description": "If true, enables the use of '*' as a wildcard character. Default: false."
     },
-    "sortfield": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      ],
-      "description": "Sort the result by the given properties."
-    },
     "sortorder": {
       "oneOf": [
         {
-          "enum": [
-            "ASC",
-            "DESC"
-          ]
+          "enum": ["ASC", "DESC"]
         },
         {
           "type": "array",
           "items": {
-            "enum": [
-              "ASC",
-              "DESC"
-            ]
+            "enum": ["ASC", "DESC"]
           }
         }
       ],

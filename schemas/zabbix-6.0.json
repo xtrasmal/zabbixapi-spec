@@ -7,782 +7,1073 @@
   "objects": {
     "action": {
       "action.create": {
-        "path": "schemas/6.0/action/action.create.json"
+        "path": "schemas/6.0/action/action.create.json",
+        "title": "action.create",
+        "description": "Create new actions."
       },
       "action.delete": {
-        "path": "schemas/6.0/action/action.delete.json"
+        "path": "schemas/6.0/action/action.delete.json",
+        "title": "action.delete",
+        "description": "Delete actions."
       },
       "action.get": {
-        "path": "schemas/6.0/action/action.get.json"
+        "path": "schemas/6.0/action/action.get.json",
+        "title": "action.get",
+        "description": "Retrieve actions according to the given parameters."
       },
       "action.update": {
-        "path": "schemas/6.0/action/action.update.json"
+        "path": "schemas/6.0/action/action.update.json",
+        "title": "action.update",
+        "description": "Update existing actions. The actionid property must be defined for each action, all other properties are optional; only the passed properties will be updated."
       }
     },
     "alert": {
       "alert.get": {
-        "path": "schemas/6.0/alert/alert.get.json"
+        "path": "schemas/6.0/alert/alert.get.json",
+        "title": "alert.get",
+        "description": "The method allows to retrieve alerts according to the given parameters."
       }
     },
     "apiinfo": {
       "apiinfo.version": {
-        "path": "schemas/6.0/apiinfo/apiinfo.version.json"
+        "path": "schemas/6.0/apiinfo/apiinfo.version.json",
+        "title": "apiinfo.version",
+        "description": "This method allows to retrieve the version of the Zabbix API. Only available to unauthenticated users and must be called without the auth parameter."
       }
     },
     "auditlog": {
       "auditlog.get": {
-        "path": "schemas/6.0/auditlog/auditlog.get.json"
+        "path": "schemas/6.0/auditlog/auditlog.get.json",
+        "title": "auditlog.get",
+        "description": "The method allows to retrieve audit log records according to the given parameters."
       }
     },
     "authentication": {
       "authentication.get": {
-        "path": "schemas/6.0/authentication/authentication.get.json"
+        "path": "schemas/6.0/authentication/authentication.get.json",
+        "title": "authentication.get",
+        "description": "Retrieve authentication object according to the given parameters."
       },
       "authentication.update": {
-        "path": "schemas/6.0/authentication/authentication.update.json"
+        "path": "schemas/6.0/authentication/authentication.update.json",
+        "title": "authentication.update",
+        "description": "Update existing authentication settings."
       }
     },
     "autoregistration": {
       "autoregistration.get": {
-        "path": "schemas/6.0/autoregistration/autoregistration.get.json"
+        "path": "schemas/6.0/autoregistration/autoregistration.get.json",
+        "title": "autoregistration.get",
+        "description": "The method allows to retrieve autoregistration object according to the given parameters."
       },
       "autoregistration.update": {
-        "path": "schemas/6.0/autoregistration/autoregistration.update.json"
+        "path": "schemas/6.0/autoregistration/autoregistration.update.json",
+        "title": "autoregistration.update",
+        "description": "This method allows to update existing autoregistration."
       }
     },
     "configuration": {
       "configuration.export": {
-        "path": "schemas/6.0/configuration/configuration.export.json"
+        "path": "schemas/6.0/configuration/configuration.export.json",
+        "title": "configuration.export",
+        "description": "This method allows to export configuration data as a serialized string."
       },
       "configuration.import": {
-        "path": "schemas/6.0/configuration/configuration.import.json"
+        "path": "schemas/6.0/configuration/configuration.import.json",
+        "title": "configuration.import",
+        "description": "This method allows to import configuration data from a serialized string."
       },
       "configuration.importcompare": {
-        "path": "schemas/6.0/configuration/configuration.importcompare.json"
+        "path": "schemas/6.0/configuration/configuration.importcompare.json",
+        "title": "configuration.importcompare",
+        "description": "This method allows to compare import file with current system elements and shows what will be changed if this import file will be imported."
       }
     },
     "correlation": {
       "correlation.create": {
-        "path": "schemas/6.0/correlation/correlation.create.json"
+        "path": "schemas/6.0/correlation/correlation.create.json",
+        "title": "correlation.create",
+        "description": "This method allows to create new correlations."
       },
       "correlation.delete": {
-        "path": "schemas/6.0/correlation/correlation.delete.json"
+        "path": "schemas/6.0/correlation/correlation.delete.json",
+        "title": "correlation.delete",
+        "description": "This method allows to delete correlations."
       },
       "correlation.get": {
-        "path": "schemas/6.0/correlation/correlation.get.json"
+        "path": "schemas/6.0/correlation/correlation.get.json",
+        "title": "correlation.get",
+        "description": "The method allows to retrieve correlations according to the given parameters."
       },
       "correlation.update": {
-        "path": "schemas/6.0/correlation/correlation.update.json"
+        "path": "schemas/6.0/correlation/correlation.update.json",
+        "title": "correlation.update",
+        "description": "This method allows to update existing correlations."
       }
     },
     "dashboard": {
       "dashboard.create": {
-        "path": "schemas/6.0/dashboard/dashboard.create.json"
+        "path": "schemas/6.0/dashboard/dashboard.create.json",
+        "title": "dashboard.create",
+        "description": "This method allows to create new dashboards."
       },
       "dashboard.delete": {
-        "path": "schemas/6.0/dashboard/dashboard.delete.json"
+        "path": "schemas/6.0/dashboard/dashboard.delete.json",
+        "title": "dashboard.delete",
+        "description": "This method allows to delete dashboards."
       },
       "dashboard.get": {
-        "path": "schemas/6.0/dashboard/dashboard.get.json"
+        "path": "schemas/6.0/dashboard/dashboard.get.json",
+        "title": "dashboard.get",
+        "description": "The method allows to retrieve dashboards according to the given parameters."
       },
       "dashboard.update": {
-        "path": "schemas/6.0/dashboard/dashboard.update.json"
+        "path": "schemas/6.0/dashboard/dashboard.update.json",
+        "title": "dashboard.update",
+        "description": "This method allows to update existing dashboards."
       }
     },
     "dcheck": {
       "dcheck.get": {
-        "path": "schemas/6.0/dcheck/dcheck.get.json"
+        "path": "schemas/6.0/dcheck/dcheck.get.json",
+        "title": "dcheck.get",
+        "description": "Retrieve discovery checks according to the given parameters."
       }
     },
     "dhost": {
       "dhost.get": {
-        "path": "schemas/6.0/dhost/dhost.get.json"
+        "path": "schemas/6.0/dhost/dhost.get.json",
+        "title": "dhost.get",
+        "description": "Retrieve discovered hosts according to the given parameters."
       }
     },
     "discoveryrule": {
       "discoveryrule.copy": {
-        "path": "schemas/6.0/discoveryrule/discoveryrule.copy.json"
+        "path": "schemas/6.0/discoveryrule/discoveryrule.copy.json",
+        "title": "discoveryrule.copy",
+        "description": "This method allows to copy LLD rules with all of the prototypes to the given hosts."
       },
       "discoveryrule.create": {
-        "path": "schemas/6.0/discoveryrule/discoveryrule.create.json"
+        "path": "schemas/6.0/discoveryrule/discoveryrule.create.json",
+        "title": "discoveryrule.create",
+        "description": "This method allows to create new LLD rules."
       },
       "discoveryrule.delete": {
-        "path": "schemas/6.0/discoveryrule/discoveryrule.delete.json"
+        "path": "schemas/6.0/discoveryrule/discoveryrule.delete.json",
+        "title": "discoveryrule.delete",
+        "description": "This method allows to delete LLD rules."
       },
       "discoveryrule.get": {
-        "path": "schemas/6.0/discoveryrule/discoveryrule.get.json"
+        "path": "schemas/6.0/discoveryrule/discoveryrule.get.json",
+        "title": "discoveryrule.get",
+        "description": "The method allows to retrieve LLD rules according to the given parameters."
       },
       "discoveryrule.update": {
-        "path": "schemas/6.0/discoveryrule/discoveryrule.update.json"
+        "path": "schemas/6.0/discoveryrule/discoveryrule.update.json",
+        "title": "discoveryrule.update",
+        "description": "This method allows to update existing LLD rules."
       }
     },
     "drule": {
       "drule.create": {
-        "path": "schemas/6.0/drule/drule.create.json"
+        "path": "schemas/6.0/drule/drule.create.json",
+        "title": "drule.create",
+        "description": "Create new discovery rules."
       },
       "drule.delete": {
-        "path": "schemas/6.0/drule/drule.delete.json"
+        "path": "schemas/6.0/drule/drule.delete.json",
+        "title": "drule.delete",
+        "description": "Delete discovery rules."
       },
       "drule.get": {
-        "path": "schemas/6.0/drule/drule.get.json"
+        "path": "schemas/6.0/drule/drule.get.json",
+        "title": "drule.get",
+        "description": "Retrieve discovery rules according to the given parameters."
       },
       "drule.update": {
-        "path": "schemas/6.0/drule/drule.update.json"
+        "path": "schemas/6.0/drule/drule.update.json",
+        "title": "drule.update",
+        "description": "Update existing discovery rules."
       }
     },
     "dservice": {
       "dservice.get": {
-        "path": "schemas/6.0/dservice/dservice.get.json"
+        "path": "schemas/6.0/dservice/dservice.get.json",
+        "title": "dservice.get",
+        "description": "The method allows to retrieve discovered services according to the given parameters."
       }
     },
     "event": {
       "event.acknowledge": {
-        "path": "schemas/6.0/event/event.acknowledge.json"
+        "path": "schemas/6.0/event/event.acknowledge.json",
+        "title": "event.acknowledge",
+        "description": "This method allows to update events: close, acknowledge, unacknowledge, add a message, or change severity."
       },
       "event.get": {
-        "path": "schemas/6.0/event/event.get.json"
+        "path": "schemas/6.0/event/event.get.json",
+        "title": "event.get",
+        "description": "The method allows to retrieve events according to the given parameters."
       }
     },
     "graph": {
       "graph.create": {
-        "path": "schemas/6.0/graph/graph.create.json"
+        "path": "schemas/6.0/graph/graph.create.json",
+        "title": "graph.create",
+        "description": "This method allows to create new graphs."
       },
       "graph.delete": {
-        "path": "schemas/6.0/graph/graph.delete.json"
+        "path": "schemas/6.0/graph/graph.delete.json",
+        "title": "graph.delete",
+        "description": "This method allows to delete graphs."
       },
       "graph.get": {
-        "path": "schemas/6.0/graph/graph.get.json"
+        "path": "schemas/6.0/graph/graph.get.json",
+        "title": "graph.get",
+        "description": "The method allows to retrieve graphs according to the given parameters."
       },
       "graph.update": {
-        "path": "schemas/6.0/graph/graph.update.json"
+        "path": "schemas/6.0/graph/graph.update.json",
+        "title": "graph.update",
+        "description": "This method allows to update existing graphs."
       }
     },
     "graphitem": {
       "graphitem.get": {
-        "path": "schemas/6.0/graphitem/graphitem.get.json"
+        "path": "schemas/6.0/graphitem/graphitem.get.json",
+        "title": "graphitem.get",
+        "description": "Retrieve graph items according to the given parameters."
       }
     },
     "graphprototype": {
       "graphprototype.create": {
-        "path": "schemas/6.0/graphprototype/graphprototype.create.json"
+        "path": "schemas/6.0/graphprototype/graphprototype.create.json",
+        "title": "graphprototype.create",
+        "description": "This method allows to create new graph prototypes."
       },
       "graphprototype.delete": {
-        "path": "schemas/6.0/graphprototype/graphprototype.delete.json"
+        "path": "schemas/6.0/graphprototype/graphprototype.delete.json",
+        "title": "graphprototype.delete",
+        "description": "This method allows to delete graph prototypes."
       },
       "graphprototype.get": {
-        "path": "schemas/6.0/graphprototype/graphprototype.get.json"
+        "path": "schemas/6.0/graphprototype/graphprototype.get.json",
+        "title": "graphprototype.get",
+        "description": "The method allows to retrieve graph prototypes according to the given parameters."
       },
       "graphprototype.update": {
-        "path": "schemas/6.0/graphprototype/graphprototype.update.json"
+        "path": "schemas/6.0/graphprototype/graphprototype.update.json",
+        "title": "graphprototype.update",
+        "description": "This method allows to update existing graph prototypes."
       }
     },
     "hanode": {
       "hanode.get": {
-        "path": "schemas/6.0/hanode/hanode.get.json"
+        "path": "schemas/6.0/hanode/hanode.get.json",
+        "title": "hanode.get",
+        "description": "Retrieve a list of High availability cluster nodes according to the given parameters."
       }
     },
     "history": {
       "history.clear": {
-        "path": "schemas/6.0/history/history.clear.json"
+        "path": "schemas/6.0/history/history.clear.json",
+        "title": "history.clear",
+        "description": "This method allows to clear item history."
       },
       "history.get": {
-        "path": "schemas/6.0/history/history.get.json"
+        "path": "schemas/6.0/history/history.get.json",
+        "title": "history.get",
+        "description": "The method allows to retrieve history data according to the given parameters."
       }
     },
     "host": {
       "host.create": {
-        "path": "schemas/6.0/host/host.create.json"
+        "path": "schemas/6.0/host/host.create.json",
+        "title": "host.create",
+        "description": "This method allows to create new hosts."
       },
       "host.delete": {
-        "path": "schemas/6.0/host/host.delete.json"
+        "path": "schemas/6.0/host/host.delete.json",
+        "title": "host.delete",
+        "description": "This method allows to delete hosts."
       },
       "host.get": {
-        "path": "schemas/6.0/host/host.get.json"
+        "path": "schemas/6.0/host/host.get.json",
+        "title": "host.get",
+        "description": "The method allows to retrieve hosts according to the given parameters."
       },
       "host.massadd": {
-        "path": "schemas/6.0/host/host.massadd.json"
+        "path": "schemas/6.0/host/host.massadd.json",
+        "title": "host.massadd",
+        "description": "This method allows to simultaneously add one or more related objects to all the given hosts."
       },
       "host.massremove": {
-        "path": "schemas/6.0/host/host.massremove.json"
+        "path": "schemas/6.0/host/host.massremove.json",
+        "title": "host.massremove",
+        "description": "This method allows to simultaneously remove one or more related objects from all the given hosts."
       },
       "host.massupdate": {
-        "path": "schemas/6.0/host/host.massupdate.json"
+        "path": "schemas/6.0/host/host.massupdate.json",
+        "title": "host.massupdate",
+        "description": "This method allows to simultaneously update multiple hosts, additionally to standard host properties, this method allows to replace host groups, templates, macros, interfaces and inventory data on multiple hosts."
       },
       "host.update": {
-        "path": "schemas/6.0/host/host.update.json"
+        "path": "schemas/6.0/host/host.update.json",
+        "title": "host.update",
+        "description": "This method allows to update existing hosts."
       }
     },
     "hostgroup": {
       "hostgroup.create": {
-        "path": "schemas/6.0/hostgroup/hostgroup.create.json"
+        "path": "schemas/6.0/hostgroup/hostgroup.create.json",
+        "title": "hostgroup.create",
+        "description": "This method allows to create new host groups."
       },
       "hostgroup.delete": {
-        "path": "schemas/6.0/hostgroup/hostgroup.delete.json"
+        "path": "schemas/6.0/hostgroup/hostgroup.delete.json",
+        "title": "hostgroup.delete",
+        "description": "This method allows to delete host groups."
       },
       "hostgroup.get": {
-        "path": "schemas/6.0/hostgroup/hostgroup.get.json"
+        "path": "schemas/6.0/hostgroup/hostgroup.get.json",
+        "title": "hostgroup.get",
+        "description": "The method allows to retrieve host groups according to the given parameters."
       },
       "hostgroup.massadd": {
-        "path": "schemas/6.0/hostgroup/hostgroup.massadd.json"
+        "path": "schemas/6.0/hostgroup/hostgroup.massadd.json",
+        "title": "hostgroup.massadd",
+        "description": "This method allows to simultaneously add multiple related objects to all the given host groups."
       },
       "hostgroup.massremove": {
-        "path": "schemas/6.0/hostgroup/hostgroup.massremove.json"
+        "path": "schemas/6.0/hostgroup/hostgroup.massremove.json",
+        "title": "hostgroup.massremove",
+        "description": "This method allows to remove related objects from multiple host groups."
       },
       "hostgroup.massupdate": {
-        "path": "schemas/6.0/hostgroup/hostgroup.massupdate.json"
+        "path": "schemas/6.0/hostgroup/hostgroup.massupdate.json",
+        "title": "hostgroup.massupdate",
+        "description": "This method allows to replace hosts and templates with the specified ones in multiple host groups."
       },
       "hostgroup.update": {
-        "path": "schemas/6.0/hostgroup/hostgroup.update.json"
+        "path": "schemas/6.0/hostgroup/hostgroup.update.json",
+        "title": "hostgroup.update",
+        "description": "This method allows to update existing hosts groups."
       }
     },
     "hostinterface": {
       "hostinterface.create": {
-        "path": "schemas/6.0/hostinterface/hostinterface.create.json"
+        "path": "schemas/6.0/hostinterface/hostinterface.create.json",
+        "title": "hostinterface.create",
+        "description": "This method allows to create new host interfaces."
       },
       "hostinterface.delete": {
-        "path": "schemas/6.0/hostinterface/hostinterface.delete.json"
+        "path": "schemas/6.0/hostinterface/hostinterface.delete.json",
+        "title": "hostinterface.delete",
+        "description": "This method allows to delete host interfaces."
       },
       "hostinterface.get": {
-        "path": "schemas/6.0/hostinterface/hostinterface.get.json"
+        "path": "schemas/6.0/hostinterface/hostinterface.get.json",
+        "title": "hostinterface.get",
+        "description": "The method allows to retrieve host interfaces according to the given parameters."
       },
       "hostinterface.massadd": {
-        "path": "schemas/6.0/hostinterface/hostinterface.massadd.json"
+        "path": "schemas/6.0/hostinterface/hostinterface.massadd.json",
+        "title": "hostinterface.massadd",
+        "description": "This method allows to simultaneously add host interfaces to multiple hosts."
       },
       "hostinterface.massremove": {
-        "path": "schemas/6.0/hostinterface/hostinterface.massremove.json"
+        "path": "schemas/6.0/hostinterface/hostinterface.massremove.json",
+        "title": "hostinterface.massremove",
+        "description": "This method allows to remove host interfaces from the given hosts."
       },
       "hostinterface.replacehostinterfaces": {
-        "path": "schemas/6.0/hostinterface/hostinterface.replacehostinterfaces.json"
+        "path": "schemas/6.0/hostinterface/hostinterface.replacehostinterfaces.json",
+        "title": "hostinterface.replacehostinterfaces",
+        "description": "This method allows to replace all host interfaces on a given host."
       },
       "hostinterface.update": {
-        "path": "schemas/6.0/hostinterface/hostinterface.update.json"
+        "path": "schemas/6.0/hostinterface/hostinterface.update.json",
+        "title": "hostinterface.update",
+        "description": "This method allows to update existing host interfaces."
       }
     },
     "hostprototype": {
       "hostprototype.create": {
-        "path": "schemas/6.0/hostprototype/hostprototype.create.json"
+        "path": "schemas/6.0/hostprototype/hostprototype.create.json",
+        "title": "hostprototype.create",
+        "description": "Create new host prototypes."
       },
       "hostprototype.delete": {
-        "path": "schemas/6.0/hostprototype/hostprototype.delete.json"
+        "path": "schemas/6.0/hostprototype/hostprototype.delete.json",
+        "title": "hostprototype.delete",
+        "description": "Delete host prototypes."
       },
       "hostprototype.get": {
-        "path": "schemas/6.0/hostprototype/hostprototype.get.json"
+        "path": "schemas/6.0/hostprototype/hostprototype.get.json",
+        "title": "hostprototype.get",
+        "description": "Retrieve host prototypes according to the given parameters."
       },
       "hostprototype.update": {
-        "path": "schemas/6.0/hostprototype/hostprototype.update.json"
+        "path": "schemas/6.0/hostprototype/hostprototype.update.json",
+        "title": "hostprototype.update",
+        "description": "Update existing host prototypes."
       }
     },
     "housekeeping": {
       "housekeeping.get": {
-        "path": "schemas/6.0/housekeeping/housekeeping.get.json"
+        "path": "schemas/6.0/housekeeping/housekeeping.get.json",
+        "title": "housekeeping.get",
+        "description": "The method allows to retrieve housekeeping object according to the given parameters."
       },
       "housekeeping.update": {
-        "path": "schemas/6.0/housekeeping/housekeeping.update.json"
+        "path": "schemas/6.0/housekeeping/housekeeping.update.json",
+        "title": "housekeeping.update",
+        "description": "This method allows to update existing housekeeping settings."
       }
     },
     "httptest": {
       "httptest.create": {
-        "path": "schemas/6.0/httptest/httptest.create.json"
+        "path": "schemas/6.0/httptest/httptest.create.json",
+        "title": "httptest.create",
+        "description": "Create new web scenarios."
       },
       "httptest.delete": {
-        "path": "schemas/6.0/httptest/httptest.delete.json"
+        "path": "schemas/6.0/httptest/httptest.delete.json",
+        "title": "httptest.delete",
+        "description": "Delete web scenarios."
       },
       "httptest.get": {
-        "path": "schemas/6.0/httptest/httptest.get.json"
+        "path": "schemas/6.0/httptest/httptest.get.json",
+        "title": "httptest.get",
+        "description": "Retrieve web scenarios according to the given parameters."
       },
       "httptest.update": {
-        "path": "schemas/6.0/httptest/httptest.update.json"
+        "path": "schemas/6.0/httptest/httptest.update.json",
+        "title": "httptest.update",
+        "description": "Update existing web scenarios."
       }
     },
     "iconmap": {
       "iconmap.create": {
-        "path": "schemas/6.0/iconmap/iconmap.create.json"
+        "path": "schemas/6.0/iconmap/iconmap.create.json",
+        "title": "iconmap.create",
+        "description": "This method allows to create new icon maps."
       },
       "iconmap.delete": {
-        "path": "schemas/6.0/iconmap/iconmap.delete.json"
+        "path": "schemas/6.0/iconmap/iconmap.delete.json",
+        "title": "iconmap.delete",
+        "description": "This method allows to delete icon maps."
       },
       "iconmap.get": {
-        "path": "schemas/6.0/iconmap/iconmap.get.json"
+        "path": "schemas/6.0/iconmap/iconmap.get.json",
+        "title": "iconmap.get",
+        "description": "The method allows to retrieve icon maps according to the given parameters."
       },
       "iconmap.update": {
-        "path": "schemas/6.0/iconmap/iconmap.update.json"
+        "path": "schemas/6.0/iconmap/iconmap.update.json",
+        "title": "iconmap.update",
+        "description": "This method allows to update existing icon maps."
       }
     },
     "image": {
       "image.create": {
-        "path": "schemas/6.0/image/image.create.json"
+        "path": "schemas/6.0/image/image.create.json",
+        "title": "image.create",
+        "description": "This method allows to create new images."
       },
       "image.delete": {
-        "path": "schemas/6.0/image/image.delete.json"
+        "path": "schemas/6.0/image/image.delete.json",
+        "title": "image.delete",
+        "description": "This method allows to delete images."
       },
       "image.get": {
-        "path": "schemas/6.0/image/image.get.json"
+        "path": "schemas/6.0/image/image.get.json",
+        "title": "image.get",
+        "description": "The method allows to retrieve images according to the given parameters."
       },
       "image.update": {
-        "path": "schemas/6.0/image/image.update.json"
+        "path": "schemas/6.0/image/image.update.json",
+        "title": "image.update",
+        "description": "This method allows to update existing images."
       }
     },
     "item": {
       "item.create": {
-        "path": "schemas/6.0/item/item.create.json"
+        "path": "schemas/6.0/item/item.create.json",
+        "title": "item.create",
+        "description": "This method allows to create new items. Web items cannot be created via the Zabbix API."
       },
       "item.delete": {
-        "path": "schemas/6.0/item/item.delete.json"
+        "path": "schemas/6.0/item/item.delete.json",
+        "title": "item.delete",
+        "description": "This method allows to delete items. Web items cannot be deleted via the Zabbix API."
       },
       "item.get": {
-        "path": "schemas/6.0/item/item.get.json"
+        "path": "schemas/6.0/item/item.get.json",
+        "title": "item.get",
+        "description": "The method allows to retrieve items according to the given parameters."
       },
       "item.update": {
-        "path": "schemas/6.0/item/item.update.json"
+        "path": "schemas/6.0/item/item.update.json",
+        "title": "item.update",
+        "description": "This method allows to update existing items. Web items cannot be updated via the Zabbix API."
       }
     },
     "itemprototype": {
       "itemprototype.create": {
-        "path": "schemas/6.0/itemprototype/itemprototype.create.json"
+        "path": "schemas/6.0/itemprototype/itemprototype.create.json",
+        "title": "itemprototype.create",
+        "description": "Create new item prototypes."
       },
       "itemprototype.delete": {
-        "path": "schemas/6.0/itemprototype/itemprototype.delete.json"
+        "path": "schemas/6.0/itemprototype/itemprototype.delete.json",
+        "title": "itemprototype.delete",
+        "description": "Delete item prototypes."
       },
       "itemprototype.get": {
-        "path": "schemas/6.0/itemprototype/itemprototype.get.json"
+        "path": "schemas/6.0/itemprototype/itemprototype.get.json",
+        "title": "itemprototype.get",
+        "description": "Retrieve item prototypes according to the given parameters."
       },
       "itemprototype.update": {
-        "path": "schemas/6.0/itemprototype/itemprototype.update.json"
+        "path": "schemas/6.0/itemprototype/itemprototype.update.json",
+        "title": "itemprototype.update",
+        "description": "Update existing item prototypes."
       }
     },
     "maintenance": {
       "maintenance.create": {
-        "path": "schemas/6.0/maintenance/maintenance.create.json"
+        "path": "schemas/6.0/maintenance/maintenance.create.json",
+        "title": "maintenance.create",
+        "description": "This method allows to create new maintenances."
       },
       "maintenance.delete": {
-        "path": "schemas/6.0/maintenance/maintenance.delete.json"
+        "path": "schemas/6.0/maintenance/maintenance.delete.json",
+        "title": "maintenance.delete",
+        "description": "This method allows to delete maintenance periods."
       },
       "maintenance.get": {
-        "path": "schemas/6.0/maintenance/maintenance.get.json"
+        "path": "schemas/6.0/maintenance/maintenance.get.json",
+        "title": "maintenance.get",
+        "description": "Retrieve maintenances according to the given parameters."
       },
       "maintenance.update": {
-        "path": "schemas/6.0/maintenance/maintenance.update.json"
+        "path": "schemas/6.0/maintenance/maintenance.update.json",
+        "title": "maintenance.update",
+        "description": "This method allows to update existing maintenances."
       }
     },
     "map": {
       "map.create": {
-        "path": "schemas/6.0/map/map.create.json"
+        "path": "schemas/6.0/map/map.create.json",
+        "title": "map.create",
+        "description": "This method allows to create new maps."
       },
       "map.delete": {
-        "path": "schemas/6.0/map/map.delete.json"
+        "path": "schemas/6.0/map/map.delete.json",
+        "title": "map.delete",
+        "description": "This method allows to delete maps."
       },
       "map.get": {
-        "path": "schemas/6.0/map/map.get.json"
+        "path": "schemas/6.0/map/map.get.json",
+        "title": "map.get",
+        "description": "The method allows to retrieve maps according to the given parameters."
       },
       "map.update": {
-        "path": "schemas/6.0/map/map.update.json"
+        "path": "schemas/6.0/map/map.update.json",
+        "title": "map.update",
+        "description": "This method allows to update existing maps."
       }
     },
     "mediatype": {
       "mediatype.create": {
-        "path": "schemas/6.0/mediatype/mediatype.create.json"
+        "path": "schemas/6.0/mediatype/mediatype.create.json",
+        "title": "mediatype.create",
+        "description": "Create new media types."
       },
       "mediatype.delete": {
-        "path": "schemas/6.0/mediatype/mediatype.delete.json"
+        "path": "schemas/6.0/mediatype/mediatype.delete.json",
+        "title": "mediatype.delete",
+        "description": "Delete media types."
       },
       "mediatype.get": {
-        "path": "schemas/6.0/mediatype/mediatype.get.json"
+        "path": "schemas/6.0/mediatype/mediatype.get.json",
+        "title": "mediatype.get",
+        "description": "Retrieve media types according to the given parameters."
       },
       "mediatype.update": {
-        "path": "schemas/6.0/mediatype/mediatype.update.json"
+        "path": "schemas/6.0/mediatype/mediatype.update.json",
+        "title": "mediatype.update",
+        "description": "Update existing media types."
       }
     },
     "problem": {
       "problem.get": {
-        "path": "schemas/6.0/problem/problem.get.json"
+        "path": "schemas/6.0/problem/problem.get.json",
+        "title": "problem.get",
+        "description": "The method allows to retrieve problems according to the given parameters."
       }
     },
     "proxy": {
       "proxy.create": {
-        "path": "schemas/6.0/proxy/proxy.create.json"
+        "path": "schemas/6.0/proxy/proxy.create.json",
+        "title": "proxy.create",
+        "description": "This method allows to create new proxies."
       },
       "proxy.delete": {
-        "path": "schemas/6.0/proxy/proxy.delete.json"
+        "path": "schemas/6.0/proxy/proxy.delete.json",
+        "title": "proxy.delete",
+        "description": "This method allows to delete proxies."
       },
       "proxy.get": {
-        "path": "schemas/6.0/proxy/proxy.get.json"
+        "path": "schemas/6.0/proxy/proxy.get.json",
+        "title": "proxy.get",
+        "description": "The method allows to retrieve proxies according to the given parameters."
       },
       "proxy.update": {
-        "path": "schemas/6.0/proxy/proxy.update.json"
+        "path": "schemas/6.0/proxy/proxy.update.json",
+        "title": "proxy.update",
+        "description": "This method allows to update existing proxies."
       }
     },
     "regexp": {
       "regexp.create": {
-        "path": "schemas/6.0/regexp/regexp.create.json"
+        "path": "schemas/6.0/regexp/regexp.create.json",
+        "title": "regexp.create",
+        "description": "This method allows to create new global regular expressions."
       },
       "regexp.delete": {
-        "path": "schemas/6.0/regexp/regexp.delete.json"
+        "path": "schemas/6.0/regexp/regexp.delete.json",
+        "title": "regexp.delete",
+        "description": "This method allows to delete global regular expressions."
       },
       "regexp.get": {
-        "path": "schemas/6.0/regexp/regexp.get.json"
+        "path": "schemas/6.0/regexp/regexp.get.json",
+        "title": "regexp.get",
+        "description": "The method allows to retrieve global regular expressions according to the given parameters."
       },
       "regexp.update": {
-        "path": "schemas/6.0/regexp/regexp.update.json"
+        "path": "schemas/6.0/regexp/regexp.update.json",
+        "title": "regexp.update",
+        "description": "This method allows to update existing global regular expressions."
       }
     },
     "report": {
       "report.create": {
-        "path": "schemas/6.0/report/report.create.json"
+        "path": "schemas/6.0/report/report.create.json",
+        "title": "report.create",
+        "description": "This method allows to create new scheduled reports."
       },
       "report.delete": {
-        "path": "schemas/6.0/report/report.delete.json"
+        "path": "schemas/6.0/report/report.delete.json",
+        "title": "report.delete",
+        "description": "This method allows to delete scheduled reports."
       },
       "report.get": {
-        "path": "schemas/6.0/report/report.get.json"
+        "path": "schemas/6.0/report/report.get.json",
+        "title": "report.get",
+        "description": "The method allows to retrieve scheduled reports according to the given parameters."
       },
       "report.update": {
-        "path": "schemas/6.0/report/report.update.json"
+        "path": "schemas/6.0/report/report.update.json",
+        "title": "report.update",
+        "description": "This method allows to update existing scheduled reports."
       }
     },
     "role": {
       "role.create": {
-        "path": "schemas/6.0/role/role.create.json"
+        "path": "schemas/6.0/role/role.create.json",
+        "title": "role.create",
+        "description": "Create new user roles."
       },
       "role.delete": {
-        "path": "schemas/6.0/role/role.delete.json"
+        "path": "schemas/6.0/role/role.delete.json",
+        "title": "role.delete",
+        "description": "Delete user roles."
       },
       "role.get": {
-        "path": "schemas/6.0/role/role.get.json"
+        "path": "schemas/6.0/role/role.get.json",
+        "title": "role.get",
+        "description": "Retrieve user roles."
       },
       "role.update": {
-        "path": "schemas/6.0/role/role.update.json"
+        "path": "schemas/6.0/role/role.update.json",
+        "title": "role.update",
+        "description": "Update existing user roles."
       }
     },
     "script": {
       "script.create": {
-        "path": "schemas/6.0/script/script.create.json"
+        "path": "schemas/6.0/script/script.create.json",
+        "title": "script.create",
+        "description": "This method allows to create new scripts."
       },
       "script.delete": {
-        "path": "schemas/6.0/script/script.delete.json"
+        "path": "schemas/6.0/script/script.delete.json",
+        "title": "script.delete",
+        "description": "This method allows to delete scripts."
       },
       "script.execute": {
-        "path": "schemas/6.0/script/script.execute.json"
+        "path": "schemas/6.0/script/script.execute.json",
+        "title": "script.execute",
+        "description": "This method allows to run a script on a host or event."
       },
       "script.get": {
-        "path": "schemas/6.0/script/script.get.json"
+        "path": "schemas/6.0/script/script.get.json",
+        "title": "script.get",
+        "description": "The method allows to retrieve scripts according to the given parameters."
       },
       "script.getscriptsbyhosts": {
-        "path": "schemas/6.0/script/script.getscriptsbyhosts.json"
+        "path": "schemas/6.0/script/script.getscriptsbyhosts.json",
+        "title": "script.getscriptsbyhosts",
+        "description": "This method allows to retrieve scripts available on the given hosts."
       },
       "script.update": {
-        "path": "schemas/6.0/script/script.update.json"
+        "path": "schemas/6.0/script/script.update.json",
+        "title": "script.update",
+        "description": "This method allows to update existing scripts."
       }
     },
     "service": {
       "service.create": {
-        "path": "schemas/6.0/service/service.create.json"
+        "path": "schemas/6.0/service/service.create.json",
+        "title": "service.create",
+        "description": "Create new services."
       },
       "service.delete": {
-        "path": "schemas/6.0/service/service.delete.json"
+        "path": "schemas/6.0/service/service.delete.json",
+        "title": "service.delete",
+        "description": "Delete services."
       },
       "service.get": {
-        "path": "schemas/6.0/service/service.get.json"
+        "path": "schemas/6.0/service/service.get.json",
+        "title": "service.get",
+        "description": "Retrieve services according to the given parameters."
       },
       "service.update": {
-        "path": "schemas/6.0/service/service.update.json"
+        "path": "schemas/6.0/service/service.update.json",
+        "title": "service.update",
+        "description": "Update existing services. The serviceid property must be defined for each service, all other properties are optional; only the passed properties will be updated."
       }
     },
     "settings": {
       "settings.get": {
-        "path": "schemas/6.0/settings/settings.get.json"
+        "path": "schemas/6.0/settings/settings.get.json",
+        "title": "settings.get",
+        "description": "Retrieve settings object according to the given parameters."
       },
       "settings.update": {
-        "path": "schemas/6.0/settings/settings.update.json"
+        "path": "schemas/6.0/settings/settings.update.json",
+        "title": "settings.update",
+        "description": "Update existing common settings."
       }
     },
     "sla": {
       "sla.create": {
-        "path": "schemas/6.0/sla/sla.create.json"
+        "path": "schemas/6.0/sla/sla.create.json",
+        "title": "sla.create",
+        "description": "This method allows to create new SLA objects."
       },
       "sla.delete": {
-        "path": "schemas/6.0/sla/sla.delete.json"
+        "path": "schemas/6.0/sla/sla.delete.json",
+        "title": "sla.delete",
+        "description": "This method allows to delete SLA entries."
       },
       "sla.get": {
-        "path": "schemas/6.0/sla/sla.get.json"
+        "path": "schemas/6.0/sla/sla.get.json",
+        "title": "sla.get",
+        "description": "The method allows to retrieve SLA objects according to the given parameters."
       },
       "sla.getsli": {
-        "path": "schemas/6.0/sla/sla.getsli.json"
+        "path": "schemas/6.0/sla/sla.getsli.json",
+        "title": "sla.getsli",
+        "description": "This method allows to calculate the Service Level Indicator (SLI) data for a Service Level Agreement (SLA)."
       },
       "sla.update": {
-        "path": "schemas/6.0/sla/sla.update.json"
+        "path": "schemas/6.0/sla/sla.update.json",
+        "title": "sla.update",
+        "description": "This method allows to update existing SLA entries."
       }
     },
     "task": {
       "task.create": {
-        "path": "schemas/6.0/task/task.create.json"
+        "path": "schemas/6.0/task/task.create.json",
+        "title": "task.create",
+        "description": "This method allows to create a new task (such as collect diagnostic data or check items or low-level discovery rules without config reload)."
       },
       "task.get": {
-        "path": "schemas/6.0/task/task.get.json"
+        "path": "schemas/6.0/task/task.get.json",
+        "title": "task.get",
+        "description": "The method allows to retrieve tasks according to the given parameters. Method returns details only about 'diagnostic information' tasks."
       }
     },
     "template": {
       "template.create": {
-        "path": "schemas/6.0/template/template.create.json"
+        "path": "schemas/6.0/template/template.create.json",
+        "title": "template.create",
+        "description": "This method allows to create new templates."
       },
       "template.delete": {
-        "path": "schemas/6.0/template/template.delete.json"
+        "path": "schemas/6.0/template/template.delete.json",
+        "title": "template.delete",
+        "description": "This method allows to delete templates. Deleting a template will cause deletion of all template entities (items, triggers, graphs, etc.)."
       },
       "template.get": {
-        "path": "schemas/6.0/template/template.get.json"
+        "path": "schemas/6.0/template/template.get.json",
+        "title": "template.get",
+        "description": "The method allows to retrieve templates according to the given parameters."
       },
       "template.massadd": {
-        "path": "schemas/6.0/template/template.massadd.json"
+        "path": "schemas/6.0/template/template.massadd.json",
+        "title": "template.massadd",
+        "description": "This method allows to simultaneously add multiple related objects to the given templates."
       },
       "template.massremove": {
-        "path": "schemas/6.0/template/template.massremove.json"
+        "path": "schemas/6.0/template/template.massremove.json",
+        "title": "template.massremove",
+        "description": "This method allows to remove related objects from multiple templates."
       },
       "template.massupdate": {
-        "path": "schemas/6.0/template/template.massupdate.json"
+        "path": "schemas/6.0/template/template.massupdate.json",
+        "title": "template.massupdate",
+        "description": "This method allows to simultaneously replace or remove related objects and update properties on multiple templates."
       },
       "template.update": {
-        "path": "schemas/6.0/template/template.update.json"
+        "path": "schemas/6.0/template/template.update.json",
+        "title": "template.update",
+        "description": "This method allows to update existing templates."
       }
     },
     "templatedashboard": {
       "templatedashboard.create": {
-        "path": "schemas/6.0/templatedashboard/templatedashboard.create.json"
+        "path": "schemas/6.0/templatedashboard/templatedashboard.create.json",
+        "title": "templatedashboard.create",
+        "description": "This method allows to create new template dashboards."
       },
       "templatedashboard.delete": {
-        "path": "schemas/6.0/templatedashboard/templatedashboard.delete.json"
+        "path": "schemas/6.0/templatedashboard/templatedashboard.delete.json",
+        "title": "templatedashboard.delete",
+        "description": "This method allows to delete template dashboards."
       },
       "templatedashboard.get": {
-        "path": "schemas/6.0/templatedashboard/templatedashboard.get.json"
+        "path": "schemas/6.0/templatedashboard/templatedashboard.get.json",
+        "title": "templatedashboard.get",
+        "description": "The method allows to retrieve template dashboards according to the given parameters."
       },
       "templatedashboard.update": {
-        "path": "schemas/6.0/templatedashboard/templatedashboard.update.json"
+        "path": "schemas/6.0/templatedashboard/templatedashboard.update.json",
+        "title": "templatedashboard.update",
+        "description": "This method allows to update existing template dashboards."
       }
     },
     "token": {
       "token.create": {
-        "path": "schemas/6.0/token/token.create.json"
+        "path": "schemas/6.0/token/token.create.json",
+        "title": "token.create",
+        "description": "Create new tokens. A token created by this method also has to be generated (token.generate) before it is usable."
       },
       "token.delete": {
-        "path": "schemas/6.0/token/token.delete.json"
+        "path": "schemas/6.0/token/token.delete.json",
+        "title": "token.delete",
+        "description": "Delete tokens."
       },
       "token.generate": {
-        "path": "schemas/6.0/token/token.generate.json"
+        "path": "schemas/6.0/token/token.generate.json",
+        "title": "token.generate",
+        "description": "Generate tokens. A token can be generated by this method only if it has been created (token.create) first."
       },
       "token.get": {
-        "path": "schemas/6.0/token/token.get.json"
+        "path": "schemas/6.0/token/token.get.json",
+        "title": "token.get",
+        "description": "Retrieve tokens according to the given parameters."
       },
       "token.update": {
-        "path": "schemas/6.0/token/token.update.json"
+        "path": "schemas/6.0/token/token.update.json",
+        "title": "token.update",
+        "description": "Update existing tokens. The tokenid property must be defined for each token; all other properties are optional and only passed properties will be updated."
       }
     },
     "trend": {
       "trend.get": {
-        "path": "schemas/6.0/trend/trend.get.json"
+        "path": "schemas/6.0/trend/trend.get.json",
+        "title": "trend.get",
+        "description": "The method allows to retrieve trend data according to the given parameters."
       }
     },
     "trigger": {
       "trigger.adddependencies": {
-        "path": "schemas/6.0/trigger/trigger.adddependencies.json"
+        "path": "schemas/6.0/trigger/trigger.adddependencies.json",
+        "title": "trigger.adddependencies",
+        "description": "This method allows to create new trigger dependencies."
       },
       "trigger.create": {
-        "path": "schemas/6.0/trigger/trigger.create.json"
+        "path": "schemas/6.0/trigger/trigger.create.json",
+        "title": "trigger.create",
+        "description": "This method allows to create new triggers."
       },
       "trigger.delete": {
-        "path": "schemas/6.0/trigger/trigger.delete.json"
+        "path": "schemas/6.0/trigger/trigger.delete.json",
+        "title": "trigger.delete",
+        "description": "This method allows to delete triggers."
       },
       "trigger.deletedependencies": {
-        "path": "schemas/6.0/trigger/trigger.deletedependencies.json"
+        "path": "schemas/6.0/trigger/trigger.deletedependencies.json",
+        "title": "trigger.deletedependencies",
+        "description": "This method allows to delete all trigger dependencies from the given triggers."
       },
       "trigger.get": {
-        "path": "schemas/6.0/trigger/trigger.get.json"
+        "path": "schemas/6.0/trigger/trigger.get.json",
+        "title": "trigger.get",
+        "description": "The method allows to retrieve triggers according to the given parameters."
       },
       "trigger.update": {
-        "path": "schemas/6.0/trigger/trigger.update.json"
+        "path": "schemas/6.0/trigger/trigger.update.json",
+        "title": "trigger.update",
+        "description": "This method allows to update existing triggers."
       }
     },
     "triggerprototype": {
       "triggerprototype.create": {
-        "path": "schemas/6.0/triggerprototype/triggerprototype.create.json"
+        "path": "schemas/6.0/triggerprototype/triggerprototype.create.json",
+        "title": "triggerprototype.create",
+        "description": "This method allows to create new trigger prototypes."
       },
       "triggerprototype.delete": {
-        "path": "schemas/6.0/triggerprototype/triggerprototype.delete.json"
+        "path": "schemas/6.0/triggerprototype/triggerprototype.delete.json",
+        "title": "triggerprototype.delete",
+        "description": "This method allows to delete trigger prototypes."
       },
       "triggerprototype.get": {
-        "path": "schemas/6.0/triggerprototype/triggerprototype.get.json"
+        "path": "schemas/6.0/triggerprototype/triggerprototype.get.json",
+        "title": "triggerprototype.get",
+        "description": "The method allows to retrieve trigger prototypes according to the given parameters."
       },
       "triggerprototype.update": {
-        "path": "schemas/6.0/triggerprototype/triggerprototype.update.json"
+        "path": "schemas/6.0/triggerprototype/triggerprototype.update.json",
+        "title": "triggerprototype.update",
+        "description": "This method allows to update existing trigger prototypes."
       }
     },
     "user": {
       "user.checkauthentication": {
-        "path": "schemas/6.0/user/user.checkauthentication.json"
+        "path": "schemas/6.0/user/user.checkauthentication.json",
+        "title": "user.checkauthentication",
+        "description": "This method checks and prolongs user session."
       },
       "user.create": {
-        "path": "schemas/6.0/user/user.create.json"
+        "path": "schemas/6.0/user/user.create.json",
+        "title": "user.create",
+        "description": "This method allows to create new users."
       },
       "user.delete": {
-        "path": "schemas/6.0/user/user.delete.json"
+        "path": "schemas/6.0/user/user.delete.json",
+        "title": "user.delete",
+        "description": "This method allows to delete users."
       },
       "user.get": {
-        "path": "schemas/6.0/user/user.get.json"
+        "path": "schemas/6.0/user/user.get.json",
+        "title": "user.get",
+        "description": "The method allows to retrieve users according to the given parameters."
       },
       "user.login": {
-        "path": "schemas/6.0/user/user.login.json"
+        "path": "schemas/6.0/user/user.login.json",
+        "title": "user.login",
+        "description": "This method allows to log in to the API and generate an authentication token."
       },
       "user.logout": {
-        "path": "schemas/6.0/user/user.logout.json"
+        "path": "schemas/6.0/user/user.logout.json",
+        "title": "user.logout",
+        "description": "This method allows to log out of the API and invalidates the current authentication token."
       },
       "user.unblock": {
-        "path": "schemas/6.0/user/user.unblock.json"
+        "path": "schemas/6.0/user/user.unblock.json",
+        "title": "user.unblock",
+        "description": "This method allows to unblock users."
       },
       "user.update": {
-        "path": "schemas/6.0/user/user.update.json"
+        "path": "schemas/6.0/user/user.update.json",
+        "title": "user.update",
+        "description": "This method allows to update existing users."
       }
     },
     "usergroup": {
       "usergroup.create": {
-        "path": "schemas/6.0/usergroup/usergroup.create.json"
+        "path": "schemas/6.0/usergroup/usergroup.create.json",
+        "title": "usergroup.create",
+        "description": "Create new user groups."
       },
       "usergroup.delete": {
-        "path": "schemas/6.0/usergroup/usergroup.delete.json"
+        "path": "schemas/6.0/usergroup/usergroup.delete.json",
+        "title": "usergroup.delete",
+        "description": "Delete user groups."
       },
       "usergroup.get": {
-        "path": "schemas/6.0/usergroup/usergroup.get.json"
+        "path": "schemas/6.0/usergroup/usergroup.get.json",
+        "title": "usergroup.get",
+        "description": "Retrieve user groups according to the given parameters."
       },
       "usergroup.update": {
-        "path": "schemas/6.0/usergroup/usergroup.update.json"
+        "path": "schemas/6.0/usergroup/usergroup.update.json",
+        "title": "usergroup.update",
+        "description": "Update existing user groups."
       }
     },
     "usermacro": {
       "usermacro.create": {
-        "path": "schemas/6.0/usermacro/usermacro.create.json"
+        "path": "schemas/6.0/usermacro/usermacro.create.json",
+        "title": "usermacro.create",
+        "description": "Create new host macros."
       },
       "usermacro.createglobal": {
-        "path": "schemas/6.0/usermacro/usermacro.createglobal.json"
+        "path": "schemas/6.0/usermacro/usermacro.createglobal.json",
+        "title": "usermacro.createglobal",
+        "description": "Create new global macros."
       },
       "usermacro.delete": {
-        "path": "schemas/6.0/usermacro/usermacro.delete.json"
+        "path": "schemas/6.0/usermacro/usermacro.delete.json",
+        "title": "usermacro.delete",
+        "description": "Delete host macros."
       },
       "usermacro.deleteglobal": {
-        "path": "schemas/6.0/usermacro/usermacro.deleteglobal.json"
+        "path": "schemas/6.0/usermacro/usermacro.deleteglobal.json",
+        "title": "usermacro.deleteglobal",
+        "description": "Delete global macros."
       },
       "usermacro.get": {
-        "path": "schemas/6.0/usermacro/usermacro.get.json"
+        "path": "schemas/6.0/usermacro/usermacro.get.json",
+        "title": "usermacro.get",
+        "description": "Retrieve host and global macros according to the given parameters."
       },
       "usermacro.update": {
-        "path": "schemas/6.0/usermacro/usermacro.update.json"
+        "path": "schemas/6.0/usermacro/usermacro.update.json",
+        "title": "usermacro.update",
+        "description": "Update existing host macros."
       },
       "usermacro.updateglobal": {
-        "path": "schemas/6.0/usermacro/usermacro.updateglobal.json"
+        "path": "schemas/6.0/usermacro/usermacro.updateglobal.json",
+        "title": "usermacro.updateglobal",
+        "description": "Update existing global macros."
       }
     },
     "valuemap": {
       "valuemap.create": {
-        "path": "schemas/6.0/valuemap/valuemap.create.json"
+        "path": "schemas/6.0/valuemap/valuemap.create.json",
+        "title": "valuemap.create",
+        "description": "This method allows to create new value maps."
       },
       "valuemap.delete": {
-        "path": "schemas/6.0/valuemap/valuemap.delete.json"
+        "path": "schemas/6.0/valuemap/valuemap.delete.json",
+        "title": "valuemap.delete",
+        "description": "This method allows to delete value maps."
       },
       "valuemap.get": {
-        "path": "schemas/6.0/valuemap/valuemap.get.json"
+        "path": "schemas/6.0/valuemap/valuemap.get.json",
+        "title": "valuemap.get",
+        "description": "The method allows to retrieve value maps according to the given parameters."
       },
       "valuemap.update": {
-        "path": "schemas/6.0/valuemap/valuemap.update.json"
-      }
-    }
-  },
-  "$defs": {
-    "commonGetParams": {
-      "countOutput": {
-        "type": "boolean",
-        "description": "Return the number of records in the result instead of the actual data."
-      },
-      "editable": {
-        "type": "boolean",
-        "description": "If set to true, return only objects that the user has write permissions to. Default: false."
-      },
-      "excludeSearch": {
-        "type": "boolean",
-        "description": "Return results that do not match the criteria given in the search parameter."
-      },
-      "filter": {
-        "type": "object",
-        "description": "Return only those results that exactly match the given filter. Does not support text-type properties."
-      },
-      "limit": {
-        "type": "integer",
-        "description": "Limit the number of records returned."
-      },
-      "output": {
-        "oneOf": [
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          {
-            "enum": [
-              "extend",
-              "count"
-            ]
-          }
-        ],
-        "description": "Object properties to be returned. Default: extend."
-      },
-      "preservekeys": {
-        "type": "boolean",
-        "description": "Use IDs as keys in the resulting array."
-      },
-      "search": {
-        "type": "object",
-        "description": "Return results that match the given pattern (case-insensitive). Supports string and text properties."
-      },
-      "searchByAny": {
-        "type": "boolean",
-        "description": "If true, return results that match any of the criteria given in the filter or search parameter. Default: false."
-      },
-      "searchWildcardsEnabled": {
-        "type": "boolean",
-        "description": "If true, enables the use of '*' as a wildcard character. Default: false."
-      },
-      "sortfield": {
-        "oneOf": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        ],
-        "description": "Sort the result by the given properties."
-      },
-      "sortorder": {
-        "oneOf": [
-          {
-            "enum": [
-              "ASC",
-              "DESC"
-            ]
-          },
-          {
-            "type": "array",
-            "items": {
-              "enum": [
-                "ASC",
-                "DESC"
-              ]
-            }
-          }
-        ],
-        "description": "Order of sorting. ASC or DESC."
-      },
-      "startSearch": {
-        "type": "boolean",
-        "description": "The search parameter will compare the beginning of fields. Ignored if searchWildcardsEnabled is set."
+        "path": "schemas/6.0/valuemap/valuemap.update.json",
+        "title": "valuemap.update",
+        "description": "This method allows to update existing value maps."
       }
     }
   }

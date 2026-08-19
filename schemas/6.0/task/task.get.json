@@ -2,10 +2,24 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/task/task.get",
   "title": "task.get",
-  "description": "",
+  "description": "The method allows to retrieve tasks according to the given parameters. Method returns details only about 'diagnostic information' tasks.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/task/get",
   "type": "object",
   "properties": {
+    "taskids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only tasks with the given IDs."
+    },
     "countOutput": {
       "type": "boolean",
       "description": "Return the number of records in the result instead of the actual data."
@@ -35,10 +49,7 @@
           }
         },
         {
-          "enum": [
-            "extend",
-            "count"
-          ]
+          "enum": ["extend", "count"]
         }
       ],
       "description": "Object properties to be returned. Default: extend."
@@ -76,18 +87,12 @@
     "sortorder": {
       "oneOf": [
         {
-          "enum": [
-            "ASC",
-            "DESC"
-          ]
+          "enum": ["ASC", "DESC"]
         },
         {
           "type": "array",
           "items": {
-            "enum": [
-              "ASC",
-              "DESC"
-            ]
+            "enum": ["ASC", "DESC"]
           }
         }
       ],

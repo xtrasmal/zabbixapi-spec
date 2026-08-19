@@ -2,9 +2,124 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/template/template.update",
   "title": "template.update",
-  "description": "",
+  "description": "This method allows to update existing templates.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/template/update",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "templateid": {
+      "type": "string",
+      "description": "ID of the template."
+    },
+    "host": {
+      "type": "string",
+      "description": "Technical name of the template."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the template."
+    },
+    "name": {
+      "type": "string",
+      "description": "Visible name of the template. Default: host property value."
+    },
+    "uuid": {
+      "type": "string",
+      "description": "Universal unique identifier, used for linking imported templates to already existing ones. Auto-generated, if not given."
+    },
+    "groups": {
+      "oneOf": [
+        { "type": "object" },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "groupid": { "type": "string", "description": "ID of the host group." }
+            },
+            "required": ["groupid"],
+            "additionalProperties": false
+          }
+        }
+      ],
+      "description": "Host groups to replace the current host groups the templates belong to. The host groups must have the groupid property defined."
+    },
+    "tags": {
+      "oneOf": [
+        { "type": "object" },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "tag": { "type": "string", "description": "Template tag name." },
+              "value": { "type": "string", "description": "Template tag value." }
+            },
+            "required": ["tag"],
+            "additionalProperties": false
+          }
+        }
+      ],
+      "description": "Template tags to replace the current template tags."
+    },
+    "macros": {
+      "oneOf": [
+        { "type": "object" },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "macro": { "type": "string", "description": "Macro string." },
+              "value": { "type": "string", "description": "Value of the macro." },
+              "type": {
+                "type": "integer",
+                "enum": [0, 1, 2],
+                "description": "Type of macro. Possible values: 0 - (default) Text macro; 1 - Secret macro; 2 - Vault secret."
+              },
+              "description": { "type": "string", "description": "Description of the macro." }
+            },
+            "required": ["macro", "value"],
+            "additionalProperties": false
+          }
+        }
+      ],
+      "description": "User macros to replace the current user macros on the given templates."
+    },
+    "templates": {
+      "oneOf": [
+        { "type": "object" },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "templateid": { "type": "string", "description": "ID of the template." }
+            },
+            "required": ["templateid"],
+            "additionalProperties": false
+          }
+        }
+      ],
+      "description": "Templates to replace the currently linked templates. Templates that are not passed are only unlinked. The templates must have the templateid property defined."
+    },
+    "templates_clear": {
+      "oneOf": [
+        { "type": "object" },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "templateid": { "type": "string", "description": "ID of the template." }
+            },
+            "required": ["templateid"],
+            "additionalProperties": false
+          }
+        }
+      ],
+      "description": "Templates to unlink and clear from the given templates. The templates must have the templateid property defined."
+    }
+  },
+  "required": ["templateid"],
   "additionalProperties": false
 }

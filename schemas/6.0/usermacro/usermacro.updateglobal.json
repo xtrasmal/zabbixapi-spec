@@ -2,9 +2,32 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/usermacro/usermacro.updateglobal",
   "title": "usermacro.updateglobal",
-  "description": "",
+  "description": "Update existing global macros.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/usermacro/updateglobal",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "globalmacroid": {
+      "type": "string",
+      "description": "ID of the global macro to update."
+    },
+    "macro": {
+      "type": "string",
+      "description": "Macro string."
+    },
+    "value": {
+      "type": "string",
+      "description": "Value of the macro."
+    },
+    "type": {
+      "type": "integer",
+      "enum": [0, 1, 2],
+      "description": "Type of macro. Possible values: 0 - (default) Text macro; 1 - Secret macro; 2 - Vault secret."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the macro."
+    }
+  },
+  "required": ["globalmacroid"],
   "additionalProperties": false
 }

@@ -2,9 +2,270 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/host/host.update",
   "title": "host.update",
-  "description": "",
+  "description": "This method allows to update existing hosts.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/host/update",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "hostid": { "type": "string", "description": "ID of the host to update." },
+    "host": { "type": "string", "description": "Technical name of the host." },
+    "description": { "type": "string", "description": "Description of the host." },
+    "inventory_mode": {
+      "type": "integer",
+      "enum": [-1, 0, 1],
+      "description": "Host inventory population mode. Possible values are: -1 - disabled; 0 - manual; 1 - automatic."
+    },
+    "ipmi_authtype": {
+      "type": "integer",
+      "enum": [-1, 0, 1, 2, 4, 5, 6],
+      "description": "IPMI authentication algorithm. Possible values are: -1 - default; 0 - none; 1 - MD2; 2 - MD5; 4 - straight; 5 - OEM; 6 - RMCP+."
+    },
+    "ipmi_password": { "type": "string", "description": "IPMI password." },
+    "ipmi_privilege": {
+      "type": "integer",
+      "enum": [1, 2, 3, 4, 5],
+      "description": "IPMI privilege level. Possible values are: 1 - callback; 2 - user; 3 - operator; 4 - admin; 5 - OEM."
+    },
+    "ipmi_username": { "type": "string", "description": "IPMI username." },
+    "name": { "type": "string", "description": "Visible name of the host." },
+    "proxy_hostid": { "type": "string", "description": "ID of the proxy that is used to monitor the host." },
+    "status": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Status and function of the host. Possible values are: 0 - monitored host; 1 - unmonitored host."
+    },
+    "tls_connect": {
+      "type": "integer",
+      "enum": [1, 2, 4],
+      "description": "Connections to host. Possible values are: 1 - No encryption; 2 - PSK; 4 - certificate."
+    },
+    "tls_accept": {
+      "type": "integer",
+      "description": "Connections from host. Possible bitmap values are: 1 - No encryption; 2 - PSK; 4 - certificate. This is a bitmask field; any sum of possible bitmap values is acceptable (for example, 6 for PSK and certificate)."
+    },
+    "tls_issuer": { "type": "string", "description": "Certificate issuer." },
+    "tls_subject": { "type": "string", "description": "Certificate subject." },
+    "tls_psk_identity": {
+      "type": "string",
+      "description": "(write-only) PSK identity; must be paired with only one PSK (across autoregistration, hosts, and proxies). Required if either tls_connect or tls_accept has PSK enabled. Do not include sensitive information in the PSK identity, as it is sent unencrypted over the network to inform the receiver which PSK to use."
+    },
+    "tls_psk": {
+      "type": "string",
+      "description": "(write-only) Pre-shared key (PSK); must be at least 32 hex digits. Required if either tls_connect or tls_accept has PSK enabled."
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "groupid": { "type": "string", "description": "ID of the host group." }
+        },
+        "required": ["groupid"],
+        "additionalProperties": false
+      },
+      "description": "Host groups to replace the current host groups the host belongs to. The host groups must have the groupid property defined."
+    },
+    "interfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "interfaceid": { "type": "string", "description": "ID of the interface (required to update an existing interface)." },
+          "dns": { "type": "string", "description": "DNS name used by the interface. Can be empty if the connection is made via IP." },
+          "ip": { "type": "string", "description": "IP address used by the interface. Can be empty if the connection is made via DNS." },
+          "main": {
+            "type": "integer",
+            "enum": [0, 1],
+            "description": "Whether the interface is used as default on the host. Possible values are: 0 - not default; 1 - default."
+          },
+          "port": { "type": "string", "description": "Port number used by the interface. Can contain user macros." },
+          "type": {
+            "type": "integer",
+            "enum": [1, 2, 3, 4],
+            "description": "Interface type. Possible values are: 1 - agent; 2 - SNMP; 3 - IPMI; 4 - JMX."
+          },
+          "useip": {
+            "type": "integer",
+            "enum": [0, 1],
+            "description": "Whether the connection should be made via IP. Possible values are: 0 - connect using host DNS name; 1 - connect using host IP address for this host interface."
+          },
+          "details": {
+            "type": "object",
+            "description": "Additional object for interface. Required if interface type is SNMP.",
+            "properties": {
+              "version": {
+                "type": "integer",
+                "enum": [1, 2, 3],
+                "description": "SNMP interface version. Possible values are: 1 - SNMPv1; 2 - SNMPv2c; 3 - SNMPv3"
+              },
+              "bulk": {
+                "type": "integer",
+                "enum": [0, 1],
+                "description": "Whether to use bulk SNMP requests. Possible values are: 0 - don't use bulk requests; 1 - use bulk requests."
+              },
+              "community": { "type": "string", "description": "SNMP community (required). Used only by SNMPv1 and SNMPv2 interfaces." },
+              "securityname": { "type": "string", "description": "SNMPv3 security name. Used only by SNMPv3 interfaces." },
+              "securitylevel": {
+                "type": "integer",
+                "enum": [0, 1, 2],
+                "description": "SNMPv3 security level. Used only by SNMPv3 interfaces. Possible values are: 0 - noAuthNoPriv; 1 - authNoPriv; 2 - authPriv."
+              },
+              "authpassphrase": { "type": "string", "description": "SNMPv3 authentication passphrase. Used only by SNMPv3 interfaces." },
+              "privpassphrase": { "type": "string", "description": "SNMPv3 privacy passphrase. Used only by SNMPv3 interfaces." },
+              "authprotocol": {
+                "type": "integer",
+                "enum": [0, 1, 2, 3, 4, 5],
+                "description": "SNMPv3 authentication protocol. Used only by SNMPv3 interfaces. Possible values are: 0 - MD5; 1 - SHA1; 2 - SHA224; 3 - SHA256; 4 - SHA384; 5 - SHA512."
+              },
+              "privprotocol": {
+                "type": "integer",
+                "enum": [0, 1, 2, 3, 4, 5],
+                "description": "SNMPv3 privacy protocol. Used only by SNMPv3 interfaces. Possible values are: 0 - DES; 1 - AES128; 2 - AES192; 3 - AES256; 4 - AES192C; 5 - AES256C."
+              },
+              "contextname": { "type": "string", "description": "SNMPv3 context name. Used only by SNMPv3 interfaces." }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": ["dns", "ip", "main", "port", "type", "useip"],
+        "additionalProperties": false
+      },
+      "description": "Interfaces to replace the current host interfaces."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": { "type": "string", "description": "Host tag name." },
+          "value": { "type": "string", "description": "Host tag value." }
+        },
+        "required": ["tag"],
+        "additionalProperties": false
+      },
+      "description": "Host tags to replace the current host tags."
+    },
+    "templates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": { "type": "string", "description": "ID of the template." }
+        },
+        "required": ["templateid"],
+        "additionalProperties": false
+      },
+      "description": "Templates to replace the currently linked templates. The templates must have the templateid property defined."
+    },
+    "templates_clear": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "templateid": { "type": "string", "description": "ID of the template." }
+        },
+        "required": ["templateid"],
+        "additionalProperties": false
+      },
+      "description": "Templates to unlink and clear from the host. The templates must have the templateid property defined."
+    },
+    "macros": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "hostmacroid": { "type": "string", "description": "ID of the macro (required to update an existing macro)." },
+          "macro": { "type": "string", "description": "Macro string." },
+          "value": { "type": "string", "description": "Value of the macro." },
+          "type": {
+            "type": "integer",
+            "enum": [0, 1, 2],
+            "description": "Type of macro. Possible values: 0 - Text macro; 1 - Secret macro; 2 - Vault secret."
+          },
+          "description": { "type": "string", "description": "Description of the macro." }
+        },
+        "required": ["macro", "value"],
+        "additionalProperties": false
+      },
+      "description": "User macros to replace the current user macros on the host."
+    },
+    "inventory": {
+      "type": "object",
+      "description": "Host inventory properties to replace the current host inventory properties.",
+      "properties": {
+        "alias": { "type": "string", "description": "Alias. Maximum length: 128 characters." },
+        "asset_tag": { "type": "string", "description": "Asset tag. Maximum length: 64 characters." },
+        "chassis": { "type": "string", "description": "Chassis. Maximum length: 64 characters." },
+        "contact": { "type": "string", "description": "Contact person." },
+        "contract_number": { "type": "string", "description": "Contract number. Maximum length: 64 characters." },
+        "date_hw_decomm": { "type": "string", "description": "HW decommissioning date. Maximum length: 64 characters." },
+        "date_hw_expiry": { "type": "string", "description": "HW maintenance expiry date. Maximum length: 64 characters." },
+        "date_hw_install": { "type": "string", "description": "HW installation date. Maximum length: 64 characters." },
+        "date_hw_purchase": { "type": "string", "description": "HW purchase date. Maximum length: 64 characters." },
+        "deployment_status": { "type": "string", "description": "Deployment status. Maximum length: 64 characters." },
+        "hardware": { "type": "string", "description": "Hardware. Maximum length: 255 characters." },
+        "hardware_full": { "type": "string", "description": "Detailed hardware." },
+        "host_netmask": { "type": "string", "description": "Host subnet mask. Maximum length: 39 characters." },
+        "host_networks": { "type": "string", "description": "Host networks." },
+        "host_router": { "type": "string", "description": "Host router. Maximum length: 39 characters." },
+        "hw_arch": { "type": "string", "description": "HW architecture. Maximum length: 32 characters." },
+        "installer_name": { "type": "string", "description": "Installer name. Maximum length: 64 characters." },
+        "location": { "type": "string", "description": "Location." },
+        "location_lat": { "type": "string", "description": "Location latitude. Maximum length: 16 characters." },
+        "location_lon": { "type": "string", "description": "Location longitude. Maximum length: 16 characters." },
+        "macaddress_a": { "type": "string", "description": "MAC address A. Maximum length: 64 characters." },
+        "macaddress_b": { "type": "string", "description": "MAC address B. Maximum length: 64 characters." },
+        "model": { "type": "string", "description": "Model. Maximum length: 64 characters." },
+        "name": { "type": "string", "description": "Name. Maximum length: 128 characters." },
+        "notes": { "type": "string", "description": "Notes." },
+        "oob_ip": { "type": "string", "description": "OOB IP address. Maximum length: 39 characters." },
+        "oob_netmask": { "type": "string", "description": "OOB host subnet mask. Maximum length: 39 characters." },
+        "oob_router": { "type": "string", "description": "OOB router. Maximum length: 39 characters." },
+        "os": { "type": "string", "description": "OS name. Maximum length: 128 characters." },
+        "os_full": { "type": "string", "description": "Detailed OS name. Maximum length: 255 characters." },
+        "os_short": { "type": "string", "description": "Short OS name. Maximum length: 128 characters." },
+        "poc_1_cell": { "type": "string", "description": "Primary POC mobile number. Maximum length: 64 characters." },
+        "poc_1_email": { "type": "string", "description": "Primary email. Maximum length: 128 characters." },
+        "poc_1_name": { "type": "string", "description": "Primary POC name. Maximum length: 128 characters." },
+        "poc_1_notes": { "type": "string", "description": "Primary POC notes." },
+        "poc_1_phone_a": { "type": "string", "description": "Primary POC phone A. Maximum length: 64 characters." },
+        "poc_1_phone_b": { "type": "string", "description": "Primary POC phone B. Maximum length: 64 characters." },
+        "poc_1_screen": { "type": "string", "description": "Primary POC screen name. Maximum length: 64 characters." },
+        "poc_2_cell": { "type": "string", "description": "Secondary POC mobile number. Maximum length: 64 characters." },
+        "poc_2_email": { "type": "string", "description": "Secondary POC email. Maximum length: 128 characters." },
+        "poc_2_name": { "type": "string", "description": "Secondary POC name. Maximum length: 128 characters." },
+        "poc_2_notes": { "type": "string", "description": "Secondary POC notes." },
+        "poc_2_phone_a": { "type": "string", "description": "Secondary POC phone A. Maximum length: 64 characters." },
+        "poc_2_phone_b": { "type": "string", "description": "Secondary POC phone B. Maximum length: 64 characters." },
+        "poc_2_screen": { "type": "string", "description": "Secondary POC screen name. Maximum length: 64 characters." },
+        "serialno_a": { "type": "string", "description": "Serial number A. Maximum length: 64 characters." },
+        "serialno_b": { "type": "string", "description": "Serial number B. Maximum length: 64 characters." },
+        "site_address_a": { "type": "string", "description": "Site address A. Maximum length: 128 characters." },
+        "site_address_b": { "type": "string", "description": "Site address B. Maximum length: 128 characters." },
+        "site_address_c": { "type": "string", "description": "Site address C. Maximum length: 128 characters." },
+        "site_city": { "type": "string", "description": "Site city. Maximum length: 128 characters." },
+        "site_country": { "type": "string", "description": "Site country. Maximum length: 64 characters." },
+        "site_notes": { "type": "string", "description": "Site notes." },
+        "site_rack": { "type": "string", "description": "Site rack location. Maximum length: 128 characters." },
+        "site_state": { "type": "string", "description": "Site state. Maximum length: 64 characters." },
+        "site_zip": { "type": "string", "description": "Site ZIP/postal code. Maximum length: 64 characters." },
+        "software": { "type": "string", "description": "Software. Maximum length: 255 characters." },
+        "software_app_a": { "type": "string", "description": "Software application A. Maximum length: 64 characters." },
+        "software_app_b": { "type": "string", "description": "Software application B. Maximum length: 64 characters." },
+        "software_app_c": { "type": "string", "description": "Software application C. Maximum length: 64 characters." },
+        "software_app_d": { "type": "string", "description": "Software application D. Maximum length: 64 characters." },
+        "software_app_e": { "type": "string", "description": "Software application E. Maximum length: 64 characters." },
+        "software_full": { "type": "string", "description": "Software details." },
+        "tag": { "type": "string", "description": "Tag. Maximum length: 64 characters." },
+        "type": { "type": "string", "description": "Type. Maximum length: 64 characters." },
+        "type_full": { "type": "string", "description": "Type details. Maximum length: 64 characters." },
+        "url_a": { "type": "string", "description": "URL A. Maximum length: 255 characters." },
+        "url_b": { "type": "string", "description": "URL B. Maximum length: 255 characters." },
+        "url_c": { "type": "string", "description": "URL C. Maximum length: 255 characters." },
+        "vendor": { "type": "string", "description": "Vendor. Maximum length: 64 characters." }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["hostid"],
   "additionalProperties": false
 }

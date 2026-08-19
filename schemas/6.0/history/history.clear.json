@@ -2,9 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/history/history.clear",
   "title": "history.clear",
-  "description": "",
+  "description": "This method allows to clear item history.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/history/clear",
-  "type": "object",
-  "properties": {},
-  "additionalProperties": false
+  "type": "array",
+  "items": { "type": "string" },
+  "minItems": 1
 }

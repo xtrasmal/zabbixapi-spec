@@ -2,10 +2,66 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/token/token.get",
   "title": "token.get",
-  "description": "",
+  "description": "Retrieve tokens according to the given parameters.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/token/get",
   "type": "object",
   "properties": {
+    "tokenids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only tokens with the given IDs."
+    },
+    "userids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only tokens created for the given users."
+    },
+    "token": {
+      "type": "string",
+      "description": "Return only tokens created for the given Auth token."
+    },
+    "valid_at": {
+      "type": "integer",
+      "description": "Return only tokens, which are valid (not expired) at the given date and time."
+    },
+    "expired_at": {
+      "type": "integer",
+      "description": "Return only tokens, which are expired (not valid) at the given date and time."
+    },
+    "sortfield": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": ["tokenid", "name", "lastaccess", "status", "expires_at", "created_at"]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["tokenid", "name", "lastaccess", "status", "expires_at", "created_at"]
+          }
+        }
+      ],
+      "description": "Sort the result by the given properties. Possible values: tokenid, name, lastaccess, status, expires_at, created_at."
+    },
     "countOutput": {
       "type": "boolean",
       "description": "Return the number of records in the result instead of the actual data."
@@ -35,10 +91,7 @@
           }
         },
         {
-          "enum": [
-            "extend",
-            "count"
-          ]
+          "enum": ["extend", "count"]
         }
       ],
       "description": "Object properties to be returned. Default: extend."
@@ -59,35 +112,15 @@
       "type": "boolean",
       "description": "If true, enables the use of '*' as a wildcard character. Default: false."
     },
-    "sortfield": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      ],
-      "description": "Sort the result by the given properties."
-    },
     "sortorder": {
       "oneOf": [
         {
-          "enum": [
-            "ASC",
-            "DESC"
-          ]
+          "enum": ["ASC", "DESC"]
         },
         {
           "type": "array",
           "items": {
-            "enum": [
-              "ASC",
-              "DESC"
-            ]
+            "enum": ["ASC", "DESC"]
           }
         }
       ],

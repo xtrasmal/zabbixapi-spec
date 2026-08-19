@@ -2,9 +2,160 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/configuration/configuration.importcompare",
   "title": "configuration.importcompare",
-  "description": "",
+  "description": "This method allows to compare import file with current system elements and shows what will be changed if this import file will be imported.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/configuration/importcompare",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "format": {
+      "type": "string",
+      "enum": ["yaml", "xml", "json"],
+      "description": "Format of the serialized string. Possible values: yaml - YAML; xml - XML; json - JSON."
+    },
+    "source": {
+      "type": "string",
+      "description": "Serialized string containing the configuration data."
+    },
+    "rules": {
+      "type": "object",
+      "properties": {
+        "discoveryRules": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new LLD rules will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing LLD rules will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, LLD rules not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import LLD rules."
+        },
+        "graphs": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new graphs will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing graphs will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, graphs not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import graphs."
+        },
+        "groups": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new host groups will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing host groups will be updated. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import host groups."
+        },
+        "hosts": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new hosts will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing hosts will be updated. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import hosts. This parameter will make no difference to the output. It is allowed only for consistency with configuration.import."
+        },
+        "httptests": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new web scenarios will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing web scenarios will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, web scenarios not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import web scenarios."
+        },
+        "images": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new images will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing images will be updated. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import images. This parameter will make no difference to the output. It is allowed only for consistency with configuration.import."
+        },
+        "items": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new items will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing items will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, items not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import items."
+        },
+        "maps": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new maps will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing maps will be updated. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import maps. This parameter will make no difference to the output. It is allowed only for consistency with configuration.import."
+        },
+        "mediaTypes": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new media types will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing media types will be updated. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import media types. This parameter will make no difference to the output. It is allowed only for consistency with configuration.import."
+        },
+        "templateLinkage": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, templates that are not linked to the host or template being imported, but are present in the imported data, will be linked. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, templates that are linked to the host or template being imported, but are not present in the imported data, will be unlinked without removing entities (items, triggers, etc.) inherited from the unlinked templates. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import template links."
+        },
+        "templates": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new templates will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing templates will be updated. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import templates."
+        },
+        "templateDashboards": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new template dashboards will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing template dashboards will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, template dashboards not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import template dashboards."
+        },
+        "triggers": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new triggers will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing triggers will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, triggers not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import triggers."
+        },
+        "valueMaps": {
+          "type": "object",
+          "properties": {
+            "createMissing": {"type": "boolean", "description": "If set to true, new value maps will be created. Default: false."},
+            "updateExisting": {"type": "boolean", "description": "If set to true, existing value maps will be updated. Default: false."},
+            "deleteMissing": {"type": "boolean", "description": "If set to true, value maps not present in the imported data will be deleted from the database. Default: false."}
+          },
+          "additionalProperties": false,
+          "description": "Rules on how to import host or template value maps."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Rules on how new and existing objects should be imported. Admin and User type users may compare new objects only with existing ones for which they have read-only or read-write permission. If no rules are given, there will be nothing to update and result will be empty. Comparison will be done only for host groups and templates. Triggers and graphs will be compared only for imported templates, any other will be considered as new."
+    }
+  },
+  "required": ["format", "source", "rules"],
   "additionalProperties": false
 }

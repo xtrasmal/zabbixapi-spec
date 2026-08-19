@@ -2,11 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/service/service.delete",
   "title": "service.delete",
-  "description": "",
+  "description": "Delete services.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/service/delete",
   "type": "array",
-  "items": {
-    "type": "string"
-  },
+  "items": {"type": "string"},
   "minItems": 1
 }

@@ -2,9 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/user/user.logout",
   "title": "user.logout",
-  "description": "",
+  "description": "This method allows to log out of the API and invalidates the current authentication token.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/user/logout",
-  "type": "object",
-  "properties": {},
-  "additionalProperties": false
+  "type": "array",
+  "maxItems": 0
 }

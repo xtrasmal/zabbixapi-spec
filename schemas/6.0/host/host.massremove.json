@@ -2,9 +2,60 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/host/host.massremove",
   "title": "host.massremove",
-  "description": "",
+  "description": "This method allows to simultaneously remove one or more related objects from all the given hosts.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/host/massremove",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "hostids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Hosts to be updated."
+    },
+    "groupids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Host groups to remove the hosts from."
+    },
+    "interfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ip": { "type": "string", "description": "IP address used by the interface to identify it for removal." },
+          "dns": { "type": "string", "description": "DNS name used by the interface to identify it for removal." },
+          "port": { "type": "string", "description": "Port number used by the interface to identify it for removal." }
+        },
+        "required": ["ip", "dns", "port"],
+        "additionalProperties": false
+      },
+      "description": "Interfaces to remove from the hosts, identified by matching ip, dns and port."
+    },
+    "macros": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Macros to remove from the hosts, given as macro names."
+    },
+    "templateids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Templates to unlink from the hosts, keeping the items, triggers and graphs that belonged to it."
+    },
+    "templateids_clear": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Templates to unlink and clear from the hosts."
+    }
+  },
+  "required": ["hostids"],
   "additionalProperties": false
 }

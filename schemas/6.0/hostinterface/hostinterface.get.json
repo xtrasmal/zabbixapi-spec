@@ -2,10 +2,114 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/hostinterface/hostinterface.get",
   "title": "hostinterface.get",
-  "description": "",
+  "description": "The method allows to retrieve host interfaces according to the given parameters.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/hostinterface/get",
   "type": "object",
   "properties": {
+    "hostids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only host interfaces used by the given hosts."
+    },
+    "interfaceids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only host interfaces with the given IDs."
+    },
+    "itemids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only host interfaces used by the given items."
+    },
+    "triggerids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only host interfaces used by items in the given triggers."
+    },
+    "selectItems": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": ["extend", "count"]
+        }
+      ],
+      "description": "Return an items property with the items that use the interface. Supports count."
+    },
+    "selectHosts": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": ["extend", "count"]
+        }
+      ],
+      "description": "Return a hosts property with an array of hosts that use the interface."
+    },
+    "limitSelects": {
+      "type": "integer",
+      "description": "Limits the number of records returned by subselects. Applies to the following subselects: selectItems."
+    },
+    "sortfield": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": ["interfaceid", "dns", "ip"]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["interfaceid", "dns", "ip"]
+          }
+        }
+      ],
+      "description": "Sort the result by the given properties. Possible values are: interfaceid, dns, ip."
+    },
     "countOutput": {
       "type": "boolean",
       "description": "Return the number of records in the result instead of the actual data."
@@ -35,10 +139,7 @@
           }
         },
         {
-          "enum": [
-            "extend",
-            "count"
-          ]
+          "enum": ["extend", "count"]
         }
       ],
       "description": "Object properties to be returned. Default: extend."
@@ -59,35 +160,15 @@
       "type": "boolean",
       "description": "If true, enables the use of '*' as a wildcard character. Default: false."
     },
-    "sortfield": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      ],
-      "description": "Sort the result by the given properties."
-    },
     "sortorder": {
       "oneOf": [
         {
-          "enum": [
-            "ASC",
-            "DESC"
-          ]
+          "enum": ["ASC", "DESC"]
         },
         {
           "type": "array",
           "items": {
-            "enum": [
-              "ASC",
-              "DESC"
-            ]
+            "enum": ["ASC", "DESC"]
           }
         }
       ],

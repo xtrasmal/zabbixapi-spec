@@ -2,9 +2,18 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/user/user.login",
   "title": "user.login",
-  "description": "",
+  "description": "This method allows to log in to the API and generate an authentication token.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/user/login",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "password": {"type": "string", "description": "User password."},
+    "username": {"type": "string", "description": "User name."},
+    "userData": {"type": "boolean", "description": "Return information about the authenticated user."},
+    "user": {
+      "type": "string",
+      "description": "(deprecated) This parameter is deprecated, please use username instead. User name."
+    }
+  },
+  "required": ["password", "username"],
   "additionalProperties": false
 }

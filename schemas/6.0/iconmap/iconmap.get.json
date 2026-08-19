@@ -2,10 +2,68 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/iconmap/iconmap.get",
   "title": "iconmap.get",
-  "description": "",
+  "description": "The method allows to retrieve icon maps according to the given parameters.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/iconmap/get",
   "type": "object",
   "properties": {
+    "iconmapids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only icon maps with the given IDs."
+    },
+    "sysmapids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only icon maps that are used in the given maps."
+    },
+    "selectMappings": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": ["extend", "count"]
+        }
+      ],
+      "description": "Return a mappings property with the icon mappings used. It has the following properties: iconmappingid - (string) ID of the icon mapping; iconid - (string) ID of the icon used by the icon mapping; expression - (string) expression to match the inventory field against; inventory_link - (integer) ID of the host inventory field; iconmapid - (string) ID of the icon map that the icon mapping belongs to; sortorder - (integer) position of the icon mapping in the icon map."
+    },
+    "sortfield": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": ["iconmapid", "name"]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["iconmapid", "name"]
+          }
+        }
+      ],
+      "description": "Sort the result by the given properties. Possible values are: iconmapid and name."
+    },
     "countOutput": {
       "type": "boolean",
       "description": "Return the number of records in the result instead of the actual data."
@@ -35,10 +93,7 @@
           }
         },
         {
-          "enum": [
-            "extend",
-            "count"
-          ]
+          "enum": ["extend", "count"]
         }
       ],
       "description": "Object properties to be returned. Default: extend."
@@ -59,35 +114,15 @@
       "type": "boolean",
       "description": "If true, enables the use of '*' as a wildcard character. Default: false."
     },
-    "sortfield": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      ],
-      "description": "Sort the result by the given properties."
-    },
     "sortorder": {
       "oneOf": [
         {
-          "enum": [
-            "ASC",
-            "DESC"
-          ]
+          "enum": ["ASC", "DESC"]
         },
         {
           "type": "array",
           "items": {
-            "enum": [
-              "ASC",
-              "DESC"
-            ]
+            "enum": ["ASC", "DESC"]
           }
         }
       ],

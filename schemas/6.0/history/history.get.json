@@ -2,10 +2,47 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/history/history.get",
   "title": "history.get",
-  "description": "",
+  "description": "The method allows to retrieve history data according to the given parameters.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/history/get",
   "type": "object",
   "properties": {
+    "history": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3, 4],
+      "description": "History object types to return. Possible values: 0 - numeric float; 1 - character; 2 - log; 3 - numeric unsigned; 4 - text. Default: 3."
+    },
+    "hostids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only history from the given hosts."
+    },
+    "itemids": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Return only history from the given items."
+    },
+    "time_from": {
+      "type": "integer",
+      "description": "Return only values that have been received after or at the given time."
+    },
+    "time_till": {
+      "type": "integer",
+      "description": "Return only values that have been received before or at the given time."
+    },
+    "sortfield": {
+      "oneOf": [
+        { "type": "string", "enum": ["itemid", "clock"] },
+        {
+          "type": "array",
+          "items": { "type": "string", "enum": ["itemid", "clock"] }
+        }
+      ],
+      "description": "Sort the result by the given properties. Possible values are: itemid and clock."
+    },
     "countOutput": {
       "type": "boolean",
       "description": "Return the number of records in the result instead of the actual data."
@@ -28,18 +65,8 @@
     },
     "output": {
       "oneOf": [
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        {
-          "enum": [
-            "extend",
-            "count"
-          ]
-        }
+        { "type": "array", "items": { "type": "string" } },
+        { "enum": ["extend", "count"] }
       ],
       "description": "Object properties to be returned. Default: extend."
     },
@@ -59,37 +86,10 @@
       "type": "boolean",
       "description": "If true, enables the use of '*' as a wildcard character. Default: false."
     },
-    "sortfield": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      ],
-      "description": "Sort the result by the given properties."
-    },
     "sortorder": {
       "oneOf": [
-        {
-          "enum": [
-            "ASC",
-            "DESC"
-          ]
-        },
-        {
-          "type": "array",
-          "items": {
-            "enum": [
-              "ASC",
-              "DESC"
-            ]
-          }
-        }
+        { "enum": ["ASC", "DESC"] },
+        { "type": "array", "items": { "enum": ["ASC", "DESC"] } }
       ],
       "description": "Order of sorting. ASC or DESC."
     },

@@ -2,10 +2,52 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zabbix.com/6.0/api/proxy/proxy.get",
   "title": "proxy.get",
-  "description": "",
+  "description": "The method allows to retrieve proxies according to the given parameters.",
   "$comment": "Source: https://www.zabbix.com/documentation/6.0/en/manual/api/reference/proxy/get",
   "type": "object",
   "properties": {
+    "proxyids": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Return only proxies with the given IDs."
+    },
+    "selectHosts": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": ["extend", "count"]
+        }
+      ],
+      "description": "Return a hosts property with the hosts monitored by the proxy."
+    },
+    "selectInterface": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "enum": ["extend", "count"]
+        }
+      ],
+      "description": "Return an interface property with the proxy interface used by a passive proxy."
+    },
     "countOutput": {
       "type": "boolean",
       "description": "Return the number of records in the result instead of the actual data."
@@ -35,10 +77,7 @@
           }
         },
         {
-          "enum": [
-            "extend",
-            "count"
-          ]
+          "enum": ["extend", "count"]
         }
       ],
       "description": "Object properties to be returned. Default: extend."
@@ -62,32 +101,28 @@
     "sortfield": {
       "oneOf": [
         {
-          "type": "string"
+          "type": "string",
+          "enum": ["hostid", "host", "status"]
         },
         {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": ["hostid", "host", "status"]
           }
         }
       ],
-      "description": "Sort the result by the given properties."
+      "description": "Sort the result by the given properties. Possible values are: hostid, host, status."
     },
     "sortorder": {
       "oneOf": [
         {
-          "enum": [
-            "ASC",
-            "DESC"
-          ]
+          "enum": ["ASC", "DESC"]
         },
         {
           "type": "array",
           "items": {
-            "enum": [
-              "ASC",
-              "DESC"
-            ]
+            "enum": ["ASC", "DESC"]
           }
         }
       ],
